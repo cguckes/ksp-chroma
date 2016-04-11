@@ -5,26 +5,14 @@ using UnityEngine;
 
 namespace KSP_Chroma_Control
 {
-    [KSPAddon(KSPAddon.Startup.Instantly, true)]
+    [KSPAddon(KSPAddon.Startup.EveryScene, false)]
     public class KSPChromaPlugin : MonoBehaviour
     {
-        private static KSPChromaPlugin singleton;
-        public static KSPChromaPlugin getInstance()
-        {
-            return singleton;
-        }
-
         private ColorSchemes.ColorScheme Scheme;
         private UdpClient Client { get; set; }
 
-        public KSPChromaPlugin()
-        {
-            singleton = this;
-        }
-
         void Awake()
         {
-            this.Scheme = new ColorSchemes.LogoScheme();
             Client = new UdpClient();
             IPEndPoint ep = new IPEndPoint(IPAddress.Parse("127.0.0.1"), 8888);
             this.Client.Connect(ep);
@@ -33,6 +21,19 @@ namespace KSP_Chroma_Control
         void Start()
         {
             Debug.Log("Sending Keyboard Layout");
+
+            switch (HighLogic.LoadedScene) {
+                case GameScenes.MAINMENU:
+                    this.Scheme = new ColorSchemes.LogoScheme();
+                    break;
+                case GameScenes.FLIGHT:
+                    this.Scheme = new ColorSchemes.FlightScheme();
+                    break;
+                default:
+                    this.Scheme = new ColorSchemes.ColorScheme(Color.black);
+                    break;
+            }
+
             byte[] ToSend = Encoding.UTF8.GetBytes(this.Scheme.ToString());
             this.Client.Send(ToSend, ToSend.Length);
         }
