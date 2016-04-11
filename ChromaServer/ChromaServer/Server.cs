@@ -179,6 +179,9 @@ namespace ChromaServer
                 {
                     System.Drawing.Color keyColor = ConvertToSystemColor(entry.Value);
                     Corale.Colore.Core.Keyboard.Instance.SetKey(translate[entry.Key], Corale.Colore.Core.Color.FromSystemColor(keyColor));
+                } else
+                {
+                    Console.Error.WriteLine("Unknown Key: " + entry.Key);
                 }
             }
         }
