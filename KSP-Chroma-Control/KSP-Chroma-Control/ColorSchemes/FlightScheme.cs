@@ -34,7 +34,7 @@ namespace KSP_Chroma_Control.ColorSchemes
             string[] greenkeys = { "r", "t", "f"};
             SetKeysToColor(greenkeys, Color.green);
 
-            string[] bluekeys = { "1", "2", "3", "4", "5", "6", "7", "8", "9" };
+            string[] bluekeys = { "1", "2", "3", "4", "5", "6", "7", "8", "9", "0" };
             SetKeysToColor(bluekeys, Color.blue);
         }
     }

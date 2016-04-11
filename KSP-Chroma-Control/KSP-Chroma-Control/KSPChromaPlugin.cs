@@ -5,16 +5,27 @@ using UnityEngine;
 
 namespace KSP_Chroma_Control
 {
-    [KSPAddon(KSPAddon.Startup.Flight, false)]
-    public class KSPChromaFlightPlugin : MonoBehaviour
+    [KSPAddon(KSPAddon.Startup.Instantly, true)]
+    public class KSPChromaPlugin : MonoBehaviour
     {
+        private static KSPChromaPlugin singleton;
+        public static KSPChromaPlugin getInstance()
+        {
+            return singleton;
+        }
+
         private ColorSchemes.ColorScheme Scheme;
-        private UdpClient Client;
+        private UdpClient Client { get; set; }
+
+        public KSPChromaPlugin()
+        {
+            singleton = this;
+        }
 
         void Awake()
         {
-            this.Scheme = new ColorSchemes.FlightScheme();
-            this.Client = new UdpClient();
+            this.Scheme = new ColorSchemes.LogoScheme();
+            Client = new UdpClient();
             IPEndPoint ep = new IPEndPoint(IPAddress.Parse("127.0.0.1"), 8888);
             this.Client.Connect(ep);
         }

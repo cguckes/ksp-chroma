@@ -45,15 +45,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ColorSchemes\ColorScheme.cs" />
-    <Compile Include="ColorSchemes\VABScheme.cs" />
-    <Compile Include="ColorSchemes\EVAScheme.cs" />
-    <Compile Include="ColorSchemes\DockingScheme.cs" />
+    <Compile Include="ColorSchemes\LogoScheme.cs" />
     <Compile Include="ColorSchemes\FlightScheme.cs" />
-    <Compile Include="KSPChromaControlPlugin.cs" />
     <Compile Include="States\ControlState.cs" />
     <Compile Include="CraftState.cs" />
     <Compile Include="ColorSchemes\GlobalKeyScheme.cs" />
-    <Compile Include="KSPChromaFlightPlugin.cs" />
+    <Compile Include="KSPChromaPlugin.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -18,12 +18,12 @@ namespace KSP_Chroma_Control.ColorSchemes
             "num.", "]", "[", "f1", "f2", "f3", "f4", "f5", "f9", "f10", "f11", "f12"
         };
 
-        public GlobalKeyScheme() : this(Color.green)
+        public GlobalKeyScheme() : this(Color.black)
         {
 
         }
 
-        public GlobalKeyScheme(Color color)
+        public GlobalKeyScheme(Color color) : base(color)
         {
             foreach (string key in KeyMap)
             {
