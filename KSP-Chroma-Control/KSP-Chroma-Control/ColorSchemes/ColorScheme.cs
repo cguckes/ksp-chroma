@@ -96,14 +96,19 @@ namespace KSP_Chroma_Control.ColorSchemes
             return myReturn;
         }
 
+        public void SetKeyToColor(string key, Color color)
+        {
+            key = key.ToLower();
+            if (this.ContainsKey(key))
+            {
+                this[key] = color;
+            }
+        }
         public void SetKeysToColor(string[] keys, Color color)
         {
             foreach (string key in keys)
             {
-                if (this.ContainsKey(key))
-                {
-                    this[key] = color;
-                }
+                SetKeyToColor(key, color);
             }
         }
     }

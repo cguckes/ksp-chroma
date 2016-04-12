@@ -22,7 +22,7 @@ namespace KSP_Chroma_Control
         /// </summary>
         private UdpClient Client { get; set; }
         private SceneManager flightSceneManager = new FlightSceneManager();
-        
+        private SceneManager vabSceneManager = new VABSceneManager();
 
         /// <summary>
         /// Called by unity during the launch of this addon.
@@ -39,7 +39,6 @@ namespace KSP_Chroma_Control
         /// </summary>
         void Start()
         {
-
         }
 
         /// <summary>
@@ -60,6 +59,9 @@ namespace KSP_Chroma_Control
             {
                 case GameScenes.FLIGHT:
                     scheme = this.flightSceneManager.getScheme();
+                    break;
+                case GameScenes.EDITOR:
+                    scheme = this.vabSceneManager.getScheme();
                     break;
                 default:
                     scheme = new ColorSchemes.LogoScheme();

@@ -6,7 +6,7 @@ using UnityEngine;
 
 namespace KSP_Chroma_Control.ColorSchemes
 {
-    class FlightScheme : GlobalKeyScheme
+    class FlightScheme : ColorScheme
     {
         /// <summary>
         /// Lists all the keys we want covered in the default color. Based on the key binding list for every
@@ -14,7 +14,7 @@ namespace KSP_Chroma_Control.ColorSchemes
         /// Discontinued this idea because it looks ridiculous and helps noone.
         /// </summary>
         private static string[] KeyMap =
-            {
+        {
             "w", "s", "a", "d", "q", "e", "c", "v", "leftshift", "leftctrl", "space", "t", "f", "capslock",
             "r", "h", "n", "i", "j", "k", "l", "x", "z", "x", "z", "g", "b", "u", "1", "2", "3", "4", "5",
             "6", "7", "8", "9", "0", "backspace", "home", "end"

@@ -33,6 +33,7 @@
     <Reference Include="Assembly-CSharp">
       <HintPath>..\..\..\..\Games\SteamApps\steamapps\common\Kerbal Space Program\KSP_x64_Data\Managed\Assembly-CSharp.dll</HintPath>
     </Reference>
+    <Reference Include="KSPUtil, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null" />
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -48,13 +49,17 @@
     <Compile Include="ColorSchemes\LogoScheme.cs" />
     <Compile Include="ColorSchemes\FlightScheme.cs" />
     <Compile Include="CraftState.cs" />
-    <Compile Include="ColorSchemes\GlobalKeyScheme.cs" />
     <Compile Include="KSPChromaPlugin.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SceneManagers\VABSceneManager.cs" />
     <Compile Include="SceneManagers\FlightSceneManager.cs" />
     <Compile Include="SceneManagers\SceneManager.cs" />
+    <Compile Include="ColorSchemes\VabScheme.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PostBuildEvent>copy "$(TargetName).dll" "G:\Games\SteamApps\steamapps\common\Kerbal Space Program\GameData\TorqDev\ChromaControlPlugin"</PostBuildEvent>
+  </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

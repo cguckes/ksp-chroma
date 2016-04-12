@@ -6,7 +6,7 @@ using UnityEngine;
 
 namespace KSP_Chroma_Control.ColorSchemes
 {
-    class LogoScheme : GlobalKeyScheme
+    class LogoScheme : ColorScheme
     {
         public LogoScheme() : base(Color.blue)
         {
