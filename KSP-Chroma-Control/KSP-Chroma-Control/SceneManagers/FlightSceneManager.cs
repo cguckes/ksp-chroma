@@ -139,6 +139,10 @@ namespace KSP_Chroma_Control.SceneManagers
                 keys[2] = (amount > maxAmount * 0.66) ? "pageup" : "";
                 currentColorScheme.SetKeysToColor(keys, new Color(.8f, .8f, .8f));
             }
+            else
+            {
+                Debug.LogWarning("Unhandled fuel resource: " + resource);
+            }
         }
     }
 }
