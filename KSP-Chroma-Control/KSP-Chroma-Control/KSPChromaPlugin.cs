@@ -2,15 +2,31 @@
 using System.Net;
 using System.Text;
 using UnityEngine;
+using KSP_Chroma_Control.SceneManagers;
 
+/// <summary>
+/// Contains the chroma control plugin allowing Kerbal Space Program to communicate a keyboard
+/// layout via UDP to a chroma udp server.
+/// </summary>
 namespace KSP_Chroma_Control
 {
+    /// <summary>
+    /// The main class, managing the keyboard appearance for every kind of scene KSP
+    /// uses.
+    /// </summary>
     [KSPAddon(KSPAddon.Startup.EveryScene, false)]
     public class KSPChromaPlugin : MonoBehaviour
     {
-        private ColorSchemes.ColorScheme Scheme;
+        /// <summary>
+        /// The UDP network socket to send keyboard appearance orders to the server.
+        /// </summary>
         private UdpClient Client { get; set; }
+        private SceneManager flightSceneManager = new FlightSceneManager();
+        
 
+        /// <summary>
+        /// Called by unity during the launch of this addon.
+        /// </summary>
         void Awake()
         {
             Client = new UdpClient();
@@ -18,39 +34,48 @@ namespace KSP_Chroma_Control
             this.Client.Connect(ep);
         }
 
+        /// <summary>
+        /// Called by unity after awake has finished.
+        /// </summary>
         void Start()
         {
-            Debug.Log("Sending Keyboard Layout");
 
-            switch (HighLogic.LoadedScene) {
-                case GameScenes.MAINMENU:
-                    this.Scheme = new ColorSchemes.LogoScheme();
-                    break;
+        }
+
+        /// <summary>
+        /// Called by unity on every frame
+        /// </summary>
+        void Update()
+        {
+        }
+
+        /// <summary>
+        /// Called by unity on every physics frame.
+        /// </summary>
+        void FixedUpdate()
+        {
+            ColorSchemes.ColorScheme scheme;
+
+            switch (HighLogic.LoadedScene)
+            {
                 case GameScenes.FLIGHT:
-                    this.Scheme = new ColorSchemes.FlightScheme();
+                    scheme = this.flightSceneManager.getScheme();
                     break;
                 default:
-                    this.Scheme = new ColorSchemes.ColorScheme(Color.black);
+                    scheme = new ColorSchemes.LogoScheme();
                     break;
             }
 
-            byte[] ToSend = Encoding.UTF8.GetBytes(this.Scheme.ToString());
+            byte[] ToSend = Encoding.UTF8.GetBytes(scheme.ToString());
             this.Client.Send(ToSend, ToSend.Length);
         }
 
-        void Update()
-        {
-
-        }
-
-        void FixedUpdate()
-        {
-           
-        }
-
+        /// <summary>
+        /// Called by unity right before the game exits.
+        /// </summary>
         void OnDestroy()
         {
-            
+            this.Client.Close();
         }
     }
 }

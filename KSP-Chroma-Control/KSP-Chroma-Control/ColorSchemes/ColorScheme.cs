@@ -96,7 +96,7 @@ namespace KSP_Chroma_Control.ColorSchemes
             return myReturn;
         }
 
-        protected void SetKeysToColor(string[] keys, Color color)
+        public void SetKeysToColor(string[] keys, Color color)
         {
             foreach (string key in keys)
             {

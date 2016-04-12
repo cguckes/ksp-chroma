@@ -47,11 +47,12 @@
     <Compile Include="ColorSchemes\ColorScheme.cs" />
     <Compile Include="ColorSchemes\LogoScheme.cs" />
     <Compile Include="ColorSchemes\FlightScheme.cs" />
-    <Compile Include="States\ControlState.cs" />
     <Compile Include="CraftState.cs" />
     <Compile Include="ColorSchemes\GlobalKeyScheme.cs" />
     <Compile Include="KSPChromaPlugin.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SceneManagers\FlightSceneManager.cs" />
+    <Compile Include="SceneManagers\SceneManager.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
