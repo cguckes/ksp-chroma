@@ -46,6 +46,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ColorSchemes\ColorScheme.cs" />
+    <Compile Include="ColorSchemes\EVAScheme.cs" />
     <Compile Include="ColorSchemes\LogoScheme.cs" />
     <Compile Include="ColorSchemes\FlightScheme.cs" />
     <Compile Include="CraftState.cs" />

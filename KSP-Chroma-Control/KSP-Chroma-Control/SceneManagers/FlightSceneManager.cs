@@ -11,6 +11,7 @@ namespace KSP_Chroma_Control.SceneManagers
     {
         private Vessel currentVessel;
         private ColorScheme currentColorScheme;
+        private Dictionary<KSPActionGroup, Boolean> actionGroups = new Dictionary<KSPActionGroup, Boolean>();
 
         /// <summary>
         /// We are using integers because we dont need any accuracy for the three keys
@@ -19,35 +20,53 @@ namespace KSP_Chroma_Control.SceneManagers
 
         public ColorScheme getScheme()
         {
-            if(currentColorScheme == null)
-            {
-                reset();
-            }
-
             update();            
             return this.currentColorScheme;
         }
 
         private void update()
         {
-            if(this.currentVessel != FlightGlobals.ActiveVessel)
+            if (this.currentVessel != FlightGlobals.ActiveVessel)
             {
                 this.currentVessel = FlightGlobals.fetch.activeVessel;
-                this.recalculateAllValues();
-            } else
+                findUsableActionGroups();
+            }
+
+            if (currentVessel.isEVA)
             {
+                this.currentColorScheme = new EVAScheme();
+
+            }
+            else
+            {
+                this.currentColorScheme = new FlightScheme();
                 recalculateResources();
+                updateToggleables();
             }
         }
 
-        private void recalculateAllValues()
+        private void calculateEvaResources()
         {
-            /*if(!this.currentVessel.IsControllable)
-            {
-                this.currentColorScheme = new ColorScheme(Color.red);
-            }*/
 
-            recalculateResources();
+        }
+
+        private void findUsableActionGroups()
+        {
+            List<BaseAction> allActionsList = new List<BaseAction>();
+
+            foreach (KSPActionGroup group in Enum.GetValues(typeof(KSPActionGroup)).Cast<KSPActionGroup>())
+                this.actionGroups.Add(group, false);
+
+            foreach(Part p in currentVessel.parts)
+            {
+                allActionsList.AddRange(p.Actions);
+                foreach(PartModule pm in p.Modules)
+                    allActionsList.AddRange(pm.Actions);
+            }
+
+            foreach (BaseAction action in allActionsList)
+                foreach (KSPActionGroup group in Enum.GetValues(typeof(KSPActionGroup)).Cast<KSPActionGroup>())
+                    actionGroups[group] = actionGroups[group] || ((action.actionGroup & group) == group);
         }
 
         private void recalculateResources()
@@ -57,14 +76,6 @@ namespace KSP_Chroma_Control.SceneManagers
             resources.ForEach(res => {
                 showGauge(res.info.name, res.amount, res.maxAmount);
             });
-        }
-
-        /// <summary>
-        /// Resets the current color scheme to the original flight scheme.
-        /// </summary>
-        private void reset()
-        {
-            this.currentColorScheme = new FlightScheme();
         }
 
         /// <summary>
@@ -141,7 +152,54 @@ namespace KSP_Chroma_Control.SceneManagers
             }
             else
             {
-                Debug.LogWarning("Unhandled fuel resource: " + resource);
+                //Debug.LogWarning("Unhandled fuel resource: " + resource);
+            }
+        }
+
+        private void updateToggleables()
+        {
+            currentColorScheme.SetKeysToColor(new string[] { "f5", "del", "t", "r", "m" }, Color.red);
+
+            if (currentVessel.Autopilot !=null && currentVessel.Autopilot.Enabled)
+                currentColorScheme.SetKeyToColor("t", Color.green);
+
+            if(!FlightInputHandler.RCSLock)
+                currentColorScheme.SetKeyToColor("r", Color.green);
+
+            if (MapView.MapIsEnabled)
+                currentColorScheme.SetKeyToColor("m", Color.green);
+
+            if (FlightInputHandler.fetch.precisionMode)
+            {
+                currentColorScheme.SetKeysToColor(new string[] { "q", "e", "w", "a", "s", "d" }, Color.cyan);
+                currentColorScheme.SetKeyToColor("capslock", Color.green);
+            }
+            else
+            {
+                currentColorScheme.SetKeysToColor(new string[] { "q", "e", "w", "a", "s", "d" }, Color.white);
+                currentColorScheme.SetKeyToColor("capslock", Color.red);
+            }
+
+            if (currentVessel.IsClearToSave() == ClearToSaveStatus.CLEAR ||
+                currentVessel.IsClearToSave() == ClearToSaveStatus.NOT_IN_ATMOSPHERE ||
+                currentVessel.IsClearToSave() == ClearToSaveStatus.NOT_UNDER_ACCELERATION)
+                currentColorScheme.SetKeyToColor("f5", Color.green);
+
+            if (TimeWarp.WarpMode == TimeWarp.Modes.HIGH)
+                currentColorScheme.SetKeysToColor(new string[] { ",", "." }, Color.green);
+            else
+                currentColorScheme.SetKeysToColor(new string[] { ",", "." }, Color.red);
+
+            for (int i = 1; i <= 10; i++)
+            {
+                KSPActionGroup action = (KSPActionGroup)System.Enum.Parse(typeof(KSPActionGroup), "Custom" + i.ToString("D2"));
+                string key = ((i == 10) ? "0" : i.ToString());
+                if(!actionGroups[action])
+                    currentColorScheme.SetKeyToColor(key, Color.black);
+                else if (currentVessel.ActionGroups[action])
+                    currentColorScheme.SetKeyToColor(key, Color.blue);
+                else
+                    currentColorScheme.SetKeyToColor(key, (Color) new Color32(50, 50, 255, 255));
             }
         }
     }

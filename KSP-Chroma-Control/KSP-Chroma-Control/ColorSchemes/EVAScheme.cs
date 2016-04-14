@@ -6,7 +6,7 @@ using UnityEngine;
 
 namespace KSP_Chroma_Control.ColorSchemes
 {
-    class FlightScheme : ColorScheme
+    class EVAScheme : ColorScheme
     {
         /// <summary>
         /// Lists all the keys we want covered in the default color. Based on the key binding list for every
@@ -19,7 +19,7 @@ namespace KSP_Chroma_Control.ColorSchemes
             "r", "h", "n", "i", "j", "k", "l", "x", "z", "x", "z", "g", "b", "u", "backspace", "home", "end"
         };
 
-        public FlightScheme()
+        public EVAScheme()
         {
             string[] whitekeys = { "w", "a", "s", "d", "q", "e", "space" };
             SetKeysToColor(whitekeys, Color.white);
