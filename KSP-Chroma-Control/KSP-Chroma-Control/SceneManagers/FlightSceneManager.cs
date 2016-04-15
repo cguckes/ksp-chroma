@@ -13,10 +13,11 @@ namespace KSP_Chroma_Control.SceneManagers
         private ColorScheme currentColorScheme;
         private Dictionary<KSPActionGroup, Boolean> actionGroups = new Dictionary<KSPActionGroup, Boolean>();
 
-        /// <summary>
-        /// We are using integers because we dont need any accuracy for the three keys
-        /// we can light up.
-        /// </summary>
+        public FlightSceneManager()
+        {
+            foreach (KSPActionGroup group in Enum.GetValues(typeof(KSPActionGroup)).Cast<KSPActionGroup>())
+                this.actionGroups.Add(group, false);
+        }
 
         public ColorScheme getScheme()
         {
@@ -35,7 +36,7 @@ namespace KSP_Chroma_Control.SceneManagers
             if (currentVessel.isEVA)
             {
                 this.currentColorScheme = new EVAScheme();
-
+                updateEvaKeys();
             }
             else
             {
@@ -45,17 +46,26 @@ namespace KSP_Chroma_Control.SceneManagers
             }
         }
 
-        private void calculateEvaResources()
+        private void updateEvaKeys()
         {
+            KerbalEVA eva = currentVessel.evaController;
 
+            showGauge("EVAFuel", eva.Fuel, eva.FuelCapacity);
+
+            if (eva.JetpackDeployed)
+                currentColorScheme.SetKeyToColor("r", Color.green);
+            else
+                currentColorScheme.SetKeyToColor("r", Color.red);
+
+            if (eva.lampOn)
+                currentColorScheme.SetKeyToColor("l", Color.green);
+            else
+                currentColorScheme.SetKeyToColor("l", Color.red);
         }
 
         private void findUsableActionGroups()
         {
             List<BaseAction> allActionsList = new List<BaseAction>();
-
-            foreach (KSPActionGroup group in Enum.GetValues(typeof(KSPActionGroup)).Cast<KSPActionGroup>())
-                this.actionGroups.Add(group, false);
 
             foreach(Part p in currentVessel.parts)
             {
@@ -114,7 +124,7 @@ namespace KSP_Chroma_Control.SceneManagers
                 keys[2] = (amount > maxAmount * 0.66) ? "num9" : "";
                 currentColorScheme.SetKeysToColor(keys, Color.cyan);
             }
-            else if (resource.Equals("MonoPropellant"))
+            else if (resource.Equals("MonoPropellant") || resource.Equals("EVAFuel"))
             {
                 currentColorScheme.SetKeysToColor(new string[] { "num4", "num5", "num6" }, Color.black);
 
@@ -158,7 +168,7 @@ namespace KSP_Chroma_Control.SceneManagers
 
         private void updateToggleables()
         {
-            currentColorScheme.SetKeysToColor(new string[] { "f5", "del", "t", "r", "m" }, Color.red);
+            currentColorScheme.SetKeysToColor(new string[] { "f5", "t", "r", "m" }, Color.red);
 
             if (currentVessel.Autopilot !=null && currentVessel.Autopilot.Enabled)
                 currentColorScheme.SetKeyToColor("t", Color.green);
@@ -190,16 +200,60 @@ namespace KSP_Chroma_Control.SceneManagers
             else
                 currentColorScheme.SetKeysToColor(new string[] { ",", "." }, Color.red);
 
-            for (int i = 1; i <= 10; i++)
+            ///TODO: Remove garbage code make nice and use all actiongroups for toggleable buttons
+            for (int i = 1; i <= 14; i++)
             {
-                KSPActionGroup action = (KSPActionGroup)System.Enum.Parse(typeof(KSPActionGroup), "Custom" + i.ToString("D2"));
-                string key = ((i == 10) ? "0" : i.ToString());
-                if(!actionGroups[action])
+                string key = "";
+                KSPActionGroup action;
+
+                switch (i) {
+                    case 11:
+                        action = KSPActionGroup.Light;
+                        key = "u";
+                        break;
+                    case 12:
+                        action = KSPActionGroup.Brakes;
+                        key = "b";
+                        break;
+                    case 13:
+                        action = KSPActionGroup.Gear;
+                        key = "g";
+                        break;
+                    case 14:
+                        action = KSPActionGroup.Abort;
+                        key = "backspace";
+                        break;
+                    default:
+                        action = (KSPActionGroup)System.Enum.Parse(typeof(KSPActionGroup), "Custom" + i.ToString("D2"));
+                        key = ((i == 10) ? "0" : i.ToString());
+                        break;
+                }
+
+                if (!actionGroups[action])
                     currentColorScheme.SetKeyToColor(key, Color.black);
                 else if (currentVessel.ActionGroups[action])
                     currentColorScheme.SetKeyToColor(key, Color.blue);
                 else
                     currentColorScheme.SetKeyToColor(key, (Color) new Color32(50, 50, 255, 255));
+            }
+
+            switch(FlightCamera.fetch.mode)
+            {
+                case FlightCamera.Modes.AUTO:
+                    currentColorScheme.SetKeyToColor("v", Color.green);
+                    break;
+                case FlightCamera.Modes.CHASE:
+                    currentColorScheme.SetKeyToColor("v", Color.blue);
+                    break;
+                case FlightCamera.Modes.FREE:
+                    currentColorScheme.SetKeyToColor("v", Color.yellow);
+                    break;
+                case FlightCamera.Modes.LOCKED:
+                    currentColorScheme.SetKeyToColor("v", Color.cyan);
+                    break;
+                default:
+                    currentColorScheme.SetKeyToColor("v", Color.white);
+                    break;
             }
         }
     }
