@@ -23,6 +23,7 @@ Due to the difference between the .NET-Version in the game and the one used by t
  
 ## Todo
 
+- Clean up the code (a lot)
 - Make the whole keyboard red, if the vessel is not steerable any more.
 - Write a compatibility class for ChromaSync
 - Create a small windows installer package
