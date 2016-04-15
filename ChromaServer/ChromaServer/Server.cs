@@ -11,8 +11,16 @@ using Corale.Colore.Razer.Keyboard;
 
 namespace ChromaServer
 {
+    /// <summary>
+    /// UDP server specifically targeting Razor Chroma devices (well... keyboards).
+    /// Ain't gonna do no headset or mousepad lighting.
+    /// </summary>
     class Server
     {
+        /// <summary>
+        /// Allows us to translate from my own defined key names to the Colore library's
+        /// key names.
+        /// </summary>
         private static Dictionary<string, Key> translate = new Dictionary<string, Key>()
         {
             {"esc", Key.Escape },
@@ -131,15 +139,34 @@ namespace ChromaServer
             {"m5", Key.Macro5 }
         };
 
+        /// <summary>
+        /// Converts a 32 bit RGB color to a system color.
+        /// </summary>
+        /// <param name="color"></param>
+        /// <returns></returns>
         private static System.Drawing.Color ConvertToSystemColor(Color32 color)
         {
             return System.Drawing.ColorTranslator.FromHtml("#" + color.r.ToString("X2") + color.g.ToString("X2") + color.b.ToString("X2"));
         }
 
+        /// <summary>
+        /// The socket to listen to.
+        /// </summary>
         UdpClient UdpServer = new UdpClient(8888);
+
+        /// <summary>
+        /// We only want to listen on localhost to minimize attack possibilities.
+        /// </summary>
         IPEndPoint RemoteEP = new IPEndPoint(IPAddress.Parse("127.0.0.1"), 8888);
+
+        /// <summary>
+        /// Indicates that the server should be shut down.
+        /// </summary>
         private Boolean quit;
 
+        /// <summary>
+        /// Starts the server.
+        /// </summary>
         public void Start()
         {
             this.quit = false;
@@ -166,11 +193,18 @@ namespace ChromaServer
             }
         }
 
+        /// <summary>
+        /// Tells the server to exit the event loop.
+        /// </summary>
         public void Stop()
         {
             this.quit = true;
         }
 
+        /// <summary>
+        /// Applies the color scheme to the keyboard.
+        /// </summary>
+        /// <param name="colorScheme">The color scheme to apply.</param>
         private void applyToKeyboard(ColorScheme colorScheme)
         {
             foreach (KeyValuePair<string, Color> entry in colorScheme)

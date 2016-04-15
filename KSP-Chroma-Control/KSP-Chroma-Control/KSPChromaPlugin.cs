@@ -35,20 +35,6 @@ namespace KSP_Chroma_Control
         }
 
         /// <summary>
-        /// Called by unity after awake has finished.
-        /// </summary>
-        void Start()
-        {
-        }
-
-        /// <summary>
-        /// Called by unity on every frame
-        /// </summary>
-        void Update()
-        {
-        }
-
-        /// <summary>
         /// Called by unity on every physics frame.
         /// </summary>
         void FixedUpdate()

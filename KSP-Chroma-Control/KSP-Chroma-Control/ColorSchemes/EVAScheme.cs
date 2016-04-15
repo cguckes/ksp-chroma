@@ -6,8 +6,14 @@ using UnityEngine;
 
 namespace KSP_Chroma_Control.ColorSchemes
 {
+    /// <summary>
+    /// Special color scheme for EVA scenes.
+    /// </summary>
     class EVAScheme : ColorScheme
     {
+        /// <summary>
+        /// Overlays the defined keys over a black base layout.
+        /// </summary>
         public EVAScheme()
         {
             string[] whitekeys = { "w", "a", "s", "d", "q", "e", "space" };

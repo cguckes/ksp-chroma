@@ -4,8 +4,16 @@ using UnityEngine;
 
 namespace KSP_Chroma_Control.ColorSchemes
 {
+    /// <summary>
+    /// Represents a base color scheme, saving all the colors per key.
+    /// </summary>
     public class ColorScheme : Dictionary<string, Color>
     {
+        /// <summary>
+        /// Takes a dictionary and parses the RGBA-Strings from Unity's color class
+        /// </summary>
+        /// <param name="colors">The dictionary to transform.</param>
+        /// <returns>A parsed color scheme.</returns>
         public static ColorScheme createFromDictionary(Dictionary<string, string> colors)
         {
             ColorScheme myReturn = new ColorScheme();
@@ -21,6 +29,11 @@ namespace KSP_Chroma_Control.ColorSchemes
             return myReturn;
         }
 
+        /// <summary>
+        /// Translates an RGBA text into a Unity color.
+        /// </summary>
+        /// <param name="rgba">The text to transform</param>
+        /// <returns>The generated Unity color</returns>
         private static Color RgbaToColor(string rgba)
         {
             Color myReturn = Color.black;
@@ -45,7 +58,8 @@ namespace KSP_Chroma_Control.ColorSchemes
         }
 
         /// <summary>
-        /// Standard keyboard map for the Razer Black Widow Chroma.
+        /// Standard keyboard map for the Razer Black Widow Chroma. Should work on
+        /// most layouts though.
         /// </summary>
         private static string[] KeyMap =
         {
@@ -74,6 +88,10 @@ namespace KSP_Chroma_Control.ColorSchemes
         public ColorScheme() : this(Color.black) {
         }
 
+        /// <summary>
+        /// Creates a new ColorScheme rendering all keys in the defined color.
+        /// </summary>
+        /// <param name="color">The color to use</param>
         public ColorScheme(Color color)
         {
             foreach (string key in KeyMap)
@@ -82,6 +100,10 @@ namespace KSP_Chroma_Control.ColorSchemes
             }
         }
 
+        /// <summary>
+        /// JSON representation of the dictionary.
+        /// </summary>
+        /// <returns></returns>
         public override string ToString()
         {
             string myReturn = "{\n";
@@ -91,11 +113,16 @@ namespace KSP_Chroma_Control.ColorSchemes
                 myReturn += "\"" + entry.Key + "\":\"" + entry.Value + "\",\n";
             }
 
-            myReturn += "}\n\n";
+            myReturn += "}\n";
 
             return myReturn;
         }
 
+        /// <summary>
+        /// Sets a single key to the defined color.
+        /// </summary>
+        /// <param name="key">The key to light up</param>
+        /// <param name="color">The color it should be lit in</param>
         public void SetKeyToColor(string key, Color color)
         {
             key = key.ToLower();
@@ -104,6 +131,12 @@ namespace KSP_Chroma_Control.ColorSchemes
                 this[key] = color;
             }
         }
+
+        /// <summary>
+        /// Sets a number of keys to the defined color
+        /// </summary>
+        /// <param name="keys">An array of keys to light up</param>
+        /// <param name="color">The color to use</param>
         public void SetKeysToColor(string[] keys, Color color)
         {
             foreach (string key in keys)

@@ -6,8 +6,14 @@ using UnityEngine;
 
 namespace KSP_Chroma_Control.ColorSchemes
 {
+    /// <summary>
+    /// The base color scheme for all flight related game scenes.
+    /// </summary>
     class FlightScheme : ColorScheme
     {
+        /// <summary>
+        /// Overlays the defined keys over a black base layout.
+        /// </summary>
         public FlightScheme()
         {
             string[] whitekeys = { "w", "a", "s", "d", "q", "e", "space" };

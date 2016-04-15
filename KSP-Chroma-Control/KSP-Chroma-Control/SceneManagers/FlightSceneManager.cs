@@ -7,29 +7,65 @@ using UnityEngine;
 
 namespace KSP_Chroma_Control.SceneManagers
 {
+    /// <summary>
+    /// Manages the keyboard colors during all flight scenes.
+    /// </summary>
     class FlightSceneManager : SceneManager
     {
+        /// <summary>
+        /// The vessel we are piloting currently. Can be a normal vessel or a single
+        /// kerbal.
+        /// </summary>
         private Vessel currentVessel;
+
+        /// <summary>
+        /// The current keyboard state color scheme
+        /// </summary>
         private ColorScheme currentColorScheme;
+
+        /// <summary>
+        /// Contains all ActionGroups and their current usage state. False means
+        /// this ActionGroup has no impact on any part of the vessel.
+        /// </summary>
         private Dictionary<KSPActionGroup, Boolean> actionGroups = new Dictionary<KSPActionGroup, Boolean>();
 
+        /// <summary>
+        /// Fills the action group list with all false values;
+        /// </summary>
         public FlightSceneManager()
         {
+            resetActionGroups();
+        }
+
+        /// <summary>
+        /// Recalculates every action group's usage.
+        /// </summary>
+        private void resetActionGroups()
+        {
+            this.actionGroups.Clear();
             foreach (KSPActionGroup group in Enum.GetValues(typeof(KSPActionGroup)).Cast<KSPActionGroup>())
                 this.actionGroups.Add(group, false);
         }
 
+        /// <summary>
+        /// Returns the calculated color scheme for the current game state.
+        /// </summary>
+        /// <returns>The final color scheme for this frame</returns>
         public ColorScheme getScheme()
         {
             update();            
             return this.currentColorScheme;
         }
 
+        /// <summary>
+        /// Called by the plugin on every physics frame.
+        /// </summary>
         private void update()
         {
             if (this.currentVessel != FlightGlobals.ActiveVessel)
             {
                 this.currentVessel = FlightGlobals.fetch.activeVessel;
+                resetActionGroups();
                 findUsableActionGroups();
             }
 
@@ -46,6 +82,9 @@ namespace KSP_Chroma_Control.SceneManagers
             }
         }
 
+        /// <summary>
+        /// Handles the EVA keyboard colors.
+        /// </summary>
         private void updateEvaKeys()
         {
             KerbalEVA eva = currentVessel.evaController;
@@ -63,6 +102,10 @@ namespace KSP_Chroma_Control.SceneManagers
                 currentColorScheme.SetKeyToColor("l", Color.red);
         }
 
+        /// <summary>
+        /// Scans the ship's parts for actions in any action group. Every action group
+        /// that has any active parts gets a toggleing button lit up.
+        /// </summary>
         private void findUsableActionGroups()
         {
             List<BaseAction> allActionsList = new List<BaseAction>();
@@ -79,6 +122,9 @@ namespace KSP_Chroma_Control.SceneManagers
                     actionGroups[group] = actionGroups[group] || ((action.actionGroup & group) == group);
         }
 
+        /// <summary>
+        /// Displays the fuel status as lights on the keyboard.
+        /// </summary>
         private void recalculateResources()
         {
             List<Vessel.ActiveResource> resources = currentVessel.GetActiveResources();
@@ -166,6 +212,9 @@ namespace KSP_Chroma_Control.SceneManagers
             }
         }
 
+        /// <summary>
+        /// Updates all toggleable buttons on the keyboard.
+        /// </summary>
         private void updateToggleables()
         {
             currentColorScheme.SetKeysToColor(new string[] { "f5", "t", "r", "m" }, Color.red);
