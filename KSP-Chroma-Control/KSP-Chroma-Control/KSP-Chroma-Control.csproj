@@ -33,6 +33,9 @@
     <Reference Include="Assembly-CSharp">
       <HintPath>..\..\..\..\Games\SteamApps\steamapps\common\Kerbal Space Program\KSP_x64_Data\Managed\Assembly-CSharp.dll</HintPath>
     </Reference>
+    <Reference Include="Corale.Colore">
+      <HintPath>..\..\..\Colore\Corale.Colore\bin\Debug\Corale.Colore.dll</HintPath>
+    </Reference>
     <Reference Include="KSPUtil, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null" />
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -45,6 +48,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ColoreDrain.cs" />
     <Compile Include="ColorSchemes\ColorScheme.cs" />
     <Compile Include="ColorSchemes\EVAScheme.cs" />
     <Compile Include="ColorSchemes\LogoScheme.cs" />

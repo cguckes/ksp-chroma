@@ -29,7 +29,8 @@ namespace KSP_Chroma_Control
         /// </summary>
         void Awake()
         {
-            this.dataDrain = new UdpDrain(IPAddress.Loopback, 8888);
+            ///this.dataDrain = new UdpDrain(IPAddress.Loopback, 8888);
+            this.dataDrain = new ColoreDrain();
         }
 
         /// <summary>
