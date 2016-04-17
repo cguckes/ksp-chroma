@@ -20,18 +20,16 @@ namespace KSP_Chroma_Control
         /// <summary>
         /// The UDP network socket to send keyboard appearance orders to the server.
         /// </summary>
-        private UdpClient Client { get; set; }
         private SceneManager flightSceneManager = new FlightSceneManager();
         private SceneManager vabSceneManager = new VABSceneManager();
+        private DataDrain dataDrain;
 
         /// <summary>
         /// Called by unity during the launch of this addon.
         /// </summary>
         void Awake()
         {
-            Client = new UdpClient();
-            IPEndPoint ep = new IPEndPoint(IPAddress.Parse("127.0.0.1"), 8888);
-            this.Client.Connect(ep);
+            this.dataDrain = new UdpDrain(IPAddress.Loopback, 8888);
         }
 
         /// <summary>
@@ -54,16 +52,7 @@ namespace KSP_Chroma_Control
                     break;
             }
 
-            byte[] ToSend = Encoding.UTF8.GetBytes(scheme.ToString());
-            this.Client.Send(ToSend, ToSend.Length);
-        }
-
-        /// <summary>
-        /// Called by unity right before the game exits.
-        /// </summary>
-        void OnDestroy()
-        {
-            this.Client.Close();
+            this.dataDrain.send(scheme);
         }
     }
 }
