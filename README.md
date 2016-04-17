@@ -14,8 +14,6 @@ The mod is still very beta, so let me know if you experience any difficulties wh
 - The color of W, A, S, D, E and Q varies slightly depending on whether you're in precision or normal steering mode
 - The keys for timewarp control are lit either red for physics timewarp or green for normal timewarp
 
-Due to the difference between the .NET-Version in the game and the one used by the C# library for the Chroma SDK, I had to create two parts for this mod. The mod itself sends the keyboard color scheme configuration to a small server app, that applies it to the keyboard. 
-
 ## Installation
 
 1. Unzip the release archive and place the KSPChromaControl folder in your KSP GameData directory.
