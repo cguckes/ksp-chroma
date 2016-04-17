@@ -60,7 +60,6 @@
     <Compile Include="SceneManagers\FlightSceneManager.cs" />
     <Compile Include="SceneManagers\SceneManager.cs" />
     <Compile Include="ColorSchemes\VabScheme.cs" />
-    <Compile Include="UdpDrain.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
