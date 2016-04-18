@@ -16,19 +16,19 @@ namespace KSP_Chroma_Control.ColorSchemes
         /// </summary>
         public EVAScheme()
         {
-            string[] whitekeys = { "w", "a", "s", "d", "q", "e", "space" };
+            KeyCode[] whitekeys = { KeyCode.W, KeyCode.A, KeyCode.S, KeyCode.D, KeyCode.Q, KeyCode.E, KeyCode.Space  };
             SetKeysToColor(whitekeys, Color.green);
 
-            string[] yellowkeys = { "f", "space",  };
+            KeyCode[] yellowkeys = { KeyCode.F };
             SetKeysToColor(yellowkeys, Color.yellow);
 
-            string[] redkeys = { "leftshift", "leftctrl" };
+            KeyCode[] redkeys = { KeyCode.LeftShift, KeyCode.LeftControl };
             SetKeysToColor(redkeys, Color.red);
 
-            string[] cyankeys = { "l", "r", "b", "alt" };
+            KeyCode[] cyankeys = { KeyCode.L, KeyCode.R, KeyCode.B, KeyCode.LeftAlt };
             SetKeysToColor(cyankeys, Color.cyan);
 
-            string[] bluekeys = { "[", "]" };
+            KeyCode[] bluekeys = { KeyCode.LeftParen, KeyCode.RightParen };
             SetKeysToColor(cyankeys, Color.blue);
         }
     }

@@ -8,6 +8,7 @@ namespace KSP_Chroma_Control
 {
     internal class ColoreDrain : DataDrain
     {
+        /*
         private static Dictionary<string, Key> translate = new Dictionary<string, Key>()
         {
             {"esc", Key.Escape },
@@ -124,7 +125,7 @@ namespace KSP_Chroma_Control
             {"m3", Key.Macro3 },
             {"m4", Key.Macro4 },
             {"m5", Key.Macro5 }
-        };
+        };*/
 
         public void send(ColorScheme scheme)
         {
@@ -137,15 +138,13 @@ namespace KSP_Chroma_Control
         /// <param name="colorScheme">The color scheme to apply.</param>
         private void applyToKeyboard(ColorScheme colorScheme)
         {
-            foreach (KeyValuePair<string, Color> entry in colorScheme)
+            foreach (KeyValuePair<Key, Color> entry in colorScheme)
             {
-                if (translate.ContainsKey(entry.Key))
+                try { 
+                    Corale.Colore.Core.Keyboard.Instance.SetKey(entry.Key, entry.Value);
+                } catch (ArgumentOutOfRangeException ex)
                 {
-                    Corale.Colore.Core.Keyboard.Instance.SetKey(translate[entry.Key], entry.Value);
-                }
-                else
-                {
-                    ///Console.Error.WriteLine("Unknown Key: " + entry.Key);
+                    //Debug.LogError("Key was: " + entry.Key.ToString());
                 }
             }
         }

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using KSP_Chroma_Control.ColorSchemes;
 using UnityEngine;
+using Corale.Colore.Razer.Keyboard;
 
 namespace KSP_Chroma_Control.SceneManagers
 {
@@ -47,34 +48,23 @@ namespace KSP_Chroma_Control.SceneManagers
         /// </summary>
         private void updatePlacementState()
         {
-            currentColorScheme.SetKeysToColor(new string[] { "1", "2", "3", "4" }, Color.white);
+            currentColorScheme.SetKeysToColor(new KeyCode[] { KeyCode.Alpha1, KeyCode.Alpha2, KeyCode.Alpha3, KeyCode.Alpha4, }, Color.white);
 
             ConstructionMode state = EditorLogic.fetch.EditorConstructionMode;
-
-            /*if (state.StartsWith("st_offset"))
-                placementStatus = "offset";
-            else if (state.StartsWith("st_rotate"))
-                placementStatus = "rotate";
-            else if (state.StartsWith("st_root"))
-                placementStatus = "root";
-            else if (state.StartsWith("st_idle") || state.StartsWith("st_place"))
-                placementStatus = "place";
-            else
-                Debug.LogWarning("Unknown state: " + state);*/
 
             switch (state)
             {
                 case ConstructionMode.Place:
-                    currentColorScheme.SetKeyToColor("1", Color.blue);
+                    currentColorScheme.SetKeyToColor(KeyCode.Alpha1, Color.blue);
                     break;
                 case ConstructionMode.Move:
-                    currentColorScheme.SetKeyToColor("2", Color.blue);
+                    currentColorScheme.SetKeyToColor(KeyCode.Alpha2, Color.blue);
                     break;
                 case ConstructionMode.Rotate:
-                    currentColorScheme.SetKeyToColor("3", Color.blue);
+                    currentColorScheme.SetKeyToColor(KeyCode.Alpha3, Color.blue);
                     break;
                 case ConstructionMode.Root:
-                    currentColorScheme.SetKeyToColor("4", Color.blue);
+                    currentColorScheme.SetKeyToColor(KeyCode.Alpha4, Color.blue);
                     break;
             }
         }
@@ -84,20 +74,20 @@ namespace KSP_Chroma_Control.SceneManagers
         /// </summary>
         private void updateToggleables()
         {
-            currentColorScheme.SetKeysToColor(new string[] { "x", "c" }, Color.red);
+            currentColorScheme.SetKeysToColor(new KeyCode[] { KeyCode.X, KeyCode.C }, Color.red);
             
             if(EditorLogic.fetch.symmetryMode > 0)
             {
-                currentColorScheme.SetKeyToColor("x", Color.green);
+                currentColorScheme.SetKeyToColor(KeyCode.X , Color.green);
             }
 
             if (EditorLogic.fetch.symmetryMethod == SymmetryMethod.Mirror)
-                currentColorScheme.SetKeyToColor("r", Color.blue);
+                currentColorScheme.SetKeyToColor(KeyCode.R, Color.blue);
             else if (EditorLogic.fetch.symmetryMethod == SymmetryMethod.Radial)
-                currentColorScheme.SetKeyToColor("r", Color.green);
+                currentColorScheme.SetKeyToColor(KeyCode.R, Color.green);
 
             if (GameSettings.VAB_USE_ANGLE_SNAP)
-                currentColorScheme.SetKeyToColor("c", Color.green);
+                currentColorScheme.SetKeyToColor(KeyCode.C, Color.green);
         }
 
         /// <summary>

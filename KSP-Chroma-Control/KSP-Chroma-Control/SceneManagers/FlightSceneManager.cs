@@ -44,7 +44,12 @@ namespace KSP_Chroma_Control.SceneManagers
         {
             this.actionGroups.Clear();
             foreach (KSPActionGroup group in Enum.GetValues(typeof(KSPActionGroup)).Cast<KSPActionGroup>())
-                this.actionGroups.Add(group, false);
+            {
+                if (!this.actionGroups.ContainsKey(group))
+                {
+                    this.actionGroups.Add(group, false);
+                }
+            }
         }
 
         /// <summary>
@@ -53,7 +58,7 @@ namespace KSP_Chroma_Control.SceneManagers
         /// <returns>The final color scheme for this frame</returns>
         public ColorScheme getScheme()
         {
-            update();            
+            update();
             return this.currentColorScheme;
         }
 
@@ -92,14 +97,14 @@ namespace KSP_Chroma_Control.SceneManagers
             showGauge("EVAFuel", eva.Fuel, eva.FuelCapacity);
 
             if (eva.JetpackDeployed)
-                currentColorScheme.SetKeyToColor("r", Color.green);
+                currentColorScheme.SetKeyToColor(KeyCode.R, Color.green);
             else
-                currentColorScheme.SetKeyToColor("r", Color.red);
+                currentColorScheme.SetKeyToColor(KeyCode.R, Color.red);
 
             if (eva.lampOn)
-                currentColorScheme.SetKeyToColor("l", Color.green);
+                currentColorScheme.SetKeyToColor(KeyCode.L, Color.green);
             else
-                currentColorScheme.SetKeyToColor("l", Color.red);
+                currentColorScheme.SetKeyToColor(KeyCode.L, Color.red);
         }
 
         /// <summary>
@@ -110,10 +115,10 @@ namespace KSP_Chroma_Control.SceneManagers
         {
             List<BaseAction> allActionsList = new List<BaseAction>();
 
-            foreach(Part p in currentVessel.parts)
+            foreach (Part p in currentVessel.parts)
             {
                 allActionsList.AddRange(p.Actions);
-                foreach(PartModule pm in p.Modules)
+                foreach (PartModule pm in p.Modules)
                     allActionsList.AddRange(pm.Actions);
             }
 
@@ -129,7 +134,8 @@ namespace KSP_Chroma_Control.SceneManagers
         {
             List<Vessel.ActiveResource> resources = currentVessel.GetActiveResources();
 
-            resources.ForEach(res => {
+            resources.ForEach(res =>
+            {
                 showGauge(res.info.name, res.amount, res.maxAmount);
             });
         }
@@ -142,19 +148,21 @@ namespace KSP_Chroma_Control.SceneManagers
         /// <param name="maxAmount">The maximal amount of the resource in the current stage</param>
         private void showGauge(string resource, double amount, double maxAmount)
         {
+            /*
             string[] keys = new string[3];
             if (resource.Equals("ElectricCharge"))
             {
-                currentColorScheme.SetKeysToColor(new string[] { "prtsc", "scrlk", "break" }, Color.black);
+                currentColorScheme.SetKeysToColor(new KeyCode[] { KeyCode.Print, KeyCode.ScrollLock,
+                    KeyCode.Break }, Color.black);
                 
-                keys[0] = (amount > 0.01) ? "prtsc" : "";
+                keys[0] = (amount > 0.01) ? KeyCode : "";
                 keys[1] = (amount > maxAmount * 0.33) ? "scrlk" : "";
                 keys[2] = (amount > maxAmount * 0.66) ? "break" : "";
                 currentColorScheme.SetKeysToColor(keys, Color.blue);
             }
             else if (resource.Equals("LiquidFuel"))
             {
-                currentColorScheme.SetKeysToColor(new string[] { "numlk", "num/", "num*" }, Color.black);
+                currentColorScheme.SetKeysToColor(new KeyCode[] { "numlk", "num/", "num*" }, Color.black);
 
                 keys[0] = (amount > 0.01) ? "numlk" : "";
                 keys[1] = (amount > maxAmount * 0.33) ? "num/" : "";
@@ -163,7 +171,7 @@ namespace KSP_Chroma_Control.SceneManagers
             }
             else if (resource.Equals("Oxidizer"))
             {
-                currentColorScheme.SetKeysToColor(new string[] { "num7", "num8", "num9" }, Color.black);
+                currentColorScheme.SetKeysToColor(new KeyCode[] { "num7", "num8", "num9" }, Color.black);
 
                 keys[0] = (amount > 0.01) ? "num7" : "";
                 keys[1] = (amount > maxAmount * 0.33) ? "num8" : "";
@@ -172,7 +180,7 @@ namespace KSP_Chroma_Control.SceneManagers
             }
             else if (resource.Equals("MonoPropellant") || resource.Equals("EVAFuel"))
             {
-                currentColorScheme.SetKeysToColor(new string[] { "num4", "num5", "num6" }, Color.black);
+                currentColorScheme.SetKeysToColor(new KeyCode[] { "num4", "num5", "num6" }, Color.black);
 
                 keys[0] = (amount > 0.01) ? "num4" : "";
                 keys[1] = (amount > maxAmount * 0.33) ? "num5" : "";
@@ -181,7 +189,7 @@ namespace KSP_Chroma_Control.SceneManagers
             }
             else if (resource.Equals("SolidFuel"))
             {
-                currentColorScheme.SetKeysToColor(new string[] { "num1", "num2", "num3" }, Color.black);
+                currentColorScheme.SetKeysToColor(new KeyCode[] { "num1", "num2", "num3" }, Color.black);
 
                 keys[0] = (amount > 0.01) ? "num1" : "";
                 keys[1] = (amount > maxAmount * 0.33) ? "num2" : "";
@@ -190,7 +198,7 @@ namespace KSP_Chroma_Control.SceneManagers
             }
             else if (resource.Equals("Ablator"))
             {
-                currentColorScheme.SetKeysToColor(new string[] { "del", "end", "pagedown" }, Color.black);
+                currentColorScheme.SetKeysToColor(new KeyCode[] { "del", "end", "pagedown" }, Color.black);
 
                 keys[0] = (amount > 0.01) ? "del" : "";
                 keys[1] = (amount > maxAmount * 0.33) ? "end" : "";
@@ -199,7 +207,7 @@ namespace KSP_Chroma_Control.SceneManagers
             }
             else if (resource.Equals("XenonGas"))
             {
-                currentColorScheme.SetKeysToColor(new string[] { "ins", "home", "pageup" }, Color.black);
+                currentColorScheme.SetKeysToColor(new KeyCode[] { "ins", "home", "pageup" }, Color.black);
 
                 keys[0] = (amount > 0.01) ? "ins" : "";
                 keys[1] = (amount > maxAmount * 0.33) ? "home" : "";
@@ -209,7 +217,7 @@ namespace KSP_Chroma_Control.SceneManagers
             else
             {
                 //Debug.LogWarning("Unhandled fuel resource: " + resource);
-            }
+            }*/
         }
 
         /// <summary>
@@ -217,21 +225,31 @@ namespace KSP_Chroma_Control.SceneManagers
         /// </summary>
         private void updateToggleables()
         {
-            currentColorScheme.SetKeysToColor(new string[] { "f5", "t", "r", "m" }, Color.red);
+            foreach (KeyValuePair<KSPActionGroup, Boolean> agroup in actionGroups)
+            {
+                if (agroup.Key != KSPActionGroup.None)
+                {
+                    if (!agroup.Value)
+                        currentColorScheme.SetKeyToColor(Config.Instance.actionGroupConf[agroup.Key].Key.primary, Color.black);
+                    else if (currentVessel.ActionGroups[agroup.Key])
+                        currentColorScheme.SetKeyToColor(Config.Instance.actionGroupConf[agroup.Key].Key.primary,
+                            Config.Instance.actionGroupConf[agroup.Key].Value.Value);
+                    else
+                        currentColorScheme.SetKeyToColor(Config.Instance.actionGroupConf[agroup.Key].Key.primary,
+                            Config.Instance.actionGroupConf[agroup.Key].Value.Key);
+                }
+            }
 
-            if (currentVessel.Autopilot !=null && currentVessel.Autopilot.Enabled)
-                currentColorScheme.SetKeyToColor("t", Color.green);
+            currentColorScheme.SetKeyToColor(
+                GameSettings.MAP_VIEW_TOGGLE.primary,
+                (MapView.MapIsEnabled ? Config.Instance.redGreenToggle.Value : Config.Instance.redGreenToggle.Value)
+            );
 
-            if(!FlightInputHandler.RCSLock)
-                currentColorScheme.SetKeyToColor("r", Color.green);
-
-            if (MapView.MapIsEnabled)
-                currentColorScheme.SetKeyToColor("m", Color.green);
-
+            /*
             if (FlightInputHandler.fetch.precisionMode)
             {
-                currentColorScheme.SetKeysToColor(new string[] { "q", "e", "w", "a", "s", "d" }, Color.cyan);
-                currentColorScheme.SetKeyToColor("capslock", Color.green);
+                currentColorScheme.SetKeysToColor(new string[] { "q", "e", "w", "a", "s", "d" }, Color.yellow);
+                currentColorScheme.SetKeyToColor(capslock", Color.green);
             }
             else
             {
@@ -303,7 +321,7 @@ namespace KSP_Chroma_Control.SceneManagers
                 default:
                     currentColorScheme.SetKeyToColor("v", Color.white);
                     break;
-            }
+            }*/
         }
     }
 }

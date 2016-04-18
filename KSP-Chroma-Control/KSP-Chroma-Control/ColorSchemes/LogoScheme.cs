@@ -17,20 +17,23 @@ namespace KSP_Chroma_Control.ColorSchemes
         /// </summary>
         public LogoScheme() : base(Color.blue)
         {
-            string[] redkeys = {
+            KeyCode[] redkeys = {
                 ///Rocket
-                "alt", "backslash", "z", "s", "x", "c", "f3", "d", "e", "4",
+                KeyCode.LeftAlt, KeyCode.Backslash, KeyCode.Z, KeyCode.S, KeyCode.X, KeyCode.C, KeyCode.F3,
+                KeyCode.D, KeyCode.E, KeyCode.Alpha4,
                 
                 ///Stripes
-                "leftshift", "x", "c", "v", "b", "n", "m", ",", ".", "slash", "rightshift"
+                KeyCode.LeftShift, KeyCode.V, KeyCode.B, KeyCode.N, KeyCode.M, KeyCode.Comma, KeyCode.Period,
+                KeyCode.Slash, KeyCode.RightShift
             };
             SetKeysToColor(redkeys, Color.red);
 
-            string[] whitekeys =
+            KeyCode[] whitekeys =
             {
-                "leftctrl", "windows", "space", "altgr", "fn", "contextmenu", "rightctrl",
-                "a", "w", "3", "f2", "f4", "5", "r", "f",
-                "capslock", "g", "h", "j", "k", "l", ";", "'", "hash"
+                KeyCode.LeftControl, KeyCode.LeftWindows, KeyCode.Space, KeyCode.AltGr, KeyCode.RightControl,
+                KeyCode.Menu, KeyCode.RightControl, KeyCode.A, KeyCode.W, KeyCode.Alpha3, KeyCode.F2,
+                KeyCode.F4, KeyCode.Alpha5, KeyCode.R, KeyCode.F, KeyCode.CapsLock, KeyCode.G, KeyCode.H,
+                KeyCode.J, KeyCode.K, KeyCode.L, KeyCode.Semicolon, KeyCode.Quote, KeyCode.Hash
             };
             SetKeysToColor(whitekeys, Color.white);
         }

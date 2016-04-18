@@ -13,11 +13,11 @@ namespace KSP_Chroma_Control.SceneManagers
         /// </summary>
         public VabScheme()
         {
-            SetKeysToColor(new string[] {
-                "w", "a", "s", "d", "q", "e",
+            SetKeysToColor(new KeyCode[] {
+                KeyCode.W, KeyCode.A, KeyCode.S, KeyCode.D, KeyCode.Q, KeyCode.E
             }, new Color(1f, 1f, 0f));
-            SetKeysToColor(new string[] {
-                "leftshift", "space", "f"
+            SetKeysToColor(new KeyCode[] {
+                KeyCode.LeftShift, KeyCode.Space, KeyCode.F
             }, Color.magenta);
         }
     }
