@@ -14,6 +14,14 @@ The mod is still very beta, so let me know if you experience any difficulties wh
 - The color of W, A, S, D, E and Q varies slightly depending on whether you're in precision or normal steering mode
 - The keys for timewarp control are lit either red for physics timewarp or green for normal timewarp
 
+## Full list of game effects
+
+- Stylized Kerbal Space Program logo on every scene that does not contain any noteworthy keyboard interaction (pressing Escape to go to the menu not being noteworthy enough to light up the key)
+- In the vessel editor, different kinds of keysets are lit up according to the current editor mode.
+- Control keys and toggleable function keys are lit up in different colors, showing whether the function is switched on or off during flight.
+- Reduced keyset lit for EVA mode
+- Resource gauges displayed on the keypad and the keys above the UpDownLeftRight keys.
+
 ## Installation
 
 1. Unzip the release archive and place the KSPChromaControl folder in your KSP GameData directory.
@@ -22,7 +30,6 @@ The mod is still very beta, so let me know if you experience any difficulties wh
 ## Todo
 
 - Clean up the code (a lot)
+- Use the actual keys configured for the respective function instead of relying on the default keyset
 - Make the whole keyboard red, if the vessel is not steerable any more.
-- Write a compatibility class for ChromaSync
-- Create a small windows installer package
 - Linux version (this might take a bit longer, but I'm planning to do it anyway. What good is a c# interface if it is only ever implemented once...)
