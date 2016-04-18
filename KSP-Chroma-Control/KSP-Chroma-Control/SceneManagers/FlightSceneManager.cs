@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using KSP_Chroma_Control.ColorSchemes;
 using UnityEngine;
+using Corale.Colore.Razer.Keyboard;
 
 namespace KSP_Chroma_Control.SceneManagers
 {
@@ -130,6 +131,10 @@ namespace KSP_Chroma_Control.SceneManagers
             foreach (BaseAction action in allActionsList)
                 foreach (KSPActionGroup group in Enum.GetValues(typeof(KSPActionGroup)).Cast<KSPActionGroup>())
                     actionGroups[group] = actionGroups[group] || ((action.actionGroup & group) == group);
+
+            ///KSP ignores RCS and SAS action groups so we enable them manually
+            actionGroups[KSPActionGroup.RCS] = true;
+            actionGroups[KSPActionGroup.SAS] = true;
         }
 
         /// <summary>
@@ -153,10 +158,27 @@ namespace KSP_Chroma_Control.SceneManagers
         /// <param name="maxAmount">The maximal amount of the resource in the current stage</param>
         private void showGauge(string resource, double amount, double maxAmount)
         {
+            Func<Color, int, Color> partialColor = (original, third) =>
+            {
+                Color newColor = new Color(original.r, original.g, original.b, original.a);
+                double ceiling = maxAmount / 3 * (third + 1);
+                double floor = maxAmount / 3 * third;
+
+                if (amount <= ceiling) { 
+                    float factor = (float)((amount - floor) / (ceiling - floor));
+                    newColor.r *= factor;
+                    newColor.g *= factor;
+                    newColor.b *= factor;
+                }
+                if ((amount - floor) < 0.001)
+                    newColor = Color.black;
+                return newColor;
+            };
+
             Action<KeyCode[], Color> displayFuel = (keys, color) => {
-                currentColorScheme.SetKeyToColor(keys[0], ((amount > maxAmount * 0.01) ? color : Color.black));
-                currentColorScheme.SetKeyToColor(keys[1], ((amount > maxAmount * 0.33) ? color : Color.black));
-                currentColorScheme.SetKeyToColor(keys[2], ((amount > maxAmount * 0.66) ? color : Color.black));
+                for(int i = 0; i < 3; i++) { 
+                    currentColorScheme.SetKeyToColor(keys[i], partialColor(color, i));
+                }
             };
 
             switch (resource)
@@ -181,6 +203,7 @@ namespace KSP_Chroma_Control.SceneManagers
                 case "SolidFuel":
                     KeyCode[] solid = { KeyCode.Keypad1, KeyCode.Keypad2, KeyCode.Keypad3 };
                     displayFuel(solid, Color.magenta);
+                    Debug.LogWarning("Color: " + currentColorScheme[Key.Num3].ToString());
                     break;
                 case "Ablator":
                     KeyCode[] ablator = { KeyCode.Delete, KeyCode.End, KeyCode.PageDown };
@@ -217,7 +240,7 @@ namespace KSP_Chroma_Control.SceneManagers
 
             currentColorScheme.SetKeyToColor(
                 GameSettings.MAP_VIEW_TOGGLE.primary,
-                (MapView.MapIsEnabled ? Config.Instance.redGreenToggle.Value : Config.Instance.redGreenToggle.Value)
+                (MapView.MapIsEnabled ? Config.Instance.redGreenToggle.Value : Config.Instance.redGreenToggle.Key)
             );
 
             if (FlightInputHandler.fetch.precisionMode)
