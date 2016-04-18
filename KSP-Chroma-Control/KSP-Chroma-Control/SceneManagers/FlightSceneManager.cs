@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using KSP_Chroma_Control.ColorSchemes;
 using UnityEngine;
 
@@ -28,6 +27,32 @@ namespace KSP_Chroma_Control.SceneManagers
         /// this ActionGroup has no impact on any part of the vessel.
         /// </summary>
         private Dictionary<KSPActionGroup, Boolean> actionGroups = new Dictionary<KSPActionGroup, Boolean>();
+
+        private static KeyCode[] rotation = new KeyCode[]
+        {
+                GameSettings.ROLL_LEFT.primary,
+                GameSettings.ROLL_RIGHT.primary,
+                GameSettings.PITCH_DOWN.primary,
+                GameSettings.PITCH_UP.primary,
+                GameSettings.YAW_LEFT.primary,
+                GameSettings.YAW_RIGHT.primary
+        };
+
+        private static KeyCode[] translation = new KeyCode[]
+        {
+            GameSettings.TRANSLATE_BACK.primary,
+            GameSettings.TRANSLATE_FWD.primary,
+            GameSettings.TRANSLATE_LEFT.primary,
+            GameSettings.TRANSLATE_RIGHT.primary,
+            GameSettings.TRANSLATE_UP.primary,
+            GameSettings.TRANSLATE_DOWN.primary
+        };
+
+        private static KeyCode[] timewarp = new KeyCode[]
+        {
+            GameSettings.TIME_WARP_INCREASE.primary,
+            GameSettings.TIME_WARP_DECREASE.primary
+        };
 
         /// <summary>
         /// Fills the action group list with all false values;
@@ -77,7 +102,7 @@ namespace KSP_Chroma_Control.SceneManagers
             if (currentVessel.isEVA)
             {
                 this.currentColorScheme = new EVAScheme();
-                updateEvaKeys();
+                showGauge("EVAFuel", currentVessel.evaController.Fuel, currentVessel.evaController.FuelCapacity);
             }
             else
             {
@@ -85,26 +110,6 @@ namespace KSP_Chroma_Control.SceneManagers
                 recalculateResources();
                 updateToggleables();
             }
-        }
-
-        /// <summary>
-        /// Handles the EVA keyboard colors.
-        /// </summary>
-        private void updateEvaKeys()
-        {
-            KerbalEVA eva = currentVessel.evaController;
-
-            showGauge("EVAFuel", eva.Fuel, eva.FuelCapacity);
-
-            if (eva.JetpackDeployed)
-                currentColorScheme.SetKeyToColor(KeyCode.R, Color.green);
-            else
-                currentColorScheme.SetKeyToColor(KeyCode.R, Color.red);
-
-            if (eva.lampOn)
-                currentColorScheme.SetKeyToColor(KeyCode.L, Color.green);
-            else
-                currentColorScheme.SetKeyToColor(KeyCode.L, Color.red);
         }
 
         /// <summary>
@@ -148,76 +153,46 @@ namespace KSP_Chroma_Control.SceneManagers
         /// <param name="maxAmount">The maximal amount of the resource in the current stage</param>
         private void showGauge(string resource, double amount, double maxAmount)
         {
-            /*
-            string[] keys = new string[3];
-            if (resource.Equals("ElectricCharge"))
-            {
-                currentColorScheme.SetKeysToColor(new KeyCode[] { KeyCode.Print, KeyCode.ScrollLock,
-                    KeyCode.Break }, Color.black);
-                
-                keys[0] = (amount > 0.01) ? KeyCode : "";
-                keys[1] = (amount > maxAmount * 0.33) ? "scrlk" : "";
-                keys[2] = (amount > maxAmount * 0.66) ? "break" : "";
-                currentColorScheme.SetKeysToColor(keys, Color.blue);
-            }
-            else if (resource.Equals("LiquidFuel"))
-            {
-                currentColorScheme.SetKeysToColor(new KeyCode[] { "numlk", "num/", "num*" }, Color.black);
+            Action<KeyCode[], Color> displayFuel = (keys, color) => {
+                currentColorScheme.SetKeyToColor(keys[0], ((amount > maxAmount * 0.01) ? color : Color.black));
+                currentColorScheme.SetKeyToColor(keys[1], ((amount > maxAmount * 0.33) ? color : Color.black));
+                currentColorScheme.SetKeyToColor(keys[2], ((amount > maxAmount * 0.66) ? color : Color.black));
+            };
 
-                keys[0] = (amount > 0.01) ? "numlk" : "";
-                keys[1] = (amount > maxAmount * 0.33) ? "num/" : "";
-                keys[2] = (amount > maxAmount * 0.66) ? "num*" : "";
-                currentColorScheme.SetKeysToColor(keys, Color.green);
-            }
-            else if (resource.Equals("Oxidizer"))
+            switch (resource)
             {
-                currentColorScheme.SetKeysToColor(new KeyCode[] { "num7", "num8", "num9" }, Color.black);
-
-                keys[0] = (amount > 0.01) ? "num7" : "";
-                keys[1] = (amount > maxAmount * 0.33) ? "num8" : "";
-                keys[2] = (amount > maxAmount * 0.66) ? "num9" : "";
-                currentColorScheme.SetKeysToColor(keys, Color.cyan);
+                case "ElectricCharge":
+                    KeyCode[] electric = { KeyCode.Print, KeyCode.ScrollLock, KeyCode.Break };
+                    displayFuel(electric, Color.blue);
+                    break;
+                case "LiquidFuel":
+                    KeyCode[] liquid = { KeyCode.Numlock, KeyCode.KeypadDivide, KeyCode.KeypadMultiply };
+                    displayFuel(liquid, Color.green);
+                    break;
+                case "Oxidizer":
+                    KeyCode[] oxidizer = { KeyCode.Keypad7, KeyCode.Keypad8, KeyCode.Keypad9 };
+                    displayFuel(oxidizer, Color.cyan);
+                    break;
+                case "MonoPropellant":
+                case "EVAFuel":
+                    KeyCode[] monoprop = { KeyCode.Keypad4, KeyCode.Keypad5, KeyCode.Keypad6 };
+                    displayFuel(monoprop, Color.yellow);
+                    break;
+                case "SolidFuel":
+                    KeyCode[] solid = { KeyCode.Keypad1, KeyCode.Keypad2, KeyCode.Keypad3 };
+                    displayFuel(solid, Color.magenta);
+                    break;
+                case "Ablator":
+                    KeyCode[] ablator = { KeyCode.Delete, KeyCode.End, KeyCode.PageDown };
+                    displayFuel(ablator, new Color(244, 259, 0, 255));
+                    break;
+                case "XenonGas":
+                    KeyCode[] xenon = { KeyCode.Insert, KeyCode.Home, KeyCode.PageUp };
+                    displayFuel(xenon, Color.gray);
+                    break;
+                default:
+                    break;
             }
-            else if (resource.Equals("MonoPropellant") || resource.Equals("EVAFuel"))
-            {
-                currentColorScheme.SetKeysToColor(new KeyCode[] { "num4", "num5", "num6" }, Color.black);
-
-                keys[0] = (amount > 0.01) ? "num4" : "";
-                keys[1] = (amount > maxAmount * 0.33) ? "num5" : "";
-                keys[2] = (amount > maxAmount * 0.66) ? "num6" : "";
-                currentColorScheme.SetKeysToColor(keys, Color.magenta);
-            }
-            else if (resource.Equals("SolidFuel"))
-            {
-                currentColorScheme.SetKeysToColor(new KeyCode[] { "num1", "num2", "num3" }, Color.black);
-
-                keys[0] = (amount > 0.01) ? "num1" : "";
-                keys[1] = (amount > maxAmount * 0.33) ? "num2" : "";
-                keys[2] = (amount > maxAmount * 0.66) ? "num3" : "";
-                currentColorScheme.SetKeysToColor(keys, new Color(1f, 1f, 0f));
-            }
-            else if (resource.Equals("Ablator"))
-            {
-                currentColorScheme.SetKeysToColor(new KeyCode[] { "del", "end", "pagedown" }, Color.black);
-
-                keys[0] = (amount > 0.01) ? "del" : "";
-                keys[1] = (amount > maxAmount * 0.33) ? "end" : "";
-                keys[2] = (amount > maxAmount * 0.66) ? "pagedown" : "";
-                currentColorScheme.SetKeysToColor(keys, new Color32(244, 159, 0, 255));
-            }
-            else if (resource.Equals("XenonGas"))
-            {
-                currentColorScheme.SetKeysToColor(new KeyCode[] { "ins", "home", "pageup" }, Color.black);
-
-                keys[0] = (amount > 0.01) ? "ins" : "";
-                keys[1] = (amount > maxAmount * 0.33) ? "home" : "";
-                keys[2] = (amount > maxAmount * 0.66) ? "pageup" : "";
-                currentColorScheme.SetKeysToColor(keys, new Color(.8f, .8f, .8f));
-            }
-            else
-            {
-                //Debug.LogWarning("Unhandled fuel resource: " + resource);
-            }*/
         }
 
         /// <summary>
@@ -245,83 +220,46 @@ namespace KSP_Chroma_Control.SceneManagers
                 (MapView.MapIsEnabled ? Config.Instance.redGreenToggle.Value : Config.Instance.redGreenToggle.Value)
             );
 
-            /*
             if (FlightInputHandler.fetch.precisionMode)
             {
-                currentColorScheme.SetKeysToColor(new string[] { "q", "e", "w", "a", "s", "d" }, Color.yellow);
-                currentColorScheme.SetKeyToColor(capslock", Color.green);
+                currentColorScheme.SetKeysToColor(rotation, Color.yellow);
+                currentColorScheme.SetKeyToColor(GameSettings.PRECISION_CTRL.primary, Color.green);
             }
             else
             {
-                currentColorScheme.SetKeysToColor(new string[] { "q", "e", "w", "a", "s", "d" }, Color.white);
-                currentColorScheme.SetKeyToColor("capslock", Color.red);
+                currentColorScheme.SetKeysToColor(rotation, Color.white);
+                currentColorScheme.SetKeyToColor(GameSettings.PRECISION_CTRL.primary, Color.red);
             }
 
             if (currentVessel.IsClearToSave() == ClearToSaveStatus.CLEAR ||
                 currentVessel.IsClearToSave() == ClearToSaveStatus.NOT_IN_ATMOSPHERE ||
                 currentVessel.IsClearToSave() == ClearToSaveStatus.NOT_UNDER_ACCELERATION)
-                currentColorScheme.SetKeyToColor("f5", Color.green);
+                currentColorScheme.SetKeyToColor(GameSettings.QUICKSAVE.primary, Color.green);
+            currentColorScheme.SetKeyToColor(GameSettings.QUICKLOAD.primary, Color.green);
 
             if (TimeWarp.WarpMode == TimeWarp.Modes.HIGH)
-                currentColorScheme.SetKeysToColor(new string[] { ",", "." }, Color.green);
+                currentColorScheme.SetKeysToColor(timewarp, Color.green);
             else
-                currentColorScheme.SetKeysToColor(new string[] { ",", "." }, Color.red);
+                currentColorScheme.SetKeysToColor(timewarp, Color.red);
 
-            ///TODO: Remove garbage code make nice and use all actiongroups for toggleable buttons
-            for (int i = 1; i <= 14; i++)
-            {
-                string key = "";
-                KSPActionGroup action;
-
-                switch (i) {
-                    case 11:
-                        action = KSPActionGroup.Light;
-                        key = "u";
-                        break;
-                    case 12:
-                        action = KSPActionGroup.Brakes;
-                        key = "b";
-                        break;
-                    case 13:
-                        action = KSPActionGroup.Gear;
-                        key = "g";
-                        break;
-                    case 14:
-                        action = KSPActionGroup.Abort;
-                        key = "backspace";
-                        break;
-                    default:
-                        action = (KSPActionGroup)System.Enum.Parse(typeof(KSPActionGroup), "Custom" + i.ToString("D2"));
-                        key = ((i == 10) ? "0" : i.ToString());
-                        break;
-                }
-
-                if (!actionGroups[action])
-                    currentColorScheme.SetKeyToColor(key, Color.black);
-                else if (currentVessel.ActionGroups[action])
-                    currentColorScheme.SetKeyToColor(key, Color.blue);
-                else
-                    currentColorScheme.SetKeyToColor(key, (Color) new Color32(50, 50, 255, 255));
-            }
-
-            switch(FlightCamera.fetch.mode)
+            switch (FlightCamera.fetch.mode)
             {
                 case FlightCamera.Modes.AUTO:
-                    currentColorScheme.SetKeyToColor("v", Color.green);
+                    currentColorScheme.SetKeyToColor(GameSettings.CAMERA_NEXT.primary, Color.green);
                     break;
                 case FlightCamera.Modes.CHASE:
-                    currentColorScheme.SetKeyToColor("v", Color.blue);
+                    currentColorScheme.SetKeyToColor(GameSettings.CAMERA_NEXT.primary, Color.blue);
                     break;
                 case FlightCamera.Modes.FREE:
-                    currentColorScheme.SetKeyToColor("v", Color.yellow);
+                    currentColorScheme.SetKeyToColor(GameSettings.CAMERA_NEXT.primary, Color.yellow);
                     break;
                 case FlightCamera.Modes.LOCKED:
-                    currentColorScheme.SetKeyToColor("v", Color.cyan);
+                    currentColorScheme.SetKeyToColor(GameSettings.CAMERA_NEXT.primary, Color.cyan);
                     break;
                 default:
-                    currentColorScheme.SetKeyToColor("v", Color.white);
+                    currentColorScheme.SetKeyToColor(GameSettings.CAMERA_NEXT.primary, Color.white);
                     break;
-            }*/
+            }
         }
     }
 }
