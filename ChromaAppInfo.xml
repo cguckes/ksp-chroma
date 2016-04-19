@@ -1,0 +1,8 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<application>
+    <title>Chroma for Kerbal Space Program</title> <!-- Title of your application -->
+    <description>Enable hotkey and status lighting for toggleable vessel functions and resource status.</description> <!-- Brief description of your application -->
+    <author name="Christopher Guckes" contact="https://github.com/cguckes/ksp-chroma"/> <!-- Contact details -->
+    <device_supported keyboard="1" mouse="0" headset="0" mousemat="0" keypad="0"/> <!-- Device supported by the application -->
+	<category game="1"> <!-- App category. Default is an app. If the app is a game, set it to "1" -->
+</application>
