@@ -1,5 +1,7 @@
 # ksp-chroma
 
+[![Join the chat at https://gitter.im/cguckes/ksp-chroma](https://badges.gitter.im/cguckes/ksp-chroma.svg)](https://gitter.im/cguckes/ksp-chroma?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+
 Good News: No messy external tool needed any more, now works out of the box as a normal KSP mod.
 
 Lights up your keyboard to make playing Kerbal Space Program a lot easier. Currently only supports Razer Chroma Keyboards. If you want me to add support for other devices as well, you'll have to send me one. I can send it back after I'm finished implementing the code.
