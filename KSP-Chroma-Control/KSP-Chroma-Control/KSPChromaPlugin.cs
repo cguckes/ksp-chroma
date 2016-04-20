@@ -3,6 +3,7 @@ using System.Net;
 using System.Text;
 using UnityEngine;
 using KSP_Chroma_Control.SceneManagers;
+using System.Collections.Generic;
 
 /// <summary>
 /// Contains the chroma control plugin allowing Kerbal Space Program to communicate a keyboard
@@ -22,15 +23,15 @@ namespace KSP_Chroma_Control
         /// </summary>
         private SceneManager flightSceneManager = new FlightSceneManager();
         private SceneManager vabSceneManager = new VABSceneManager();
-        private DataDrain dataDrain;
+        private List<DataDrain> dataDrains = new List<DataDrain>();
 
         /// <summary>
         /// Called by unity during the launch of this addon.
         /// </summary>
         void Awake()
         {
-            //this.dataDrain = new ColoreDrain();
-            this.dataDrain = new LogitechDrain();
+            this.dataDrains.Add(new ColoreDrain());
+            this.dataDrains.Add(new LogitechDrain());
         }
 
         /// <summary>
@@ -53,7 +54,7 @@ namespace KSP_Chroma_Control
                     break;
             }
 
-            this.dataDrain.send(scheme);
+            this.dataDrains.ForEach(drain => drain.send(scheme));
         }
     }
 }
