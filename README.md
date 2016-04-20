@@ -26,6 +26,7 @@ The mod is still very beta, so let me know if you experience any difficulties wh
 
 1. Unzip the release archive and place the KSPChromaControl folder in your KSP GameData directory.
 2. Start KSP and witness the awesomeness of highlighted function keys while kerbaling through space
+3. (optional) Move the file ChromaAppInfo.xml from the mod folder into the KSP folder, to allow Synapse to recognize the game properly.
  
 ## Todo
 
