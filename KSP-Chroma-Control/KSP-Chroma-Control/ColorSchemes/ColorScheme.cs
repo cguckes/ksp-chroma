@@ -8,7 +8,7 @@ namespace KSP_Chroma_Control.ColorSchemes
     /// <summary>
     /// Represents a base color scheme, saving all the colors per key.
     /// </summary>
-    public class ColorScheme : Dictionary<Key, Color>
+    public class ColorScheme : Dictionary<KeyCode, Color>
     {
         /// <summary>
         /// Creates a new ColorScheme rendering all keys black;
@@ -22,7 +22,7 @@ namespace KSP_Chroma_Control.ColorSchemes
         /// <param name="color">The color to use</param>
         public ColorScheme(Color color)
         {
-            foreach (Key key in Enum.GetValues(typeof(Key)))
+            foreach (KeyCode key in Enum.GetValues(typeof(KeyCode)))
             {
                 if (!this.ContainsKey(key))
                     this.Add(key, color);
@@ -30,14 +30,15 @@ namespace KSP_Chroma_Control.ColorSchemes
                     this[key] = color;
             }
 
-            this.Remove(Key.Invalid);
+            // Remove the non-existing key.
+            this.Remove(KeyCode.None);
         }
 
 
         public void SetKeyToColor(KeyCode key, Color color)
         {
-            if (Config.Instance.keyMapping.ContainsKey(key))
-                this[Config.Instance.keyMapping[key]] = color;
+            if (this.ContainsKey(key))
+                this[key] = color;
         }
 
         /// <summary>

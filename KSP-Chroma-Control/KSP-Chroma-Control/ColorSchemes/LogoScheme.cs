@@ -30,7 +30,7 @@ namespace KSP_Chroma_Control.ColorSchemes
 
             KeyCode[] whitekeys =
             {
-                KeyCode.LeftControl, KeyCode.LeftWindows, KeyCode.Space, KeyCode.AltGr, KeyCode.RightControl,
+                KeyCode.LeftControl, KeyCode.LeftWindows, KeyCode.Space, KeyCode.AltGr, KeyCode.RightAlt, KeyCode.RightControl,
                 KeyCode.Menu, KeyCode.RightControl, KeyCode.A, KeyCode.W, KeyCode.Alpha3, KeyCode.F2,
                 KeyCode.F4, KeyCode.Alpha5, KeyCode.R, KeyCode.F, KeyCode.CapsLock, KeyCode.G, KeyCode.H,
                 KeyCode.J, KeyCode.K, KeyCode.L, KeyCode.Semicolon, KeyCode.Quote, KeyCode.Hash

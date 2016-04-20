@@ -203,7 +203,6 @@ namespace KSP_Chroma_Control.SceneManagers
                 case "SolidFuel":
                     KeyCode[] solid = { KeyCode.Keypad1, KeyCode.Keypad2, KeyCode.Keypad3 };
                     displayFuel(solid, Color.magenta);
-                    Debug.LogWarning("Color: " + currentColorScheme[Key.Num3].ToString());
                     break;
                 case "Ablator":
                     KeyCode[] ablator = { KeyCode.Delete, KeyCode.End, KeyCode.PageDown };
