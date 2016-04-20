@@ -10,7 +10,7 @@ namespace KSP_Chroma_Control
     internal class ColoreDrain : DataDrain
     {
         /// <summary>
-        /// Unity Keybinding <=> UK Layout translation dictionary
+        /// Unity Keybinding <=> Razer UK Layout translation dictionary
         /// </summary>
         private static readonly Dictionary<KeyCode, Key> keyMapping = new Dictionary<KeyCode, Key>()
         {
@@ -26,19 +26,19 @@ namespace KSP_Chroma_Control
             { KeyCode.Alpha8, Key.D8 },
             { KeyCode.Alpha9, Key.D9 },
             { KeyCode.AltGr, Key.Function }, // abused to use the fn key
-            { KeyCode.Ampersand, Key.D7 },
-            { KeyCode.Asterisk, Key.D8 },
+            //{ KeyCode.Ampersand, Key.D7 },
+            //{ KeyCode.Asterisk, Key.D8 },
             // { KeyCode.At, Key.OemApostrophe }, blinking
 
             { KeyCode.B, Key.B },
             { KeyCode.BackQuote, Key.OemTilde },
             { KeyCode.Backslash, Key.EurBackslash },
             { KeyCode.Backspace, Key.Backspace },
-            { KeyCode.Break, Key.Pause },
+            //{ KeyCode.Break, Key.Pause },
 
             { KeyCode.C, Key.C },
             { KeyCode.CapsLock, Key.CapsLock },
-            { KeyCode.Caret, Key.D6 },
+            //{ KeyCode.Caret, Key.D6 },
             //{ KeyCode.Colon, Key.OemPeriod },
             { KeyCode.Comma, Key.OemComma },
 
@@ -124,7 +124,7 @@ namespace KSP_Chroma_Control
             { KeyCode.PageUp, Key.PageUp },
             { KeyCode.Pause, Key.Pause },
             { KeyCode.Period, Key.OemPeriod },
-            { KeyCode.Plus, Key.OemEquals },
+            //{ KeyCode.Plus, Key.OemEquals },
             { KeyCode.Print, Key.PrintScreen },
 
             { KeyCode.Q, Key.Q },
@@ -147,13 +147,13 @@ namespace KSP_Chroma_Control
             { KeyCode.Semicolon, Key.OemSemicolon },
             { KeyCode.Slash, Key.OemSlash },
             { KeyCode.Space, Key.Space },
-            { KeyCode.SysReq, Key.PrintScreen },
+            //{ KeyCode.SysReq, Key.PrintScreen },
 
             { KeyCode.T, Key.T },
             { KeyCode.Tab, Key.Tab },
 
             { KeyCode.U, Key.U },
-            { KeyCode.Underscore, Key.OemMinus },
+            //{ KeyCode.Underscore, Key.OemMinus },
             { KeyCode.UpArrow, Key.Up },
 
             { KeyCode.V, Key.V },

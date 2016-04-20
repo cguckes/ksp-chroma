@@ -29,7 +29,8 @@ namespace KSP_Chroma_Control
         /// </summary>
         void Awake()
         {
-            this.dataDrain = new ColoreDrain();
+            //this.dataDrain = new ColoreDrain();
+            this.dataDrain = new LogitechDrain();
         }
 
         /// <summary>
