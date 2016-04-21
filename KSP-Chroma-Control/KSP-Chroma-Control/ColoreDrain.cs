@@ -34,11 +34,11 @@ namespace KSP_Chroma_Control
             { KeyCode.BackQuote, Key.OemTilde },
             { KeyCode.Backslash, Key.EurBackslash },
             { KeyCode.Backspace, Key.Backspace },
-            { KeyCode.Break, Key.Pause },
+            //{ KeyCode.Break, Key.Pause },
 
             { KeyCode.C, Key.C },
             { KeyCode.CapsLock, Key.CapsLock },
-            { KeyCode.Caret, Key.D6 },
+            //{ KeyCode.Caret, Key.D6 },
             //{ KeyCode.Colon, Key.OemPeriod },
             { KeyCode.Comma, Key.OemComma },
 
@@ -124,7 +124,7 @@ namespace KSP_Chroma_Control
             { KeyCode.PageUp, Key.PageUp },
             { KeyCode.Pause, Key.Pause },
             { KeyCode.Period, Key.OemPeriod },
-            { KeyCode.Plus, Key.OemEquals },
+            //{ KeyCode.Plus, Key.OemEquals },
             { KeyCode.Print, Key.PrintScreen },
 
             { KeyCode.Q, Key.Q },
@@ -147,13 +147,13 @@ namespace KSP_Chroma_Control
             { KeyCode.Semicolon, Key.OemSemicolon },
             { KeyCode.Slash, Key.OemSlash },
             { KeyCode.Space, Key.Space },
-            { KeyCode.SysReq, Key.PrintScreen },
+            //{ KeyCode.SysReq, Key.PrintScreen },
 
             { KeyCode.T, Key.T },
             { KeyCode.Tab, Key.Tab },
 
             { KeyCode.U, Key.U },
-            { KeyCode.Underscore, Key.OemMinus },
+            //{ KeyCode.Underscore, Key.OemMinus },
             { KeyCode.UpArrow, Key.Up },
 
             { KeyCode.V, Key.V },

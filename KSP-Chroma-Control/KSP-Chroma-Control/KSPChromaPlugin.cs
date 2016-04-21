@@ -3,6 +3,7 @@ using System.Net;
 using System.Text;
 using UnityEngine;
 using KSP_Chroma_Control.SceneManagers;
+using System.Collections.Generic;
 
 /// <summary>
 /// Contains the chroma control plugin allowing Kerbal Space Program to communicate a keyboard
@@ -22,14 +23,15 @@ namespace KSP_Chroma_Control
         /// </summary>
         private SceneManager flightSceneManager = new FlightSceneManager();
         private SceneManager vabSceneManager = new VABSceneManager();
-        private DataDrain dataDrain;
+        private List<DataDrain> dataDrains = new List<DataDrain>();
+        private KeyboardAnimation activeAnimation = null; //new SplashdownAnimation();
 
         /// <summary>
         /// Called by unity during the launch of this addon.
         /// </summary>
         void Awake()
         {
-            this.dataDrain = new ColoreDrain();
+            this.dataDrains.Add(new ColoreDrain());
         }
 
         /// <summary>
@@ -39,20 +41,32 @@ namespace KSP_Chroma_Control
         {
             ColorSchemes.ColorScheme scheme;
 
-            switch (HighLogic.LoadedScene)
+            if (this.activeAnimation != null)
             {
-                case GameScenes.FLIGHT:
-                    scheme = this.flightSceneManager.getScheme();
-                    break;
-                case GameScenes.EDITOR:
-                    scheme = this.vabSceneManager.getScheme();
-                    break;
-                default:
-                    scheme = new ColorSchemes.LogoScheme();
-                    break;
+                scheme = this.activeAnimation.getFrame();
+            }
+            else
+            {
+                switch (HighLogic.LoadedScene)
+                {
+                    case GameScenes.FLIGHT:
+                        scheme = this.flightSceneManager.getScheme();
+                        break;
+                    case GameScenes.EDITOR:
+                        scheme = this.vabSceneManager.getScheme();
+                        break;
+                    default:
+                        scheme = new ColorSchemes.LogoScheme();
+                        break;
+                }
             }
 
-            this.dataDrain.send(scheme);
+            this.dataDrains.ForEach(drain => drain.send(scheme));
+        }
+
+        void stopAnimation(KeyboardAnimation animation)
+        {
+            this.activeAnimation = animation;
         }
     }
 }
