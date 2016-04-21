@@ -1,7 +1,4 @@
-﻿using System.Net.Sockets;
-using System.Net;
-using System.Text;
-using UnityEngine;
+﻿using UnityEngine;
 using KSP_Chroma_Control.SceneManagers;
 using System.Collections.Generic;
 
@@ -30,7 +27,7 @@ namespace KSP_Chroma_Control
         /// </summary>
         void Awake()
         {
-            this.dataDrains.Add(new ColoreDrain());
+            //this.dataDrains.Add(new ColoreDrain());
             this.dataDrains.Add(new LogitechDrain());
         }
 

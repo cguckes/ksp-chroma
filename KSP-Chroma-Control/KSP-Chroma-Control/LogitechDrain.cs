@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using KSP_Chroma_Control.ColorSchemes;
 using LedCSharp;
 using UnityEngine;
@@ -168,6 +166,17 @@ namespace KSP_Chroma_Control
             { KeyCode.Z, keyboardNames.Z }
         };
 
+        public LogitechDrain()
+        {
+            LogitechGSDK.LogiLedInit();
+        }
+
+        ~LogitechDrain()
+        {
+            // Not strictly necessary, frees up memory, but causes keys blinking on scene switches
+            LogitechGSDK.LogiLedShutdown();
+        }
+
         public void send(ColorScheme scheme)
         {
             applyToKeyboard(scheme);
@@ -179,14 +188,17 @@ namespace KSP_Chroma_Control
         /// <param name="colorScheme">The color scheme to apply.</param>
         private void applyToKeyboard(ColorScheme colorScheme)
         {
-            foreach (var entry in colorScheme)
+            foreach (KeyValuePair<KeyCode, Color> entry in colorScheme)
             {
-                LogitechGSDK.LogiLedSetLightingForKeyWithScanCode(
-                    Convert.ToInt32(entry.Key),
-                    Convert.ToInt32(entry.Value.r * 100),
-                    Convert.ToInt32(entry.Value.g * 100),
-                    Convert.ToInt32(entry.Value.b * 100)
-                );
+                if (keyMapping.ContainsKey(entry.Key))
+                {
+                    LogitechGSDK.LogiLedSetLightingForKeyWithScanCode(
+                        Convert.ToInt32(keyMapping[entry.Key]),
+                        Convert.ToInt32(entry.Value.r*100),
+                        Convert.ToInt32(entry.Value.g*100),
+                        Convert.ToInt32(entry.Value.b*100)
+                        );
+                }
             }
         }
     }

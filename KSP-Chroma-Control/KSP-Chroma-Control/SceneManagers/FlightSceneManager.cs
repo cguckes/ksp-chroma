@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using KSP_Chroma_Control.ColorSchemes;
 using UnityEngine;
-using Corale.Colore.Razer.Keyboard;
 
 namespace KSP_Chroma_Control.SceneManagers
 {
