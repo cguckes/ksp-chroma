@@ -110,7 +110,7 @@ namespace KSP_Chroma_Control
             //{ KeyCode.Less, keyboardNames.OemComma },
 
             { KeyCode.M, keyboardNames.M },
-            //{ KeyCode.Menu, keyboardNames.RightMenu },
+            { KeyCode.Menu, keyboardNames.APPLICATION_SELECT },
             { KeyCode.Minus, keyboardNames.MINUS },
 
             { KeyCode.N, keyboardNames.N },
@@ -140,6 +140,7 @@ namespace KSP_Chroma_Control
             { KeyCode.RightControl, keyboardNames.RIGHT_CONTROL },
             //{ KeyCode.RightParen, keyboardNames.D0 },
             { KeyCode.RightShift, keyboardNames.RIGHT_SHIFT },
+            { KeyCode.RightWindows, keyboardNames.RIGHT_WINDOWS },
 
             { KeyCode.S, keyboardNames.S },
             { KeyCode.ScrollLock, keyboardNames.SCROLL_LOCK },
