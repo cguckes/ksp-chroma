@@ -2,8 +2,9 @@
 
 namespace KSP_Chroma_Control
 {
-    internal interface KeyboardAnimation
+    public interface KeyboardAnimation
     {
         ColorScheme getFrame();
+        bool isFinished();
     }
 }

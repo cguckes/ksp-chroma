@@ -62,7 +62,7 @@
     <Compile Include="SceneManagers\SceneManager.cs" />
     <Compile Include="ColorSchemes\VabScheme.cs" />
     <Compile Include="Config.cs" />
-    <Compile Include="SplashdownAnimation.cs" />
+    <Compile Include="PowerLostAnimation.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>

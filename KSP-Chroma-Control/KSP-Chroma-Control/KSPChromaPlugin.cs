@@ -24,26 +24,29 @@ namespace KSP_Chroma_Control
         private SceneManager flightSceneManager = new FlightSceneManager();
         private SceneManager vabSceneManager = new VABSceneManager();
         private List<DataDrain> dataDrains = new List<DataDrain>();
-        private KeyboardAnimation activeAnimation = null; //new SplashdownAnimation();
+        private KeyboardAnimation activeAnimation = null;
+
+        public static KSPChromaPlugin fetch;
 
         /// <summary>
         /// Called by unity during the launch of this addon.
         /// </summary>
         void Awake()
         {
+            fetch = this;
             this.dataDrains.Add(new ColoreDrain());
         }
 
         /// <summary>
         /// Called by unity on every physics frame.
         /// </summary>
-        void FixedUpdate()
+        void Update()
         {
             ColorSchemes.ColorScheme scheme;
 
-            if (this.activeAnimation != null)
+            if (activeAnimation != null && !activeAnimation.isFinished())
             {
-                scheme = this.activeAnimation.getFrame();
+                scheme = activeAnimation.getFrame();
             }
             else
             {
@@ -64,7 +67,7 @@ namespace KSP_Chroma_Control
             this.dataDrains.ForEach(drain => drain.send(scheme));
         }
 
-        void stopAnimation(KeyboardAnimation animation)
+        public void setAnimation(KeyboardAnimation animation)
         {
             this.activeAnimation = animation;
         }

@@ -105,6 +105,10 @@ namespace KSP_Chroma_Control.SceneManagers
                 this.currentColorScheme = new EVAScheme();
                 showGauge("EVAFuel", currentVessel.evaController.Fuel, currentVessel.evaController.FuelCapacity);
             }
+            else if(!currentVessel.IsControllable)// && !currentVessel.isCommandable)
+            {
+                KSPChromaPlugin.fetch.setAnimation(new PowerLostAnimation());
+            }
             else
             {
                 this.currentColorScheme = new FlightScheme();
