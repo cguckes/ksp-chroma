@@ -5,6 +5,9 @@ using System.Text;
 
 namespace KSP_Chroma_Control
 {
+    /// <summary>
+    /// Implement this to use the mod with other devices.
+    /// </summary>
     interface DataDrain
     {
         /// <summary>
