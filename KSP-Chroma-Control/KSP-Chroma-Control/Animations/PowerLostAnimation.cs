@@ -6,11 +6,25 @@ using System.Linq;
 
 namespace KSP_Chroma_Control
 {
+    /// <summary>
+    /// Displays a warning on the keyboard, indicating that the vessel is currently out of power and cannot
+    /// be controlled. Consists of two frames alternating at 1fps.
+    /// </summary>
     internal class PowerLostAnimation : KeyboardAnimation
     {
+        /// <summary>
+        /// The red frame
+        /// </summary>
         private static ColorScheme red = new ColorScheme(Color.red);
-        private static ColorScheme lightningBolts = new ColorScheme(Color.blue);
 
+        /// <summary>
+        /// The blue frame
+        /// </summary>
+        private static ColorScheme blue = new ColorScheme(Color.blue);
+
+        /// <summary>
+        /// Static constructor adds lightning bolts in different colors to both frames
+        /// </summary>
         static PowerLostAnimation()
         {
             KeyCode[] lightningKeys = new KeyCode[]
@@ -23,15 +37,23 @@ namespace KSP_Chroma_Control
                 KeyCode.RightAlt
             };
 
-            lightningBolts.SetKeysToColor(lightningKeys, Color.white);
+            blue.SetKeysToColor(lightningKeys, Color.white);
             red.SetKeysToColor(lightningKeys, Color.blue);
         }
 
+        /// <summary>
+        /// <see cref="KeyboardAnimation.getFrame"/>
+        /// </summary>
+        /// <returns>the current animation frame.</returns>
         public ColorScheme getFrame()
         {
-            return (((int)Time.realtimeSinceStartup) % 2 == 0) ? red : lightningBolts;
+            return (((int)Time.realtimeSinceStartup) % 2 == 0) ? red : blue;
         }
 
+        /// <summary>
+        /// <see cref="KeyboardAnimation.isFinished"/>
+        /// </summary>
+        /// <returns>true, if the animation is finished, false if not.</returns>
         public bool isFinished()
         {
             /// Exit if the scene changes.
