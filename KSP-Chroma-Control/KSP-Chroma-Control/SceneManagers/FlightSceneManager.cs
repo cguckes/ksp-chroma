@@ -39,16 +39,6 @@ namespace KSP_Chroma_Control.SceneManagers
                 GameSettings.YAW_RIGHT.primary
         };
 
-        private static KeyCode[] translation = new KeyCode[]
-        {
-            GameSettings.TRANSLATE_BACK.primary,
-            GameSettings.TRANSLATE_FWD.primary,
-            GameSettings.TRANSLATE_LEFT.primary,
-            GameSettings.TRANSLATE_RIGHT.primary,
-            GameSettings.TRANSLATE_UP.primary,
-            GameSettings.TRANSLATE_DOWN.primary
-        };
-
         private static KeyCode[] timewarp = new KeyCode[]
         {
             GameSettings.TIME_WARP_INCREASE.primary,
