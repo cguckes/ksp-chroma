@@ -24,6 +24,7 @@ namespace KSP_Chroma_Control
             };
 
             lightningBolts.SetKeysToColor(lightningKeys, Color.white);
+            red.SetKeysToColor(lightningKeys, Color.blue);
         }
 
         public ColorScheme getFrame()

@@ -24,7 +24,6 @@ namespace KSP_Chroma_Control
         private SceneManager flightSceneManager = new FlightSceneManager();
         private SceneManager vabSceneManager = new VABSceneManager();
         private List<DataDrain> dataDrains = new List<DataDrain>();
-        private KeyboardAnimation activeAnimation = null;
 
         public static KSPChromaPlugin fetch;
 
@@ -44,9 +43,9 @@ namespace KSP_Chroma_Control
         {
             ColorSchemes.ColorScheme scheme;
 
-            if (activeAnimation != null && !activeAnimation.isFinished())
+            if (AnimationManager.Instance.animationRunning())
             {
-                scheme = activeAnimation.getFrame();
+                scheme = AnimationManager.Instance.getFrame();
             }
             else
             {
@@ -65,11 +64,6 @@ namespace KSP_Chroma_Control
             }
 
             this.dataDrains.ForEach(drain => drain.send(scheme));
-        }
-
-        public void setAnimation(KeyboardAnimation animation)
-        {
-            this.activeAnimation = animation;
         }
     }
 }
