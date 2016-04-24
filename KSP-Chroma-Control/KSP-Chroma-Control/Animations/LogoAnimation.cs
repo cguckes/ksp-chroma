@@ -15,56 +15,15 @@ namespace KSP_Chroma_Control
     internal class LogoAnimation : KeyboardAnimation
     {
         /// <summary>
-        /// List of all animation frames.
-        /// </summary>
-        private static List<ColorScheme> frames = new List<ColorScheme>();
-
-        /// <summary>
-        /// The framerate of this animation.
-        /// </summary>
-        private static double fps = 10;
-
-        /// <summary>
         /// Static constructor adds lightning bolts in different colors to both frames
         /// </summary>
         static LogoAnimation()
         {
-            frames.AddRange(AnimationUtils.InterpolateFrames(new ColorScheme(Color.blue), new LogoScheme(), 20));
+            frames = AnimationUtils.InterpolateFrames(new ColorScheme(Color.blue), new LogoScheme(), 20);
         }
 
-        /// <summary>
-        /// Local copy to be able to pop the objects we need.
-        /// </summary>
-        private Queue<ColorScheme> localCopy;
-        private int lastFrameTime = 0;
-        private ColorScheme currentFrame;
-
-        public LogoAnimation()
+        public LogoAnimation() : base(10)
         {
-            localCopy = new Queue<ColorScheme>(frames);
-        }
-
-        /// <summary>
-        /// <see cref="KeyboardAnimation.getFrame"/>
-        /// </summary>
-        /// <returns>the current animation frame.</returns>
-        public ColorScheme getFrame()
-        {
-            if(lastFrameTime < (int)(Time.realtimeSinceStartup * fps))
-            {
-                currentFrame = this.localCopy.Dequeue();
-                lastFrameTime = (int)(Time.realtimeSinceStartup * fps);
-            }
-            return currentFrame;
-        }
-
-        /// <summary>
-        /// <see cref="KeyboardAnimation.isFinished"/>
-        /// </summary>
-        /// <returns>true, if the animation is finished, false if not.</returns>
-        public bool isFinished()
-        {
-            return localCopy.Count() <= 0;
         }
     }
 }

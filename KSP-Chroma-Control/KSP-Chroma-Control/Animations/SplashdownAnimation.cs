@@ -15,27 +15,21 @@ namespace KSP_Chroma_Control
     internal class SplashdownAnimation : KeyboardAnimation
     {
         /// <summary>
-        /// List of all animation frames.
-        /// </summary>
-        private static List<ColorScheme> frames = new List<ColorScheme>();
-
-        /// <summary>
-        /// The framerate of this animation.
-        /// </summary>
-        private static double fps = 40;
-
-        /// <summary>
         /// Static constructor adds lightning bolts in different colors to both frames
         /// </summary>
         static SplashdownAnimation()
         {
+            List<ColorScheme> newFrames = new List<ColorScheme>();
+
             ColorScheme[] uninterpolated = generateAnimationFrames();
             
             for(int i = 0; i < uninterpolated.Length - 1; i++)
             {
-                frames.AddRange(AnimationUtils.InterpolateFrames(uninterpolated[i], uninterpolated[i + 1], 5));
+                newFrames.AddRange(AnimationUtils.InterpolateFrames(uninterpolated[i], uninterpolated[i + 1], 5));
             }
-            frames.AddRange(AnimationUtils.InterpolateFrames(uninterpolated[uninterpolated.Length - 1], new ColorScheme(new Color(0f, 0f, .2f)), 10));
+            newFrames.AddRange(AnimationUtils.InterpolateFrames(uninterpolated[uninterpolated.Length - 1], new ColorScheme(new Color(0f, 0f, .2f)), 10));
+
+            frames = newFrames.ToArray();
         }
 
         private static ColorScheme[] generateAnimationFrames()
@@ -50,42 +44,8 @@ namespace KSP_Chroma_Control
            return myReturn;
         }
 
-        /// <summary>
-        /// Local copy to be able to pop the objects we need.
-        /// </summary>
-        private Queue<ColorScheme> localCopy;
-        private int lastFrameTime = 0;
-        private ColorScheme currentFrame;
-
-        public SplashdownAnimation()
+        public SplashdownAnimation() : base(40)
         {
-            localCopy = new Queue<ColorScheme>(frames);
-        }
-
-        /// <summary>
-        /// <see cref="KeyboardAnimation.getFrame"/>
-        /// </summary>
-        /// <returns>the current animation frame.</returns>
-        public ColorScheme getFrame()
-        {
-            if(lastFrameTime < (int)(Time.realtimeSinceStartup * fps))
-            {
-                currentFrame = this.localCopy.Dequeue();
-                lastFrameTime = (int)(Time.realtimeSinceStartup * fps);
-            }
-            return currentFrame;
-        }
-
-        /// <summary>
-        /// <see cref="KeyboardAnimation.isFinished"/>
-        /// </summary>
-        /// <returns>true, if the animation is finished, false if not.</returns>
-        public bool isFinished()
-        {
-            /// Exit if the scene changes.
-            if (HighLogic.LoadedScene != GameScenes.FLIGHT)
-                return true;
-            return localCopy.Count() <= 0;
         }
     }
 }
