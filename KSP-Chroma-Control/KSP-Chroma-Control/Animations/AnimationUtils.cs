@@ -61,8 +61,6 @@ namespace KSP_Chroma_Control.Animations
                 + distanceY * distanceY
             );
 
-            Debug.Log("Distance: (" + x + ":" + y + ") => " + distance);
-
             return distance;
         }
 

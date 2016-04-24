@@ -50,6 +50,8 @@
   <ItemGroup>
     <Compile Include="Animations\AnimationManager.cs" />
     <Compile Include="Animations\AnimationUtils.cs" />
+    <Compile Include="Animations\CrashAnimation.cs" />
+    <Compile Include="Animations\LogoAnimation.cs" />
     <Compile Include="Animations\SplashdownAnimation.cs" />
     <Compile Include="ColoreDrain.cs" />
     <Compile Include="ColorSchemes\ColorScheme.cs" />

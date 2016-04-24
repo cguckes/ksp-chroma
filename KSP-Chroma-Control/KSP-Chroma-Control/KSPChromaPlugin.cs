@@ -31,8 +31,12 @@ namespace KSP_Chroma_Control
         void Awake()
         {
             this.dataDrains.Add(new ColoreDrain());
-            
+            AnimationManager.Instance.setAnimation(new LogoAnimation());
+
             GameEvents.VesselSituation.onLand.Add(callbackLanded);
+            GameEvents.onPartDie.Add(callbackCrash);
+            GameEvents.onCrashSplashdown.Add(callbackSplashdownCrash);
+            GameEvents.onGameSceneLoadRequested.Add(callbackSceneChange);
         }
 
         private void callbackLanded(Vessel vessel, CelestialBody body)
@@ -41,12 +45,32 @@ namespace KSP_Chroma_Control
                 AnimationManager.Instance.setAnimation(new SplashdownAnimation());
         }
 
-        private void callbackCrashed(EventReport report)
+        private void callbackSplashdownCrash(EventReport report)
         {
-            if (report.eventType == FlightEvents.SPLASHDOWN_CRASH)
-                AnimationManager.Instance.setAnimation(new SplashdownAnimation());
-            /*else if (report.eventType == FlightEvents.CRASH)
-                AnimationManager.Instance.setAnimation(new CrashAnimation());*/
+            AnimationManager.Instance.setAnimation(new SplashdownAnimation());
+        }
+
+        private void callbackCrash(Part part)
+        {
+            if(FlightGlobals.ActiveVessel.rootPart == part)
+                AnimationManager.Instance.setAnimation(new CrashAnimation());
+        }
+
+        private void callbackSceneChange(GameScenes scene)
+        {
+            Debug.LogError("Scene changed: " + scene);
+            switch (scene)
+            {
+                case GameScenes.EDITOR:
+                case GameScenes.FLIGHT:
+                case GameScenes.LOADING:
+                case GameScenes.LOADINGBUFFER:
+                case GameScenes.PSYSTEM:
+                    break;
+                default:
+                    AnimationManager.Instance.setAnimation(new LogoAnimation());
+                    break;
+            }
         }
 
         /// <summary>
