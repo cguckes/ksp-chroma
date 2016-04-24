@@ -26,8 +26,8 @@ namespace KSP_Chroma_Control
             { KeyCode.Alpha8, Key.D8 },
             { KeyCode.Alpha9, Key.D9 },
             { KeyCode.AltGr, Key.Function }, // abused to use the fn key
-            { KeyCode.Ampersand, Key.D7 },
-            { KeyCode.Asterisk, Key.D8 },
+            //{ KeyCode.Ampersand, Key.D7 },
+            //{ KeyCode.Asterisk, Key.D8 },
             // { KeyCode.At, Key.OemApostrophe }, blinking
 
             { KeyCode.B, Key.B },

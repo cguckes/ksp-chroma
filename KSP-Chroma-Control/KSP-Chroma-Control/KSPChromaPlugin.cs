@@ -1,6 +1,6 @@
 ﻿using System.Net.Sockets;
 using System.Net;
-using System.Text;
+using System.Linq;
 using UnityEngine;
 using KSP_Chroma_Control.SceneManagers;
 using System.Collections.Generic;
@@ -25,15 +25,28 @@ namespace KSP_Chroma_Control
         private SceneManager vabSceneManager = new VABSceneManager();
         private List<DataDrain> dataDrains = new List<DataDrain>();
 
-        public static KSPChromaPlugin fetch;
-
         /// <summary>
         /// Called by unity during the launch of this addon.
         /// </summary>
         void Awake()
         {
-            fetch = this;
             this.dataDrains.Add(new ColoreDrain());
+            
+            GameEvents.VesselSituation.onLand.Add(callbackLanded);
+        }
+
+        private void callbackLanded(Vessel vessel, CelestialBody body)
+        {
+            if(vessel.situation == Vessel.Situations.SPLASHED)
+                AnimationManager.Instance.setAnimation(new SplashdownAnimation());
+        }
+
+        private void callbackCrashed(EventReport report)
+        {
+            if (report.eventType == FlightEvents.SPLASHDOWN_CRASH)
+                AnimationManager.Instance.setAnimation(new SplashdownAnimation());
+            /*else if (report.eventType == FlightEvents.CRASH)
+                AnimationManager.Instance.setAnimation(new CrashAnimation());*/
         }
 
         /// <summary>

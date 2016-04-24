@@ -49,6 +49,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Animations\AnimationManager.cs" />
+    <Compile Include="Animations\AnimationUtils.cs" />
+    <Compile Include="Animations\SplashdownAnimation.cs" />
     <Compile Include="ColoreDrain.cs" />
     <Compile Include="ColorSchemes\ColorScheme.cs" />
     <Compile Include="ColorSchemes\EVAScheme.cs" />

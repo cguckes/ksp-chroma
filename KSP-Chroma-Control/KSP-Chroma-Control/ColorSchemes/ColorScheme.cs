@@ -41,6 +41,11 @@ namespace KSP_Chroma_Control.ColorSchemes
                 this[key] = color;
         }
 
+        public void SetKeyToColor(int x, int y, Color color)
+        {
+            SetKeyToColor(Config.Instance.KeyByPosition[y,x], color);
+        }
+
         /// <summary>
         /// Sets a number of keys to the defined color
         /// </summary>

@@ -1,4 +1,5 @@
 ﻿using Corale.Colore.Razer.Keyboard;
+using KSP_Chroma_Control.ColorSchemes;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -25,6 +26,54 @@ namespace KSP_Chroma_Control
         public readonly KeyValuePair<Color, Color> redOrangeToggle = new KeyValuePair<Color, Color>(Color.red, new Color32(255, 100, 0, 255));
         public readonly KeyValuePair<Color, Color> redGreenToggle = new KeyValuePair<Color, Color>(Color.red, Color.green);
         public readonly KeyValuePair<Color, Color> cyanBlueToggle = new KeyValuePair<Color, Color>(Color.cyan, Color.blue);
+
+        /// <summary>
+        /// Allows getting a key via it's coordinates, rather than it's keycodes. Default values are calibrated for razer devices.
+        /// </summary>
+        public KeyCode[,] KeyByPosition { get; set; } = new KeyCode[6,22]
+        {
+            {
+                KeyCode.None, KeyCode.Escape, KeyCode.None, KeyCode.F1, KeyCode.F2,
+                KeyCode.F3, KeyCode.F4, KeyCode.F5, KeyCode.F6, KeyCode.F7,
+                KeyCode.F8, KeyCode.F9, KeyCode.F10, KeyCode.F11, KeyCode.F12, KeyCode.Print,
+                KeyCode.ScrollLock, KeyCode.Pause, KeyCode.None, KeyCode.None,
+                KeyCode.None, KeyCode.None
+            },
+            {
+                KeyCode.None, KeyCode.BackQuote, KeyCode.Alpha1, KeyCode.Alpha2, KeyCode.Alpha3,
+                KeyCode.Alpha4, KeyCode.Alpha5, KeyCode.Alpha6, KeyCode.Alpha7, KeyCode.Alpha8,
+                KeyCode.Alpha9, KeyCode.Alpha0, KeyCode.Minus, KeyCode.Equals, KeyCode.Backspace,
+                KeyCode.Insert, KeyCode.Home, KeyCode.PageUp, KeyCode.Numlock, KeyCode.KeypadDivide,
+                KeyCode.KeypadMultiply, KeyCode.KeypadMinus },
+            {
+                KeyCode.None, KeyCode.Tab, KeyCode.Q, KeyCode.W, KeyCode.E,
+                KeyCode.R, KeyCode.T, KeyCode.Y, KeyCode.U, KeyCode.I,
+                KeyCode.O, KeyCode.P, KeyCode.LeftBracket, KeyCode.RightBracket, KeyCode.Backslash,
+                KeyCode.Delete, KeyCode.End, KeyCode.PageDown, KeyCode.Keypad7, KeyCode.Keypad8,
+                KeyCode.Keypad9,KeyCode.KeypadPlus
+            },
+            {
+                KeyCode.None, KeyCode.CapsLock, KeyCode.A, KeyCode.S, KeyCode.D,
+                KeyCode.F, KeyCode.G, KeyCode.H, KeyCode.J, KeyCode.K,
+                KeyCode.L, KeyCode.Semicolon, KeyCode.Colon, KeyCode.Hash, KeyCode.Return,
+                KeyCode.None, KeyCode.None, KeyCode.None, KeyCode.Keypad4, KeyCode.Keypad5,
+                KeyCode.Keypad6, KeyCode.None
+            },
+            {
+                KeyCode.None, KeyCode.LeftShift, KeyCode.None, KeyCode.Z, KeyCode.X,
+                KeyCode.C, KeyCode.V, KeyCode.B, KeyCode.N, KeyCode.M,
+                KeyCode.Comma, KeyCode.Period, KeyCode.Slash, KeyCode.None, KeyCode.RightShift,
+                KeyCode.None, KeyCode.UpArrow, KeyCode.None, KeyCode.Keypad1, KeyCode.Keypad2,
+                KeyCode.Keypad3, KeyCode.KeypadEnter
+            },
+            {
+                KeyCode.None, KeyCode.LeftControl, KeyCode.LeftWindows, KeyCode.LeftAlt, KeyCode.None,
+                KeyCode.None, KeyCode.None, KeyCode.Space, KeyCode.None, KeyCode.None,
+                KeyCode.None, KeyCode.RightAlt, KeyCode.AltGr, KeyCode.Menu, KeyCode.RightControl,
+                KeyCode.LeftArrow, KeyCode.DownArrow, KeyCode.RightArrow, KeyCode.None, KeyCode.Keypad0,
+                KeyCode.KeypadPeriod, KeyCode.None
+            },
+        };
 
         /// <summary>
         /// Configures the key binding and colors for every action group
