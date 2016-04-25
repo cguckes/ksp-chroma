@@ -31,9 +31,6 @@ namespace KSP_Chroma_Control
         /// </summary>
         void Awake()
         {
-            // Load animations before displaying them.
-            //AnimationManager.preloadAnimations();
-
             this.dataDrains.Add(new ColoreDrain());
             AnimationManager.Instance.setAnimation(new LogoAnimation());
 

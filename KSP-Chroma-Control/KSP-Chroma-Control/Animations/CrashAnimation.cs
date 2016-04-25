@@ -21,36 +21,30 @@ namespace KSP_Chroma_Control
         {
             List<ColorScheme> newFrames = new List<ColorScheme>();
 
-            ColorScheme[] uninterpolated = generateAnimationFrames();
-            
-            for(int i = 0; i < uninterpolated.Length - 1; i++)
-            {
-                newFrames.AddRange(AnimationUtils.InterpolateFrames(uninterpolated[i], uninterpolated[i + 1], 2));
-            }
-            newFrames.AddRange(AnimationUtils.InterpolateFrames(uninterpolated[uninterpolated.Length - 1], new ColorScheme(Color.black), 10));
-
-            frames = newFrames.ToArray();
-        }
-
-        private static ColorScheme[] generateAnimationFrames()
-        {
             ColorScheme red = new ColorScheme(Color.red);
             ColorScheme yellow = new ColorScheme(Color.yellow);
 
-            ColorScheme[] myReturn = new ColorScheme[20];
-            
-            for(int i = 0; i < 10; i++)
-                myReturn[i] = (i % 2 == 0) ? red : yellow;
+            // Generate first few frames
+            newFrames.AddRange(AnimationUtils.InterpolateFrames(red, yellow, 3));
+            // Add the way back to the original
+            newFrames.AddRange(newFrames.ToArray().Reverse());
+            // Double it
+            newFrames.AddRange(newFrames.ToArray());
+            // Quadruple it
+            newFrames.AddRange(newFrames.ToArray());
+            // Octuple it
+            newFrames.AddRange(newFrames.ToArray());
 
-            for(int i = 10; i < myReturn.Length; i++)
-            //for (int i = 0; i < myReturn.Length; i++)
+            for (int i = 0; i < 30; i++)
             {
-                    myReturn[i] = AnimationUtils.CircularSineWave(Color.red, Color.yellow, i);
+                newFrames.Add(AnimationUtils.CircularSineWave(Color.red, Color.yellow, i));
             }
 
-           return myReturn;
-        }
+            newFrames.AddRange(AnimationUtils.InterpolateFrames(newFrames.Last(), new ColorScheme(Color.black), 10));
 
+            frames = newFrames.ToArray();
+        }
+        
         public CrashAnimation() : base(30)
         {
         }
