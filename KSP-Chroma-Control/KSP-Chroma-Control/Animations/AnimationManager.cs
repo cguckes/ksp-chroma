@@ -1,6 +1,8 @@
 ﻿using KSP_Chroma_Control.ColorSchemes;
 using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 
@@ -67,7 +69,9 @@ namespace KSP_Chroma_Control
         /// <returns></returns>
         public Boolean animationRunning()
         {
-            return activeAnimation != null && !activeAnimation.isFinished();
+            if (activeAnimation != null && activeAnimation.isFinished())
+                activeAnimation = null;
+            return activeAnimation != null;
         }
     }
 }

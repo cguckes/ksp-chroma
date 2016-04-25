@@ -178,10 +178,9 @@ namespace KSP_Chroma_Control
         /// <param name="colorScheme">The color scheme to apply.</param>
         private void applyToKeyboard(ColorScheme colorScheme)
         {
-            foreach (KeyValuePair<KeyCode, Color> entry in colorScheme)
+            foreach (KeyValuePair<KeyCode, Key> key in keyMapping)
             {
-                if(keyMapping.ContainsKey(entry.Key))
-                    Corale.Colore.Core.Keyboard.Instance.SetKey(keyMapping[entry.Key], entry.Value);
+                Corale.Colore.Core.Keyboard.Instance.SetKey(key.Value, colorScheme[key.Key]);
             }
         }
     }

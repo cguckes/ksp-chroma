@@ -33,20 +33,18 @@ namespace KSP_Chroma_Control.Animations
 
         public static ColorScheme InterpolateFrames(ColorScheme from, ColorScheme to)
         {
-            ColorScheme myReturn = new ColorScheme();
+            ColorScheme myReturn = from;
+            //Debug.LogWarning("Interpolating from " + from[KeyCode.Q] + " to " + to[KeyCode.Q]);
             KeyCode[,] keys = Config.Instance.KeyByPosition;
 
             foreach (KeyCode key in keys)
             {
-                if (myReturn.ContainsKey(key))
-                {
-                    myReturn[key] = new Color(
-                        (from[key].r + to[key].r) / 2f,
-                        (from[key].g + to[key].g) / 2f,
-                        (from[key].b + to[key].b) / 2f,
-                        255
-                    );
-                }
+                myReturn[key] = new Color(
+                    (from[key].r + to[key].r) / 2f,
+                    (from[key].g + to[key].g) / 2f,
+                    (from[key].b + to[key].b) / 2f,
+                    255
+                );
             }
 
             return myReturn;

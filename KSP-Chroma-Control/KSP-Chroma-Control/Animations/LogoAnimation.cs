@@ -22,7 +22,7 @@ namespace KSP_Chroma_Control
             frames = AnimationUtils.InterpolateFrames(new ColorScheme(Color.blue), new LogoScheme(), 20);
         }
 
-        public LogoAnimation() : base(10)
+        public LogoAnimation() : base(5)
         {
         }
     }

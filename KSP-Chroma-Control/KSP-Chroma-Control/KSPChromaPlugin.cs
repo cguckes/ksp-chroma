@@ -4,6 +4,7 @@ using System.Linq;
 using UnityEngine;
 using KSP_Chroma_Control.SceneManagers;
 using System.Collections.Generic;
+using System.Collections;
 
 /// <summary>
 /// Contains the chroma control plugin allowing Kerbal Space Program to communicate a keyboard
@@ -30,6 +31,9 @@ namespace KSP_Chroma_Control
         /// </summary>
         void Awake()
         {
+            // Load animations before displaying them.
+            //AnimationManager.preloadAnimations();
+
             this.dataDrains.Add(new ColoreDrain());
             AnimationManager.Instance.setAnimation(new LogoAnimation());
 
@@ -41,7 +45,7 @@ namespace KSP_Chroma_Control
 
         private void callbackLanded(Vessel vessel, CelestialBody body)
         {
-            if(vessel.situation == Vessel.Situations.SPLASHED)
+            if (vessel.situation == Vessel.Situations.SPLASHED)
                 AnimationManager.Instance.setAnimation(new SplashdownAnimation());
         }
 
@@ -52,13 +56,13 @@ namespace KSP_Chroma_Control
 
         private void callbackCrash(Part part)
         {
-            if(FlightGlobals.ActiveVessel.rootPart == part)
+            if (FlightGlobals.ActiveVessel.rootPart == part)
                 AnimationManager.Instance.setAnimation(new CrashAnimation());
         }
 
         private void callbackSceneChange(GameScenes scene)
         {
-            Debug.LogError("Scene changed: " + scene);
+            AnimationManager.Instance.setAnimation(null);
             switch (scene)
             {
                 case GameScenes.EDITOR:
@@ -79,7 +83,7 @@ namespace KSP_Chroma_Control
         void Update()
         {
             ColorSchemes.ColorScheme scheme;
-
+            
             if (AnimationManager.Instance.animationRunning())
             {
                 scheme = AnimationManager.Instance.getFrame();

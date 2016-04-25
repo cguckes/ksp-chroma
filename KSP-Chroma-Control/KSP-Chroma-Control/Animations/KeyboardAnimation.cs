@@ -9,6 +9,10 @@ namespace KSP_Chroma_Control
     public abstract class KeyboardAnimation
     {
         protected static ColorScheme[] frames;
+        public static string getName()
+        {
+            return "KeyBoardAnimation";
+        }
 
         private int currentFrame;
         private int lastFrameTime = 0;
@@ -24,21 +28,21 @@ namespace KSP_Chroma_Control
         /// Returns the current animation frame.
         /// </summary>
         /// <returns>the current animation frame.</returns>
-        public ColorScheme getFrame()
+        public virtual ColorScheme getFrame()
         {
             if (lastFrameTime < (int)(Time.realtimeSinceStartup * fps))
             {
                 currentFrame++;
                 lastFrameTime = (int)(Time.realtimeSinceStartup * fps);
             }
-            return frames[currentFrame];
+            return (frames.Length > currentFrame) ? frames[currentFrame] : frames[currentFrame - 1];
         }
 
         /// <summary>
         /// Checks if the animation is complete.
         /// </summary>
         /// <returns>true, if the animation is finished.</returns>
-        public bool isFinished()
+        public virtual bool isFinished()
         {
             return currentFrame >= frames.Length;
         }

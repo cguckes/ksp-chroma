@@ -6,8 +6,6 @@ using UnityEngine;
 
 namespace KSP_Chroma_Control.ColorSchemes
 {
-
-
     /// <summary>
     /// Special color scheme for EVA scenes.
     /// </summary>
