@@ -32,7 +32,9 @@ The mod is still very beta, so let me know if you experience any difficulties wh
  
 ## Todo
 
-- Make the whole keyboard red, if the vessel is not steerable any more.
-- Add CatastrophicFailure event and SplashedDown event animation.
+- Make the whole keyboard red, if the vessel is not steerable any more. (done -> next release)
+- Add CatastrophicFailure event and SplashedDown event animation. (done -> next release)
+- Altimeter on F-Keys (done -> next release)
+- Make fuel gauge position configurable
+- Add Razer Chroma mouse support
 - Linux version (this might take a bit longer, but I'm planning to do it anyway. What good is a c# interface if it is only ever implemented once...)
-- Get it promoted on Reddit (/u/FauserneEist)
