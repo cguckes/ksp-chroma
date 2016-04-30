@@ -37,4 +37,5 @@ The mod is still very beta, so let me know if you experience any difficulties wh
 - Altimeter on F-Keys (done -> next release)
 - Make fuel gauge position configurable
 - Add Razer Chroma mouse support
+- Light up all keys when the player is entering text (vessel name, savegame, etc.)
 - Linux version (this might take a bit longer, but I'm planning to do it anyway. What good is a c# interface if it is only ever implemented once...)
