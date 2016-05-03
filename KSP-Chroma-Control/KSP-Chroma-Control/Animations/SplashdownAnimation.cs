@@ -14,6 +14,10 @@ namespace KSP_Chroma_Control
     /// </summary>
     internal class SplashdownAnimation : KeyboardAnimation
     {
+        private static List<GameScenes> validScenes = new List<GameScenes>() {
+            GameScenes.FLIGHT
+        };
+
         /// <summary>
         /// Static constructor adds lightning bolts in different colors to both frames
         /// </summary>
@@ -44,7 +48,7 @@ namespace KSP_Chroma_Control
            return myReturn;
         }
 
-        public SplashdownAnimation() : base(40)
+        public SplashdownAnimation() : base(40, validScenes)
         {
         }
     }

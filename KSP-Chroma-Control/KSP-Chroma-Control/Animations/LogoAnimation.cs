@@ -14,15 +14,22 @@ namespace KSP_Chroma_Control
     /// </summary>
     internal class LogoAnimation : KeyboardAnimation
     {
+        private static List<GameScenes> validScenes = new List<GameScenes>() {
+            GameScenes.MAINMENU,
+            GameScenes.SPACECENTER,
+            GameScenes.TRACKSTATION,
+            GameScenes.CREDITS
+        };
+
         /// <summary>
-        /// Static constructor adds lightning bolts in different colors to both frames
+        /// Static constructor interpolates from blue to logo.
         /// </summary>
         static LogoAnimation()
         {
             frames = AnimationUtils.InterpolateFrames(new ColorScheme(Color.blue), new LogoScheme(), 20);
         }
 
-        public LogoAnimation() : base(5)
+        public LogoAnimation() : base(5, validScenes)
         {
         }
     }

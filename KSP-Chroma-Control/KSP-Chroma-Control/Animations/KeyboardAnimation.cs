@@ -1,4 +1,5 @@
 ﻿using KSP_Chroma_Control.ColorSchemes;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace KSP_Chroma_Control
@@ -9,19 +10,17 @@ namespace KSP_Chroma_Control
     public abstract class KeyboardAnimation
     {
         protected static ColorScheme[] frames;
-        public static string getName()
-        {
-            return "KeyBoardAnimation";
-        }
 
         private int currentFrame;
         private int lastFrameTime = 0;
         private int fps = 10;
+        private List<GameScenes> validScenes;
 
-        public KeyboardAnimation(int fps)
+        public KeyboardAnimation(int fps, List<GameScenes> validScenes)
         {
             this.fps = fps;
             this.currentFrame = 0;
+            this.validScenes = validScenes;
         }
 
         /// <summary>
@@ -30,12 +29,24 @@ namespace KSP_Chroma_Control
         /// <returns>the current animation frame.</returns>
         public virtual ColorScheme getFrame()
         {
+            ColorScheme myReturn = null;
+
             if (lastFrameTime < (int)(Time.realtimeSinceStartup * fps))
             {
                 currentFrame++;
                 lastFrameTime = (int)(Time.realtimeSinceStartup * fps);
             }
-            return (frames.Length > currentFrame) ? frames[currentFrame] : frames[currentFrame - 1];
+
+            if(frames != null && frames.Length > currentFrame)
+            {
+                myReturn = frames[currentFrame];
+            }
+            else
+            {
+                myReturn = new ColorScheme(Color.black);
+                frames = null;
+            }
+            return myReturn;
         }
 
         /// <summary>
@@ -44,7 +55,7 @@ namespace KSP_Chroma_Control
         /// <returns>true, if the animation is finished.</returns>
         public virtual bool isFinished()
         {
-            return currentFrame >= frames.Length;
+            return !validScenes.Contains(HighLogic.LoadedScene) || frames == null || currentFrame >= frames.Length;
         }
     }
 }

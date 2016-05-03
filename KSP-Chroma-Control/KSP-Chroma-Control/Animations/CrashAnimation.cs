@@ -14,6 +14,10 @@ namespace KSP_Chroma_Control
     /// </summary>
     internal class CrashAnimation : KeyboardAnimation
     {
+        private static List<GameScenes> validScenes = new List<GameScenes>() {
+            GameScenes.FLIGHT
+        };
+
         /// <summary>
         /// Static constructor adds lightning bolts in different colors to both frames
         /// </summary>
@@ -45,7 +49,7 @@ namespace KSP_Chroma_Control
             frames = newFrames.ToArray();
         }
         
-        public CrashAnimation() : base(30)
+        public CrashAnimation() : base(30, validScenes)
         {
         }
     }

@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Text;
+using UnityEngine;
 
 namespace KSP_Chroma_Control
 {
@@ -71,7 +72,7 @@ namespace KSP_Chroma_Control
         {
             if (activeAnimation != null && activeAnimation.isFinished())
                 activeAnimation = null;
-            return activeAnimation != null;
+            return activeAnimation != null && !activeAnimation.isFinished();
         }
     }
 }

@@ -83,45 +83,30 @@ namespace KSP_Chroma_Control.SceneManagers
         /// </summary>
         private void update()
         {
-            Debug.LogError("1");
             if (this.currentVessel != FlightGlobals.ActiveVessel)
             {
-                Debug.LogError("2");
                 this.currentVessel = FlightGlobals.fetch.activeVessel;
-                Debug.LogError("3");
                 resetActionGroups();
-                Debug.LogError("4");
                 findUsableActionGroups();
-                Debug.LogError("5");
             }
             else if (currentVessel != null)
             {
 
-                Debug.LogError("6");
                 if (currentVessel.isEVA)
                 {
-                    Debug.LogError("7");
                     this.currentColorScheme = new EVAScheme();
-                    Debug.LogError("8");
                     showGauge("EVAFuel", currentVessel.evaController.Fuel, currentVessel.evaController.FuelCapacity);
-                    Debug.LogError("9");
                 }
                 else if (!currentVessel.IsControllable)
                 {
-                    Debug.LogError("10");
                     AnimationManager.Instance.setAnimation(new PowerLostAnimation());
                 }
                 else
                 {
-                    Debug.LogError("11");
                     this.currentColorScheme = new FlightScheme();
-                    Debug.LogError("12");
                     recalculateResources();
-                    Debug.LogError("13");
                     updateToggleables();
-                    Debug.LogError("14");
                 }
-                Debug.LogError("15");
                 this.displayVesselHeight();
             }
         }

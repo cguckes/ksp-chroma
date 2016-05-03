@@ -51,22 +51,25 @@ namespace KSP_Chroma_Control.SceneManagers
             currentColorScheme.SetKeysToColor(new KeyCode[] { GameSettings.Editor_modePlace.primary, GameSettings.Editor_modeOffset.primary,
                 GameSettings.Editor_modeRotate.primary, GameSettings.Editor_modeRoot.primary }, Color.white);
 
-            ConstructionMode state = EditorLogic.fetch.EditorConstructionMode;
-
-            switch (state)
+            if (EditorLogic.fetch != null)
             {
-                case ConstructionMode.Place:
-                    currentColorScheme.SetKeyToColor(GameSettings.Editor_modePlace.primary, Color.blue);
-                    break;
-                case ConstructionMode.Move:
-                    currentColorScheme.SetKeyToColor(GameSettings.Editor_modeOffset.primary, Color.blue);
-                    break;
-                case ConstructionMode.Rotate:
-                    currentColorScheme.SetKeyToColor(GameSettings.Editor_modeRotate.primary, Color.blue);
-                    break;
-                case ConstructionMode.Root:
-                    currentColorScheme.SetKeyToColor(GameSettings.Editor_modeRoot.primary, Color.blue);
-                    break;
+                ConstructionMode state = EditorLogic.fetch.EditorConstructionMode;
+
+                switch (state)
+                {
+                    case ConstructionMode.Place:
+                        currentColorScheme.SetKeyToColor(GameSettings.Editor_modePlace.primary, Color.blue);
+                        break;
+                    case ConstructionMode.Move:
+                        currentColorScheme.SetKeyToColor(GameSettings.Editor_modeOffset.primary, Color.blue);
+                        break;
+                    case ConstructionMode.Rotate:
+                        currentColorScheme.SetKeyToColor(GameSettings.Editor_modeRotate.primary, Color.blue);
+                        break;
+                    case ConstructionMode.Root:
+                        currentColorScheme.SetKeyToColor(GameSettings.Editor_modeRoot.primary, Color.blue);
+                        break;
+                }
             }
         }
 

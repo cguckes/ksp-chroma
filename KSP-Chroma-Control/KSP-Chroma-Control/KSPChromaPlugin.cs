@@ -36,7 +36,6 @@ namespace KSP_Chroma_Control
 
             GameEvents.VesselSituation.onLand.Add(callbackLanded);
             GameEvents.onPartDie.Add(callbackCrash);
-            GameEvents.onCrashSplashdown.Add(callbackSplashdownCrash);
             GameEvents.onGameSceneLoadRequested.Add(callbackSceneChange);
         }
 
@@ -44,11 +43,6 @@ namespace KSP_Chroma_Control
         {
             if (vessel.situation == Vessel.Situations.SPLASHED)
                 AnimationManager.Instance.setAnimation(new SplashdownAnimation());
-        }
-
-        private void callbackSplashdownCrash(EventReport report)
-        {
-            AnimationManager.Instance.setAnimation(new SplashdownAnimation());
         }
 
         private void callbackCrash(Part part)
@@ -59,7 +53,6 @@ namespace KSP_Chroma_Control
 
         private void callbackSceneChange(GameScenes scene)
         {
-            AnimationManager.Instance.setAnimation(null);
             switch (scene)
             {
                 case GameScenes.EDITOR:
@@ -67,6 +60,7 @@ namespace KSP_Chroma_Control
                 case GameScenes.LOADING:
                 case GameScenes.LOADINGBUFFER:
                 case GameScenes.PSYSTEM:
+                    AnimationManager.Instance.setAnimation(null);
                     break;
                 default:
                     AnimationManager.Instance.setAnimation(new LogoAnimation());

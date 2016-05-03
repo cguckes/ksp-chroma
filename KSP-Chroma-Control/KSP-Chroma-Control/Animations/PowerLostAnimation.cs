@@ -22,6 +22,10 @@ namespace KSP_Chroma_Control
         /// </summary>
         private static ColorScheme blue = new ColorScheme(Color.blue);
 
+        private static List<GameScenes> validScenes = new List<GameScenes>() {
+            GameScenes.FLIGHT
+        };
+
         /// <summary>
         /// Static constructor adds lightning bolts in different colors to both frames
         /// </summary>
@@ -41,7 +45,7 @@ namespace KSP_Chroma_Control
             red.SetKeysToColor(lightningKeys, Color.blue);
         }
 
-        public PowerLostAnimation() : base(1)
+        public PowerLostAnimation() : base(1, validScenes)
         {
         }
 

@@ -34,7 +34,6 @@ namespace KSP_Chroma_Control.Animations
         public static ColorScheme InterpolateFrames(ColorScheme from, ColorScheme to)
         {
             ColorScheme myReturn = from;
-            //Debug.LogWarning("Interpolating from " + from[KeyCode.Q] + " to " + to[KeyCode.Q]);
             KeyCode[,] keys = Config.Instance.KeyByPosition;
 
             foreach (KeyCode key in keys)
@@ -143,7 +142,7 @@ namespace KSP_Chroma_Control.Animations
                                 newColor.r += source.r * factor;
                                 newColor.g += source.g * factor;
                                 newColor.b += source.b * factor;
-                                newColor.a += source.a; // * factor; // We don't want to interpolate alpha colors
+                                newColor.a += source.a;
                             }
                             catch (Exception e)
                             {
@@ -154,15 +153,12 @@ namespace KSP_Chroma_Control.Animations
                 else
                 {
                     newColor = oldColor;
-                    Debug.LogError("Error: Using filter matrices with an even number of colums/rows is not allowed. Dimesions were " + matrix.GetLength(0) + ":" + matrix.GetLength(1));
                 }
 
-                Debug.LogWarning("OldColor(" + origX + "," + origY + "): " + oldColor.ToString() + " => " + newColor.ToString());
                 return newColor;
             }
-            catch (Exception e)
+            catch (Exception)
             {
-                Debug.LogException(e);
                 return Color.black;
             }
         }
