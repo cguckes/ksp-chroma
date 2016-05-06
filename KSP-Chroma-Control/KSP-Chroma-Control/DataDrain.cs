@@ -8,7 +8,7 @@ namespace KspChromaControl
     /// <summary>
     /// Implement this to use the mod with other devices.
     /// </summary>
-    interface DataDrain
+    internal interface DataDrain
     {
         /// <summary>
         /// Sends the requested color scheme to the implemented output channel

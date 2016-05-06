@@ -6,7 +6,7 @@ namespace KspChromaControl.SceneManagers
     /// <summary>
     /// Contains the base color scheme for all VAB and SPH scenes.
     /// </summary>
-    class VabScheme : ColorScheme
+    internal class VabScheme : ColorScheme
     {
         /// <summary>
         /// Overlays the defined key colors over the base color scheme.

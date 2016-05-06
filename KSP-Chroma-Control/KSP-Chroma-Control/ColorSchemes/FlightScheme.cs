@@ -9,7 +9,7 @@ namespace KspChromaControl.ColorSchemes
     /// <summary>
     /// The base color scheme for all flight related game scenes.
     /// </summary>
-    class FlightScheme : ColorScheme
+    internal class FlightScheme : ColorScheme
     {
         /// <summary>
         /// Overlays the defined keys over a black base layout.

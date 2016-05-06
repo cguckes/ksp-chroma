@@ -1,15 +1,13 @@
-﻿using System.Net.Sockets;
-using System.Net;
-using System.Linq;
-using UnityEngine;
+﻿using UnityEngine;
 using KspChromaControl.SceneManagers;
 using System.Collections.Generic;
-using System.Collections;
+using System;
 
 /// <summary>
 /// Contains the chroma control plugin allowing Kerbal Space Program to communicate a keyboard
 /// layout via UDP to a chroma udp server.
 /// </summary>
+[assembly:CLSCompliant(false)]
 namespace KspChromaControl
 {
     /// <summary>

@@ -9,7 +9,7 @@ namespace KspChromaControl.ColorSchemes
     /// <summary>
     /// Special color scheme for EVA scenes.
     /// </summary>
-    class EVAScheme : ColorScheme
+    internal class EVAScheme : ColorScheme
     {
         private readonly KeyCode[] movementKeys = {
             GameSettings.EVA_back.primary,

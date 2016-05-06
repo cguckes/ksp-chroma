@@ -9,7 +9,7 @@ namespace KspChromaControl.ColorSchemes
     /// Represents a base color scheme, saving all the colors per key.
     /// </summary>
     [Serializable]
-    public class ColorScheme : Dictionary<KeyCode, Color>
+    internal class ColorScheme : Dictionary<KeyCode, Color>
     {
         public Color baseColor { get; }
 

@@ -11,7 +11,7 @@ namespace KspChromaControl.SceneManagers
     /// <summary>
     /// Manages the keyboard colors for VAB and SPH scenes.
     /// </summary>
-    class VABSceneManager : SceneManager
+    internal class VABSceneManager : SceneManager
     {
         /// <summary>
         /// The base color scheme, used by all editor scenes

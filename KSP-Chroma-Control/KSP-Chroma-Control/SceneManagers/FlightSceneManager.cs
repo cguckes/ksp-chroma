@@ -10,7 +10,7 @@ namespace KspChromaControl.SceneManagers
     /// <summary>
     /// Manages the keyboard colors during all flight scenes.
     /// </summary>
-    class FlightSceneManager : SceneManager
+    internal class FlightSceneManager : SceneManager
     {
         /// <summary>
         /// The vessel we are piloting currently. Can be a normal vessel or a single

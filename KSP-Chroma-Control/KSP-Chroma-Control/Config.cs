@@ -8,7 +8,7 @@ using UnityEngine;
 
 namespace KspChromaControl
 {
-    public class Config
+    internal class Config
     {
         private static Config instance;
         public static Config Instance

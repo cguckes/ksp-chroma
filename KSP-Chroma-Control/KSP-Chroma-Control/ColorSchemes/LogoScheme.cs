@@ -10,7 +10,7 @@ namespace KspChromaControl.ColorSchemes
     /// Displays an image on the keyboard vaguely similar to the logo minus the 
     /// KSP text.
     /// </summary>
-    class LogoScheme : ColorScheme
+    internal class LogoScheme : ColorScheme
     {
         /// <summary>
         /// Overlays the defined keys on top of a blue base color scheme.
