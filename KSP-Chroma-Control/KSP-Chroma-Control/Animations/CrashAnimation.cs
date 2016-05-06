@@ -14,6 +14,8 @@ namespace KspChromaControl
     /// </summary>
     internal class CrashAnimation : KeyboardAnimation
     {
+        private static ColorScheme[] frames;
+
         private static List<GameScenes> validScenes = new List<GameScenes>() {
             GameScenes.FLIGHT
         };
@@ -49,7 +51,7 @@ namespace KspChromaControl
             frames = newFrames.ToArray();
         }
         
-        public CrashAnimation() : base(30, validScenes)
+        public CrashAnimation() : base(30, validScenes, frames)
         {
         }
     }

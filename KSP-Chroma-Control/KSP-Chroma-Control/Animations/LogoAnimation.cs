@@ -14,6 +14,8 @@ namespace KspChromaControl
     /// </summary>
     internal class LogoAnimation : KeyboardAnimation
     {
+        private static ColorScheme[] frames;
+
         private static List<GameScenes> validScenes = new List<GameScenes>() {
             GameScenes.MAINMENU,
             GameScenes.SPACECENTER,
@@ -29,7 +31,7 @@ namespace KspChromaControl
             frames = AnimationUtils.InterpolateFrames(new ColorScheme(Color.blue), new LogoScheme(), 20);
         }
 
-        public LogoAnimation() : base(10, validScenes)
+        public LogoAnimation() : base(10, validScenes, frames)
         {
         }
     }

@@ -14,6 +14,8 @@ namespace KspChromaControl
     /// </summary>
     internal class SplashdownAnimation : KeyboardAnimation
     {
+        private static ColorScheme[] frames;
+
         private static List<GameScenes> validScenes = new List<GameScenes>() {
             GameScenes.FLIGHT
         };
@@ -48,7 +50,7 @@ namespace KspChromaControl
            return myReturn;
         }
 
-        public SplashdownAnimation() : base(40, validScenes)
+        public SplashdownAnimation() : base(40, validScenes, frames)
         {
         }
     }

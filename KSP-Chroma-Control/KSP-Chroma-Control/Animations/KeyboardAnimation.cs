@@ -9,18 +9,19 @@ namespace KspChromaControl
     /// </summary>
     internal abstract class KeyboardAnimation
     {
-        protected static ColorScheme[] frames;
+        private ColorScheme[] frames;
 
         private int currentFrame;
         private int lastFrameTime = 0;
         private int fps = 10;
         private List<GameScenes> validScenes;
 
-        public KeyboardAnimation(int fps, List<GameScenes> validScenes)
+        public KeyboardAnimation(int fps, List<GameScenes> validScenes, ColorScheme[] frames)
         {
             this.fps = fps;
             this.currentFrame = 0;
             this.validScenes = validScenes;
+            this.frames = frames;
         }
 
         /// <summary>

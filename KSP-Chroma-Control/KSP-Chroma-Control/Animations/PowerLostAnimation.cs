@@ -45,7 +45,7 @@ namespace KspChromaControl
             red.SetKeysToColor(lightningKeys, Color.blue);
         }
 
-        public PowerLostAnimation() : base(1, validScenes)
+        public PowerLostAnimation() : base(1, validScenes, null)
         {
         }
 
