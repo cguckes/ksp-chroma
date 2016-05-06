@@ -178,6 +178,10 @@ namespace KspChromaControl
             { KeyCode.Z, Key.Z }
         };
 
+        private Corale.Colore.Razer.Mouse.Effects.CustomGrid mouseGrid = new Corale.Colore.Razer.Mouse.Effects.CustomGrid(Color.black);
+        private Corale.Colore.Razer.Mousepad.Effects.Custom mousePadGrid = new Corale.Colore.Razer.Mousepad.Effects.Custom(Color.black);
+        private Corale.Colore.Razer.Headset.Effects.Static headSetGrid = new Corale.Colore.Razer.Headset.Effects.Static();
+
         /// <summary>
         /// Applies the current color scheme to all connected razer devices.
         /// </summary>
@@ -185,7 +189,10 @@ namespace KspChromaControl
         public void send(ColorScheme scheme)
         {
             applyToKeyboard(scheme);
-            applyToMouse(scheme);
+            displayHeat(scheme);
+            displayElectricity(scheme);
+
+            applyGrids();
         }
 
         /// <summary>
@@ -203,21 +210,21 @@ namespace KspChromaControl
             }
         }
 
-        private void applyToMouse(ColorScheme colorScheme)
+        /// <summary>
+        /// Paints heat displays onto all connected devices except keyboards and keypads.
+        /// </summary>
+        /// <param name="colorScheme"></param>
+        private void displayHeat(ColorScheme colorScheme)
         {
-            double electricity = 0.0;
             double heat = 0.0;
 
-            if(colorScheme.otherValues.ContainsKey("ElectricCharge"))
-                electricity = colorScheme.otherValues["ElectricCharge"];
             if (colorScheme.otherValues.ContainsKey("Heat"))
                 heat = colorScheme.otherValues["Heat"];
 
             // Display heat on all LEDs we have
             Color heatColor = new Color();
-            Debug.LogWarning("Heat percentage: " + heat);
 
-            if(heat >= 0.5)
+            if (heat >= 0.5)
             {
                 heat = 2 * heat - 1.0;
                 heatColor.r = warm.r + (hot.r - warm.r) * (float)heat;
@@ -234,26 +241,56 @@ namespace KspChromaControl
                 heatColor.a = 1f;
             }
 
-            Corale.Colore.Razer.Mouse.Effects.CustomGrid grid = new Corale.Colore.Razer.Mouse.Effects.CustomGrid(heatColor);
+            mouseGrid.Set(heatColor);
+            mousePadGrid.Set(heatColor);
+            headSetGrid = new Corale.Colore.Razer.Headset.Effects.Static(heatColor);
+        }
 
-            // Color the outside led rows with an electricity gauge, overwriting heat displays
-            electricity *= Corale.Colore.Razer.Mouse.Constants.MaxRows - 2;
+        private void displayElectricity(ColorScheme colorScheme)
+        {
+            double electricity = 0.0;
 
+            if(colorScheme.otherValues.ContainsKey("ElectricCharge"))
+                electricity = colorScheme.otherValues["ElectricCharge"];
+
+            // Color the outside led rows with an electricity gauge, overwriting heat displays on a mouse
+            double mouseElectricity = electricity * (Corale.Colore.Razer.Mouse.Constants.MaxRows - 2);
             for(int i = 1; i < Corale.Colore.Razer.Mouse.Constants.MaxRows - 1; i++)
             {
                 Color ledColor = Color.cyan;
 
-                float colorStrength = (float)Math.Min(electricity - (i - 1), 1.0);
+                float colorStrength = (float)Math.Min(mouseElectricity - (i - 1), 1.0);
 
                 ledColor.r *= colorStrength;
                 ledColor.g *= colorStrength;
                 ledColor.b *= colorStrength;
 
-                grid[Corale.Colore.Razer.Mouse.Constants.MaxRows - 1 - i, 0] = ledColor;
-                grid[Corale.Colore.Razer.Mouse.Constants.MaxRows - 1 - i, Corale.Colore.Razer.Mouse.Constants.MaxColumns - 1] = ledColor;
+                mouseGrid[Corale.Colore.Razer.Mouse.Constants.MaxRows - 1 - i, 0] = ledColor;
+                mouseGrid[Corale.Colore.Razer.Mouse.Constants.MaxRows - 1 - i, Corale.Colore.Razer.Mouse.Constants.MaxColumns - 1] = ledColor;
             }
-          
-            Corale.Colore.Core.Mouse.Instance.SetGrid(grid);
+
+            // Color the outside led rows with an electricity gauge, overwriting heat displays on a mousepad
+            double padElectricity = electricity * 5.0;
+            for (int i = 0; i < 5; i++)
+            {
+                Color ledColor = Color.cyan;
+
+                float colorStrength = (float)Math.Min(padElectricity - i, 1.0);
+
+                ledColor.r *= colorStrength;
+                ledColor.g *= colorStrength;
+                ledColor.b *= colorStrength;
+
+                mousePadGrid[4 - i] = ledColor;
+                mousePadGrid[10 + i] = ledColor;
+            }
+        }
+
+        private void applyGrids()
+        {
+            Corale.Colore.Core.Mouse.Instance.SetGrid(mouseGrid);
+            Mousepad.Instance.SetCustom(mousePadGrid);
+            Headset.Instance.SetStatic(headSetGrid);
         }
     }
 }
