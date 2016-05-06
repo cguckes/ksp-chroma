@@ -45,6 +45,10 @@ namespace KspChromaControl
             red.SetKeysToColor(lightningKeys, Color.blue);
         }
 
+        /// <summary>
+        /// Constructor that initializes the keyboard animation object. frames can be null here, because the
+        /// getFrame method relies on alternating between two fixed frames rather than a sequence.
+        /// </summary>
         public PowerLostAnimation() : base(1, validScenes, null)
         {
         }

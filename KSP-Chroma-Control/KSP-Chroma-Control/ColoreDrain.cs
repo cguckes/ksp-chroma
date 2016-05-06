@@ -6,7 +6,9 @@ using UnityEngine;
 
 namespace KspChromaControl
 {
-
+    /// <summary>
+    /// Data drain that colors razer devices.
+    /// </summary>
     internal class ColoreDrain : DataDrain
     {
         /// <summary>

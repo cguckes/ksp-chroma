@@ -9,13 +9,18 @@ using KspChromaControl.Animations;
 namespace KspChromaControl
 {
     /// <summary>
-    /// Displays a warning on the keyboard, indicating that the vessel is currently out of power and cannot
-    /// be controlled. Consists of two frames alternating at 1fps.
+    /// Animation displayed when you manage to explode the root part of your vessel.
     /// </summary>
     internal class CrashAnimation : KeyboardAnimation
     {
+        /// <summary>
+        /// All animation frames for this animation.
+        /// </summary>
         private static ColorScheme[] frames;
 
+        /// <summary>
+        /// List of scenes this animation is valid in.
+        /// </summary>
         private static List<GameScenes> validScenes = new List<GameScenes>() {
             GameScenes.FLIGHT
         };
@@ -51,6 +56,9 @@ namespace KspChromaControl
             frames = newFrames.ToArray();
         }
         
+        /// <summary>
+        /// Initializes the base keyboard animation object.
+        /// </summary>
         public CrashAnimation() : base(30, validScenes, frames)
         {
         }

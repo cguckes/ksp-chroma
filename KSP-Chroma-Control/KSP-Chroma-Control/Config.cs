@@ -8,9 +8,19 @@ using UnityEngine;
 
 namespace KspChromaControl
 {
+    /// <summary>
+    /// Stores configuration settings for the whole mod. Implemented as singleton.
+    /// </summary>
     internal class Config
     {
+        /// <summary>
+        /// Singleton instance
+        /// </summary>
         private static Config instance;
+
+        /// <summary>
+        /// Singleton getter / initializer
+        /// </summary>
         public static Config Instance
         {
             get
@@ -23,12 +33,24 @@ namespace KspChromaControl
             }
         }
 
+        /// <summary>
+        /// Colors for red and orange toggle keys.
+        /// </summary>
         public readonly KeyValuePair<Color, Color> redOrangeToggle = new KeyValuePair<Color, Color>(Color.red, new Color32(255, 100, 0, 255));
+
+        /// <summary>
+        /// Colors for red and green toggle keys.
+        /// </summary>
         public readonly KeyValuePair<Color, Color> redGreenToggle = new KeyValuePair<Color, Color>(Color.red, Color.green);
+
+        /// <summary>
+        /// Colors for cyan and blue toggle keys.
+        /// </summary>
         public readonly KeyValuePair<Color, Color> cyanBlueToggle = new KeyValuePair<Color, Color>(Color.cyan, Color.blue);
 
         /// <summary>
-        /// Allows getting a key via it's coordinates, rather than it's keycodes. Default values are calibrated for razer devices.
+        /// Allows getting a key via it's coordinates, rather than it's keycodes. Necessary for animations to work as expected.
+        /// Default values are calibrated for razer devices. (Most animations should be ok on other devices too).
         /// </summary>
         public KeyCode[,] KeyByPosition { get; set; } = new KeyCode[6,22]
         {
@@ -80,6 +102,9 @@ namespace KspChromaControl
         /// </summary>
         public readonly Dictionary<KSPActionGroup, KeyValuePair<KeyBinding, KeyValuePair<Color, Color>>> actionGroupConf;
 
+        /// <summary>
+        /// Private constructor to avoid instantiation outside of our singleton logic.
+        /// </summary>
         private Config()
         {
             actionGroupConf = new Dictionary<KSPActionGroup, KeyValuePair<KeyBinding, KeyValuePair<Color, Color>>>()

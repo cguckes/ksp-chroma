@@ -1,5 +1,4 @@
-﻿using Corale.Colore.Razer.Keyboard;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using UnityEngine;
 

@@ -9,13 +9,37 @@ namespace KspChromaControl
     /// </summary>
     internal abstract class KeyboardAnimation
     {
+        /// <summary>
+        /// Array of frames we iterate over to show the animation.
+        /// </summary>
         private ColorScheme[] frames;
 
+        /// <summary>
+        /// The index of the currently displayed frame.
+        /// </summary>
         private int currentFrame;
+
+        /// <summary>
+        /// The realtime the last frame was displayed
+        /// </summary>
         private int lastFrameTime = 0;
-        private int fps = 10;
+
+        /// <summary>
+        /// The fps value for this animation
+        /// </summary>
+        private int fps = 24;
+
+        /// <summary>
+        /// The list of scenes, this animation can be shown in.
+        /// </summary>
         private List<GameScenes> validScenes;
 
+        /// <summary>
+        /// Creates a new keyboard animation with the given parameters
+        /// </summary>
+        /// <param name="fps">The number of frames per second we want to use.</param>
+        /// <param name="validScenes">A list of scenes, the animation should be valid in.</param>
+        /// <param name="frames">A list of all frames, containing the actual animation</param>
         public KeyboardAnimation(int fps, List<GameScenes> validScenes, ColorScheme[] frames)
         {
             this.fps = fps;

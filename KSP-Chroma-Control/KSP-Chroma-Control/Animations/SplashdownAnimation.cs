@@ -9,13 +9,18 @@ using KspChromaControl.Animations;
 namespace KspChromaControl
 {
     /// <summary>
-    /// Displays a warning on the keyboard, indicating that the vessel is currently out of power and cannot
-    /// be controlled. Consists of two frames alternating at 1fps.
+    /// Animation displayed when the vessel is splashed down into any sort of ocean.
     /// </summary>
     internal class SplashdownAnimation : KeyboardAnimation
     {
+        /// <summary>
+        /// The animation frames.
+        /// </summary>
         private static ColorScheme[] frames;
 
+        /// <summary>
+        /// List of scenes this animation is valid in.
+        /// </summary>
         private static List<GameScenes> validScenes = new List<GameScenes>() {
             GameScenes.FLIGHT
         };
@@ -38,6 +43,10 @@ namespace KspChromaControl
             frames = newFrames.ToArray();
         }
 
+        /// <summary>
+        /// Helper method that generates all animation frames.
+        /// </summary>
+        /// <returns></returns>
         private static ColorScheme[] generateAnimationFrames()
         {
             /// Init with sine wave
@@ -50,6 +59,9 @@ namespace KspChromaControl
            return myReturn;
         }
 
+        /// <summary>
+        /// Constructor that initializes the keyboard animation object.
+        /// </summary>
         public SplashdownAnimation() : base(40, validScenes, frames)
         {
         }

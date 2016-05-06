@@ -7,8 +7,18 @@ using UnityEngine;
 
 namespace KspChromaControl.Animations
 {
+    /// <summary>
+    /// Utility class that contains many useful functions for displaying animations on the keyboard.
+    /// </summary>
     internal class AnimationUtils
     {
+        /// <summary>
+        /// Interpolates a number of frames for a smooth transition between the provided color schemes.
+        /// </summary>
+        /// <param name="from">The color scheme to transition from</param>
+        /// <param name="to">The color scheme to transition to</param>
+        /// <param name="steps">The number of steps to take</param>
+        /// <returns></returns>
         public static ColorScheme[] InterpolateFrames(ColorScheme from, ColorScheme to, int steps)
         {
             ColorScheme[] myReturn = new ColorScheme[steps];
@@ -36,6 +46,12 @@ namespace KspChromaControl.Animations
             return myReturn;
         }
 
+        /// <summary>
+        /// Calculates the distance of a key from the center of the keyboard.
+        /// </summary>
+        /// <param name="x">The x coordinate of the key</param>
+        /// <param name="y">The y coordinate of the key</param>
+        /// <returns></returns>
         public static double GetDistanceFromCenter(int x, int y)
         {
             int distanceX = x - (Config.Instance.KeyByPosition.GetLength(1) / 2);
@@ -48,6 +64,13 @@ namespace KspChromaControl.Animations
             return distance;
         }
 
+        /// <summary>
+        /// Colors the keyboard in a circular sine wave from the center with the given offset.
+        /// </summary>
+        /// <param name="one">The base color</param>
+        /// <param name="two">The color for the wave peaks</param>
+        /// <param name="offset">The offset used to animate the scene (offset + 1 => next scene)</param>
+        /// <returns></returns>
         public static ColorScheme CircularSineWave(Color one, Color two, double offset)
         {
             ColorScheme myReturn = new ColorScheme(one);
@@ -75,6 +98,11 @@ namespace KspChromaControl.Animations
             return myReturn;
         }
 
+        /// <summary>
+        /// Very simple gauss blur over the current color scheme.
+        /// </summary>
+        /// <param name="original">the original color scheme</param>
+        /// <returns>the gauss-smoothed color scheme</returns>
         public static ColorScheme GaussBlur(ColorScheme original)
         {
             float[,] matrix = new float[3, 3]
@@ -87,6 +115,13 @@ namespace KspChromaControl.Animations
             return ApplyMatrixFilter(original, matrix);
         }
 
+        /// <summary>
+        /// Allows you to apply any matrix filter to a given color scheme, as long as the matrix is of uneven
+        /// width and height.
+        /// </summary>
+        /// <param name="original">the original color scheme</param>
+        /// <param name="matrix">the transformation matrix</param>
+        /// <returns></returns>
         public static ColorScheme ApplyMatrixFilter(ColorScheme original, float[,] matrix)
         {
             ColorScheme myReturn = new ColorScheme();
@@ -102,6 +137,14 @@ namespace KspChromaControl.Animations
             return myReturn;
         }
 
+        /// <summary>
+        /// Calculates the resulting pixel from an original using the supplied transformation matrix.
+        /// </summary>
+        /// <param name="original">the original color scheme</param>
+        /// <param name="matrix">the transformation matrix</param>
+        /// <param name="origX">the pixel x-coordinate</param>
+        /// <param name="origY">the pixel y-coordinate</param>
+        /// <returns></returns>
         private static Color FilterPixel(ColorScheme original, float[,] matrix, int origX, int origY)
         {
             try
@@ -150,6 +193,9 @@ namespace KspChromaControl.Animations
             }
         }
 
+        /// <summary>
+        /// Utility classes should not be instantiated.
+        /// </summary>
         private AnimationUtils() { }
 
     }
