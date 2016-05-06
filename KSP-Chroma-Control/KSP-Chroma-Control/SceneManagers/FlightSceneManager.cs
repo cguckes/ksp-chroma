@@ -24,6 +24,11 @@ namespace KspChromaControl.SceneManagers
         private ColorScheme currentColorScheme;
 
         /// <summary>
+        /// Maximum relative temperature, meaning the maximum of the percentage of all parts heat / heat resistance
+        /// </summary>
+        private double maxTemperature = 0.0;
+
+        /// <summary>
         /// Contains all ActionGroups and their current usage state. False means
         /// this ActionGroup has no impact on any part of the vessel.
         /// </summary>
@@ -144,8 +149,18 @@ namespace KspChromaControl.SceneManagers
 
             resources.ForEach(res =>
             {
+                if (!currentColorScheme.otherValues.ContainsKey(res.info.name))
+                    currentColorScheme.otherValues.Add(res.info.name, (res.amount / res.maxAmount));
+                else
+                    currentColorScheme.otherValues[res.info.name] = res.amount / res.maxAmount;
+
                 showGauge(res.info.name, res.amount, res.maxAmount);
             });
+
+            if (!currentColorScheme.otherValues.ContainsKey("Heat"))
+                currentColorScheme.otherValues.Add("Heat", maxTemperature);
+            else
+                currentColorScheme.otherValues["Heat"] = maxTemperature;
         }
 
         /// <summary>
@@ -293,8 +308,7 @@ namespace KspChromaControl.SceneManagers
         }
 
         /// <summary>
-        /// Height off ground display on F keys that arent quicksave and quickload. Scale is in powers of ten
-        /// from 1m to 1000km.
+        /// Height off ground display on F keys from F1 to F4.
         /// </summary>
         private void displayVesselHeight()
         {
@@ -312,7 +326,7 @@ namespace KspChromaControl.SceneManagers
             {
                 double floor = (i > 0) ? heightLimits[i - 1] : 0;
                 double ceiling = heightLimits[i];
-                double vesselHeight = calculateDistanceFromGround();
+                double vesselHeight = calculateDistanceFromGroundAndTemperaturePercentage();
                 Color newColor = new Color32(0, 100, 100, 255);
 
                 if (vesselHeight > ceiling)
@@ -329,11 +343,13 @@ namespace KspChromaControl.SceneManagers
         }
 
         /// <summary>
-        /// Calculates the ground distance for the vessel.
+        /// Calculates the ground distance for the vessel. Also calculates the maximum temperature percentage
+        /// because why iterate over all parts twice.
         /// </summary>
         /// <returns></returns>
-        private double calculateDistanceFromGround()
+        private double calculateDistanceFromGroundAndTemperaturePercentage()
         {
+            maxTemperature = 0.0;
             Vector3 CoM = currentVessel.findWorldCenterOfMass();  //Gets CoM
             Vector3 up = FlightGlobals.getUpAxis(CoM); //Gets up axis (needed for the raycast)
             float ASL = FlightGlobals.getAltitudeAtPos(CoM);
@@ -359,6 +375,8 @@ namespace KspChromaControl.SceneManagers
                     float partAlt = FlightGlobals.getAltitudeAtPos(bottom) - surfaceAlt;  //Gets the looped part alt
                     bottomAlt = Mathf.Max(0, Mathf.Min(bottomAlt, partAlt));  //Stores the smallest value in all the parts
                 }
+
+                maxTemperature = Math.Max(p.skinTemperature / p.skinMaxTemp, maxTemperature);
             }
 
             return bottomAlt;

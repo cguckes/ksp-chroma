@@ -5,12 +5,16 @@ using UnityEngine;
 namespace KspChromaControl.ColorSchemes
 {
     /// <summary>
-    /// Represents a base color scheme, saving all the colors per key.
+    /// Represents a base color scheme, saving a base color and colors for modified keys. Implements the
+    /// flyweight design pattern, to keep the memory footprint low. This is necessary for the animations to
+    /// work smoothly. Also allows the storage of values for other gauge display devices, should range from 0 to 1.
     /// </summary>
     [Serializable]
     internal class ColorScheme : Dictionary<KeyCode, Color>
     {
+
         public Color baseColor { get; }
+        public Dictionary<string, double> otherValues { get; } = new Dictionary<string, double>();
 
         /// <summary>
         /// Creates a new ColorScheme rendering all keys black;

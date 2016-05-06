@@ -2,7 +2,9 @@
 using KspChromaControl.ColorSchemes;
 using System.Collections.Generic;
 using Corale.Colore.Razer.Keyboard;
+using Corale.Colore.Core;
 using UnityEngine;
+using System.Linq;
 
 namespace KspChromaControl
 {
@@ -11,6 +13,13 @@ namespace KspChromaControl
     /// </summary>
     internal class ColoreDrain : DataDrain
     {
+        /// <summary>
+        /// Three colors we use to display craft hotness.
+        /// </summary>
+        private static Color cold = Color.blue;
+        private static Color warm = Color.red;
+        private static Color hot = Color.yellow;
+
         /// <summary>
         /// Unity Keybinding <=> UK Layout translation dictionary
         /// </summary>
@@ -169,9 +178,14 @@ namespace KspChromaControl
             { KeyCode.Z, Key.Z }
         };
 
+        /// <summary>
+        /// Applies the current color scheme to all connected razer devices.
+        /// </summary>
+        /// <param name="scheme"></param>
         public void send(ColorScheme scheme)
         {
             applyToKeyboard(scheme);
+            applyToMouse(scheme);
         }
 
         /// <summary>
@@ -184,9 +198,62 @@ namespace KspChromaControl
             {
                 foreach (KeyValuePair<KeyCode, Key> key in keyMapping)
                 {
-                    Corale.Colore.Core.Keyboard.Instance.SetKey(key.Value, colorScheme[key.Key]);
+                    Keyboard.Instance.SetKey(key.Value, colorScheme[key.Key]);
                 }
             }
+        }
+
+        private void applyToMouse(ColorScheme colorScheme)
+        {
+            double electricity = 0.0;
+            double heat = 0.0;
+
+            if(colorScheme.otherValues.ContainsKey("ElectricCharge"))
+                electricity = colorScheme.otherValues["ElectricCharge"];
+            if (colorScheme.otherValues.ContainsKey("Heat"))
+                heat = colorScheme.otherValues["Heat"];
+
+            // Display heat on all LEDs we have
+            Color heatColor = new Color();
+            Debug.LogWarning("Heat percentage: " + heat);
+
+            if(heat >= 0.5)
+            {
+                heat = 2 * heat - 1.0;
+                heatColor.r = warm.r + (hot.r - warm.r) * (float)heat;
+                heatColor.g = warm.g + (hot.g - warm.g) * (float)heat;
+                heatColor.b = warm.b + (hot.b - warm.b) * (float)heat;
+                heatColor.a = 1f;
+            }
+            else
+            {
+                heat = 2 * heat;
+                heatColor.r = cold.r + (warm.r - cold.r) * (float)heat;
+                heatColor.g = cold.g + (warm.g - cold.g) * (float)heat;
+                heatColor.b = cold.b + (warm.b - cold.b) * (float)heat;
+                heatColor.a = 1f;
+            }
+
+            Corale.Colore.Razer.Mouse.Effects.CustomGrid grid = new Corale.Colore.Razer.Mouse.Effects.CustomGrid(heatColor);
+
+            // Color the outside led rows with an electricity gauge, overwriting heat displays
+            electricity *= Corale.Colore.Razer.Mouse.Constants.MaxRows - 2;
+
+            for(int i = 1; i < Corale.Colore.Razer.Mouse.Constants.MaxRows - 1; i++)
+            {
+                Color ledColor = Color.cyan;
+
+                float colorStrength = (float)Math.Min(electricity - (i - 1), 1.0);
+
+                ledColor.r *= colorStrength;
+                ledColor.g *= colorStrength;
+                ledColor.b *= colorStrength;
+
+                grid[Corale.Colore.Razer.Mouse.Constants.MaxRows - 1 - i, 0] = ledColor;
+                grid[Corale.Colore.Razer.Mouse.Constants.MaxRows - 1 - i, Corale.Colore.Razer.Mouse.Constants.MaxColumns - 1] = ledColor;
+            }
+          
+            Corale.Colore.Core.Mouse.Instance.SetGrid(grid);
         }
     }
 }
