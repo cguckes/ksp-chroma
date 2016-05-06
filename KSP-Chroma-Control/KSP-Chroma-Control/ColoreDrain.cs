@@ -1,14 +1,25 @@
 ﻿using System;
-using KSP_Chroma_Control.ColorSchemes;
+using KspChromaControl.ColorSchemes;
 using System.Collections.Generic;
 using Corale.Colore.Razer.Keyboard;
+using Corale.Colore.Core;
 using UnityEngine;
+using System.Linq;
 
-namespace KSP_Chroma_Control
+namespace KspChromaControl
 {
-
+    /// <summary>
+    /// Data drain that colors razer devices.
+    /// </summary>
     internal class ColoreDrain : DataDrain
     {
+        /// <summary>
+        /// Three colors we use to display craft hotness.
+        /// </summary>
+        private static Color cold = Color.blue;
+        private static Color warm = Color.red;
+        private static Color hot = Color.yellow;
+
         /// <summary>
         /// Unity Keybinding <=> UK Layout translation dictionary
         /// </summary>
@@ -26,19 +37,19 @@ namespace KSP_Chroma_Control
             { KeyCode.Alpha8, Key.D8 },
             { KeyCode.Alpha9, Key.D9 },
             { KeyCode.AltGr, Key.Function }, // abused to use the fn key
-            { KeyCode.Ampersand, Key.D7 },
-            { KeyCode.Asterisk, Key.D8 },
+            //{ KeyCode.Ampersand, Key.D7 },
+            //{ KeyCode.Asterisk, Key.D8 },
             // { KeyCode.At, Key.OemApostrophe }, blinking
 
             { KeyCode.B, Key.B },
             { KeyCode.BackQuote, Key.OemTilde },
             { KeyCode.Backslash, Key.EurBackslash },
             { KeyCode.Backspace, Key.Backspace },
-            { KeyCode.Break, Key.Pause },
+            //{ KeyCode.Break, Key.Pause },
 
             { KeyCode.C, Key.C },
             { KeyCode.CapsLock, Key.CapsLock },
-            { KeyCode.Caret, Key.D6 },
+            //{ KeyCode.Caret, Key.D6 },
             //{ KeyCode.Colon, Key.OemPeriod },
             { KeyCode.Comma, Key.OemComma },
 
@@ -124,7 +135,7 @@ namespace KSP_Chroma_Control
             { KeyCode.PageUp, Key.PageUp },
             { KeyCode.Pause, Key.Pause },
             { KeyCode.Period, Key.OemPeriod },
-            { KeyCode.Plus, Key.OemEquals },
+            //{ KeyCode.Plus, Key.OemEquals },
             { KeyCode.Print, Key.PrintScreen },
 
             { KeyCode.Q, Key.Q },
@@ -147,13 +158,13 @@ namespace KSP_Chroma_Control
             { KeyCode.Semicolon, Key.OemSemicolon },
             { KeyCode.Slash, Key.OemSlash },
             { KeyCode.Space, Key.Space },
-            { KeyCode.SysReq, Key.PrintScreen },
+            //{ KeyCode.SysReq, Key.PrintScreen },
 
             { KeyCode.T, Key.T },
             { KeyCode.Tab, Key.Tab },
 
             { KeyCode.U, Key.U },
-            { KeyCode.Underscore, Key.OemMinus },
+            //{ KeyCode.Underscore, Key.OemMinus },
             { KeyCode.UpArrow, Key.Up },
 
             { KeyCode.V, Key.V },
@@ -167,9 +178,21 @@ namespace KSP_Chroma_Control
             { KeyCode.Z, Key.Z }
         };
 
+        private Corale.Colore.Razer.Mouse.Effects.CustomGrid mouseGrid = new Corale.Colore.Razer.Mouse.Effects.CustomGrid(Color.black);
+        private Corale.Colore.Razer.Mousepad.Effects.Custom mousePadGrid = new Corale.Colore.Razer.Mousepad.Effects.Custom(Color.black);
+        private Corale.Colore.Razer.Headset.Effects.Static headSetGrid = new Corale.Colore.Razer.Headset.Effects.Static();
+
+        /// <summary>
+        /// Applies the current color scheme to all connected razer devices.
+        /// </summary>
+        /// <param name="scheme"></param>
         public void send(ColorScheme scheme)
         {
             applyToKeyboard(scheme);
+            displayHeat(scheme);
+            displayElectricity(scheme);
+
+            applyGrids();
         }
 
         /// <summary>
@@ -178,11 +201,96 @@ namespace KSP_Chroma_Control
         /// <param name="colorScheme">The color scheme to apply.</param>
         private void applyToKeyboard(ColorScheme colorScheme)
         {
-            foreach (KeyValuePair<KeyCode, Color> entry in colorScheme)
+            if (colorScheme != null)
             {
-                if(keyMapping.ContainsKey(entry.Key))
-                    Corale.Colore.Core.Keyboard.Instance.SetKey(keyMapping[entry.Key], entry.Value);
+                foreach (KeyValuePair<KeyCode, Key> key in keyMapping)
+                {
+                    Keyboard.Instance.SetKey(key.Value, colorScheme[key.Key]);
+                }
             }
+        }
+
+        /// <summary>
+        /// Paints heat displays onto all connected devices except keyboards and keypads.
+        /// </summary>
+        /// <param name="colorScheme"></param>
+        private void displayHeat(ColorScheme colorScheme)
+        {
+            double heat = 0.0;
+
+            if (colorScheme.otherValues.ContainsKey("Heat"))
+                heat = colorScheme.otherValues["Heat"];
+
+            // Display heat on all LEDs we have
+            Color heatColor = new Color();
+
+            if (heat >= 0.5)
+            {
+                heat = 2 * heat - 1.0;
+                heatColor.r = warm.r + (hot.r - warm.r) * (float)heat;
+                heatColor.g = warm.g + (hot.g - warm.g) * (float)heat;
+                heatColor.b = warm.b + (hot.b - warm.b) * (float)heat;
+                heatColor.a = 1f;
+            }
+            else
+            {
+                heat = 2 * heat;
+                heatColor.r = cold.r + (warm.r - cold.r) * (float)heat;
+                heatColor.g = cold.g + (warm.g - cold.g) * (float)heat;
+                heatColor.b = cold.b + (warm.b - cold.b) * (float)heat;
+                heatColor.a = 1f;
+            }
+
+            mouseGrid.Set(heatColor);
+            mousePadGrid.Set(heatColor);
+            headSetGrid = new Corale.Colore.Razer.Headset.Effects.Static(heatColor);
+        }
+
+        private void displayElectricity(ColorScheme colorScheme)
+        {
+            double electricity = 0.0;
+
+            if(colorScheme.otherValues.ContainsKey("ElectricCharge"))
+                electricity = colorScheme.otherValues["ElectricCharge"];
+
+            // Color the outside led rows with an electricity gauge, overwriting heat displays on a mouse
+            double mouseElectricity = electricity * (Corale.Colore.Razer.Mouse.Constants.MaxRows - 2);
+            for(int i = 1; i < Corale.Colore.Razer.Mouse.Constants.MaxRows - 1; i++)
+            {
+                Color ledColor = Color.cyan;
+
+                float colorStrength = (float)Math.Min(mouseElectricity - (i - 1), 1.0);
+
+                ledColor.r *= colorStrength;
+                ledColor.g *= colorStrength;
+                ledColor.b *= colorStrength;
+
+                mouseGrid[Corale.Colore.Razer.Mouse.Constants.MaxRows - 1 - i, 0] = ledColor;
+                mouseGrid[Corale.Colore.Razer.Mouse.Constants.MaxRows - 1 - i, Corale.Colore.Razer.Mouse.Constants.MaxColumns - 1] = ledColor;
+            }
+
+            // Color the outside led rows with an electricity gauge, overwriting heat displays on a mousepad
+            double padElectricity = electricity * 5.0;
+            for (int i = 0; i < 5; i++)
+            {
+                Color ledColor = Color.cyan;
+
+                float colorStrength = (float)Math.Min(padElectricity - i, 1.0);
+
+                ledColor.r *= colorStrength;
+                ledColor.g *= colorStrength;
+                ledColor.b *= colorStrength;
+
+                mousePadGrid[4 - i] = ledColor;
+                mousePadGrid[10 + i] = ledColor;
+            }
+        }
+
+        private void applyGrids()
+        {
+            Corale.Colore.Core.Mouse.Instance.SetGrid(mouseGrid);
+            Mousepad.Instance.SetCustom(mousePadGrid);
+            Headset.Instance.SetStatic(headSetGrid);
         }
     }
 }

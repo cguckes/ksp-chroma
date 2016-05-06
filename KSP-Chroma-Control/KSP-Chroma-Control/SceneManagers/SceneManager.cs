@@ -3,12 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace KSP_Chroma_Control.SceneManagers
+namespace KspChromaControl.SceneManagers
 {
     /// <summary>
     /// Allows creation of keyboard color managers for multiple scenes.
     /// </summary>
-    interface SceneManager
+    internal interface SceneManager
     {
         /// <summary>
         /// Gets the keyboard color scheme for the current frame.

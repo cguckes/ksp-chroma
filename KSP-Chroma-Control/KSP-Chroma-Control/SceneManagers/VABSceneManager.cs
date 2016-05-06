@@ -2,16 +2,16 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using KSP_Chroma_Control.ColorSchemes;
+using KspChromaControl.ColorSchemes;
 using UnityEngine;
 using Corale.Colore.Razer.Keyboard;
 
-namespace KSP_Chroma_Control.SceneManagers
+namespace KspChromaControl.SceneManagers
 {
     /// <summary>
     /// Manages the keyboard colors for VAB and SPH scenes.
     /// </summary>
-    class VABSceneManager : SceneManager
+    internal class VABSceneManager : SceneManager
     {
         /// <summary>
         /// The base color scheme, used by all editor scenes
@@ -48,24 +48,28 @@ namespace KSP_Chroma_Control.SceneManagers
         /// </summary>
         private void updatePlacementState()
         {
-            currentColorScheme.SetKeysToColor(new KeyCode[] { KeyCode.Alpha1, KeyCode.Alpha2, KeyCode.Alpha3, KeyCode.Alpha4, }, Color.white);
+            currentColorScheme.SetKeysToColor(new KeyCode[] { GameSettings.Editor_modePlace.primary, GameSettings.Editor_modeOffset.primary,
+                GameSettings.Editor_modeRotate.primary, GameSettings.Editor_modeRoot.primary }, Color.white);
 
-            ConstructionMode state = EditorLogic.fetch.EditorConstructionMode;
-
-            switch (state)
+            if (EditorLogic.fetch != null)
             {
-                case ConstructionMode.Place:
-                    currentColorScheme.SetKeyToColor(KeyCode.Alpha1, Color.blue);
-                    break;
-                case ConstructionMode.Move:
-                    currentColorScheme.SetKeyToColor(KeyCode.Alpha2, Color.blue);
-                    break;
-                case ConstructionMode.Rotate:
-                    currentColorScheme.SetKeyToColor(KeyCode.Alpha3, Color.blue);
-                    break;
-                case ConstructionMode.Root:
-                    currentColorScheme.SetKeyToColor(KeyCode.Alpha4, Color.blue);
-                    break;
+                ConstructionMode state = EditorLogic.fetch.EditorConstructionMode;
+
+                switch (state)
+                {
+                    case ConstructionMode.Place:
+                        currentColorScheme.SetKeyToColor(GameSettings.Editor_modePlace.primary, Color.blue);
+                        break;
+                    case ConstructionMode.Move:
+                        currentColorScheme.SetKeyToColor(GameSettings.Editor_modeOffset.primary, Color.blue);
+                        break;
+                    case ConstructionMode.Rotate:
+                        currentColorScheme.SetKeyToColor(GameSettings.Editor_modeRotate.primary, Color.blue);
+                        break;
+                    case ConstructionMode.Root:
+                        currentColorScheme.SetKeyToColor(GameSettings.Editor_modeRoot.primary, Color.blue);
+                        break;
+                }
             }
         }
 
@@ -74,20 +78,20 @@ namespace KSP_Chroma_Control.SceneManagers
         /// </summary>
         private void updateToggleables()
         {
-            currentColorScheme.SetKeysToColor(new KeyCode[] { KeyCode.X, KeyCode.C }, Color.red);
+            currentColorScheme.SetKeysToColor(new KeyCode[] { GameSettings.Editor_toggleSymMode.primary, GameSettings.Editor_toggleAngleSnap.primary }, Color.red);
             
             if(EditorLogic.fetch.symmetryMode > 0)
             {
-                currentColorScheme.SetKeyToColor(KeyCode.X , Color.green);
+                currentColorScheme.SetKeyToColor(GameSettings.Editor_toggleSymMode.primary , Color.green);
             }
 
             if (EditorLogic.fetch.symmetryMethod == SymmetryMethod.Mirror)
-                currentColorScheme.SetKeyToColor(KeyCode.R, Color.blue);
+                currentColorScheme.SetKeyToColor(GameSettings.Editor_toggleSymMethod.primary, Color.blue);
             else if (EditorLogic.fetch.symmetryMethod == SymmetryMethod.Radial)
-                currentColorScheme.SetKeyToColor(KeyCode.R, Color.green);
+                currentColorScheme.SetKeyToColor(GameSettings.Editor_toggleSymMethod.primary, Color.green);
 
             if (GameSettings.VAB_USE_ANGLE_SNAP)
-                currentColorScheme.SetKeyToColor(KeyCode.C, Color.green);
+                currentColorScheme.SetKeyToColor(GameSettings.Editor_toggleAngleSnap.primary, Color.green);
         }
 
         /// <summary>

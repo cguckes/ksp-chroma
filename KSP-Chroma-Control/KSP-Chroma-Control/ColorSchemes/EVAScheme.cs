@@ -4,14 +4,12 @@ using System.Linq;
 using System.Text;
 using UnityEngine;
 
-namespace KSP_Chroma_Control.ColorSchemes
+namespace KspChromaControl.ColorSchemes
 {
-
-
     /// <summary>
     /// Special color scheme for EVA scenes.
     /// </summary>
-    class EVAScheme : ColorScheme
+    internal class EVAScheme : ColorScheme
     {
         private readonly KeyCode[] movementKeys = {
             GameSettings.EVA_back.primary,

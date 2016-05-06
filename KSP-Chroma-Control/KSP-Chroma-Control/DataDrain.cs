@@ -3,9 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace KSP_Chroma_Control
+namespace KspChromaControl
 {
-    interface DataDrain
+    /// <summary>
+    /// Implement this to use the mod with other devices.
+    /// </summary>
+    internal interface DataDrain
     {
         /// <summary>
         /// Sends the requested color scheme to the implemented output channel
