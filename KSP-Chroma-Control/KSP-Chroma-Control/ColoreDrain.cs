@@ -191,8 +191,19 @@ namespace KspChromaControl
             applyToKeyboard(scheme);
             displayHeat(scheme);
             displayElectricity(scheme);
+            displayHeadset(scheme);
 
             applyGrids();
+        }
+
+        private void displayHeadset(ColorScheme scheme)
+        {
+            Color saveStateColor = scheme[KeyCode.F5];
+            if (saveStateColor.r == 1f && saveStateColor.g == 0f && saveStateColor.b == 0f)
+                headSetGrid = new Corale.Colore.Razer.Headset.Effects.Static(Color.red);
+            else
+                headSetGrid = new Corale.Colore.Razer.Headset.Effects.Static(Color.green);
+
         }
 
         /// <summary>
@@ -243,7 +254,6 @@ namespace KspChromaControl
 
             mouseGrid.Set(heatColor);
             mousePadGrid.Set(heatColor);
-            headSetGrid = new Corale.Colore.Razer.Headset.Effects.Static(heatColor);
         }
 
         private void displayElectricity(ColorScheme colorScheme)
