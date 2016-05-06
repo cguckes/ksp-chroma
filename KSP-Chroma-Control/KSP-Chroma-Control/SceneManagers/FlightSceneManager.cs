@@ -298,15 +298,20 @@ namespace KspChromaControl.SceneManagers
         /// </summary>
         private void displayVesselHeight()
         {
+            double[] heightLimits = new double[]
+            {
+                10.0, 20.0, 50.0, 100.0
+            };
+
             KeyCode[] heightScaleKeys = new KeyCode[]
             {
-                KeyCode.F1, KeyCode.F2, KeyCode.F3, KeyCode.F4, KeyCode.F6, KeyCode.F7, KeyCode.F8
+                KeyCode.F1, KeyCode.F2, KeyCode.F3, KeyCode.F4
             };
 
             for(int i = 0; i < heightScaleKeys.Length; i++)
             {
-                double floor = (i > 0) ? Math.Pow(10, i - 1) : 0;
-                double ceiling = Math.Pow(10, i);
+                double floor = (i > 0) ? heightLimits[i - 1] : 0;
+                double ceiling = heightLimits[i];
                 double vesselHeight = calculateDistanceFromGround();
                 Color newColor = new Color32(0, 100, 100, 255);
 
