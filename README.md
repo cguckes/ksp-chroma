@@ -27,7 +27,8 @@ The mod is still very beta, so let me know if you experience any difficulties wh
 - Crash animation that triggers when crashing a vessel's root part
 - Splashdown animation that triggers, when landing on water.
 - Vessel electricity status displayed on any Razer mouse and mousepad connected
-- Vessel heat displayed in three colors (blue = cool, red = warm/hot, yellow = you're in trouble)
+- Vessel heat displayed in three colors (blue = cool, red = warm/hot, yellow = you're in trouble), uses the scrollwheel and logo on mice and the bottom LEDs on the mousepad.
+- "Dear GF, please don't disturb me now" feature on the headset. The device is colored red, when you can't quicksave right now. Turns green once quicksave is allowed again.
 - Vessel height above ground displayed on F1 to F4 keys (F1 = 10m, F2 = 50m, F3 = 100m, F4 = 1000m). The intensity changes, e.g. if F1 is fully lit and F2 is half lit, you are 30 meters above ground.
 
 ## Installation
