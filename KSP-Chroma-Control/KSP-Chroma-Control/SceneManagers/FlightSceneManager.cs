@@ -300,7 +300,7 @@ namespace KspChromaControl.SceneManagers
         {
             double[] heightLimits = new double[]
             {
-                10.0, 20.0, 50.0, 100.0
+                10.0, 20.0, 100.0, 1000.0
             };
 
             KeyCode[] heightScaleKeys = new KeyCode[]
