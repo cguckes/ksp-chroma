@@ -18,11 +18,17 @@ The mod is still very beta, so let me know if you experience any difficulties wh
 
 ## Full list of game effects
 
-- Stylized Kerbal Space Program logo on every scene that does not contain any noteworthy keyboard interaction (pressing Escape to go to the menu not being noteworthy enough to light up the key)
+- Stylized Kerbal Space Program logo that fades in on every scene that does not contain any noteworthy keyboard interaction (pressing Escape to go to the menu not being noteworthy enough to light up the key)
 - In the vessel editor, different kinds of keysets are lit up according to the current editor mode.
 - Control keys and toggleable function keys are lit up in different colors, showing whether the function is switched on or off during flight.
 - Reduced keyset lit for EVA mode
 - Resource gauges displayed on the keypad and the keys above the UpDownLeftRight keys.
+- Power failure animation on vessels that need power to be controllable
+- Crash animation that triggers when crashing a vessel's root part
+- Splashdown animation that triggers, when landing on water.
+- Vessel electricity status displayed on any Razer mouse and mousepad connected
+- Vessel heat displayed in three colors (blue = cool, red = warm/hot, yellow = you're in trouble)
+- Vessel height above ground displayed on F1 to F4 keys (F1 = 10m, F2 = 50m, F3 = 100m, F4 = 1000m). The intensity changes, e.g. if F1 is fully lit and F2 is half lit, you are 30 meters above ground.
 
 ## Installation
 
@@ -32,10 +38,7 @@ The mod is still very beta, so let me know if you experience any difficulties wh
  
 ## Todo
 
-- Make the whole keyboard red, if the vessel is not steerable any more. (done -> next release)
-- Add CatastrophicFailure event and SplashedDown event animation. (done -> next release)
-- Altimeter on F-Keys (done -> next release)
-- Make fuel gauge position configurable
-- Add Razer Chroma mouse support
+- Make fuel gauge position device dependent (Blackwidow Chroma / Blackwidow Chroma TE / Orbweaver)
 - Light up all keys when the player is entering text (vessel name, savegame, etc.)
+
 - Linux version (this might take a bit longer, but I'm planning to do it anyway. What good is a c# interface if it is only ever implemented once...)
