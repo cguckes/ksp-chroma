@@ -1,7 +1,7 @@
-﻿using KSP_Chroma_Control.ColorSchemes;
+﻿using KspChromaControl.ColorSchemes;
 using UnityEngine;
 
-namespace KSP_Chroma_Control.SceneManagers
+namespace KspChromaControl.SceneManagers
 {
     /// <summary>
     /// Contains the base color scheme for all VAB and SPH scenes.

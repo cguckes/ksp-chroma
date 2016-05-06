@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using UnityEngine;
 
-namespace KSP_Chroma_Control.ColorSchemes
+namespace KspChromaControl.ColorSchemes
 {
     /// <summary>
     /// The base color scheme for all flight related game scenes.

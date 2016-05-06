@@ -1,4 +1,4 @@
-﻿using KSP_Chroma_Control.ColorSchemes;
+﻿using KspChromaControl.ColorSchemes;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -7,12 +7,12 @@ using System.Linq;
 using System.Text;
 using UnityEngine;
 
-namespace KSP_Chroma_Control
+namespace KspChromaControl
 {
     /// <summary>
     /// Handles all animations to avoid confusion and multiple animations running at the same time.
     /// </summary>
-    class AnimationManager
+    internal class AnimationManager
     {
         /// <summary>
         /// Singleton instance
@@ -70,8 +70,6 @@ namespace KSP_Chroma_Control
         /// <returns></returns>
         public Boolean animationRunning()
         {
-            if (activeAnimation != null && activeAnimation.isFinished())
-                activeAnimation = null;
             return activeAnimation != null && !activeAnimation.isFinished();
         }
     }

@@ -1,11 +1,11 @@
-﻿using KSP_Chroma_Control.ColorSchemes;
+﻿using KspChromaControl.ColorSchemes;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using UnityEngine;
 
-namespace KSP_Chroma_Control.Animations
+namespace KspChromaControl.Animations
 {
     internal class AnimationUtils
     {
@@ -14,36 +14,23 @@ namespace KSP_Chroma_Control.Animations
             ColorScheme[] myReturn = new ColorScheme[steps];
             myReturn[0] = from;
             myReturn[steps - 1] = to;
-
-            Action<ColorScheme, ColorScheme, int, int> interpolateRecursive = null;
-            interpolateRecursive = (localFrom, localTo, start, stop) =>
-            {
-                int center = start + ((stop - start) / 2);
-                if (start != stop && center != start)
-                {
-                    myReturn[center] = InterpolateFrames(myReturn[start], myReturn[stop]);
-                    interpolateRecursive(myReturn[0], myReturn[center], 0, center);
-                    interpolateRecursive(myReturn[center], myReturn[stop], center, stop);
-                }
-            };
-
-            interpolateRecursive(from, to, 0, steps - 1);
-            return myReturn;
-        }
-
-        public static ColorScheme InterpolateFrames(ColorScheme from, ColorScheme to)
-        {
-            ColorScheme myReturn = from;
             KeyCode[,] keys = Config.Instance.KeyByPosition;
 
-            foreach (KeyCode key in keys)
+            for (int frame = 1; frame < steps - 1; frame++)
             {
-                myReturn[key] = new Color(
-                    (from[key].r + to[key].r) / 2f,
-                    (from[key].g + to[key].g) / 2f,
-                    (from[key].b + to[key].b) / 2f,
-                    255
-                );
+                ColorScheme frameScheme = new ColorScheme(myReturn[0].baseColor);
+
+                foreach (KeyCode key in keys)
+                {
+                    float newR = myReturn[frame - 1][key].r + (to[key].r - from[key].r) / steps;
+                    float newG = myReturn[frame - 1][key].g + (to[key].g - from[key].g) / steps;
+                    float newB = myReturn[frame - 1][key].b + (to[key].b - from[key].b) / steps;
+
+                    Color keyColor = new Color(newR, newG, newB);
+                    frameScheme[key] = keyColor;
+                }
+
+                myReturn[frame] = frameScheme;
             }
 
             return myReturn;
@@ -52,7 +39,7 @@ namespace KSP_Chroma_Control.Animations
         public static double GetDistanceFromCenter(int x, int y)
         {
             int distanceX = x - (Config.Instance.KeyByPosition.GetLength(1) / 2);
-            int distanceY = x - (Config.Instance.KeyByPosition.GetLength(0) / 2);
+            int distanceY = y - (Config.Instance.KeyByPosition.GetLength(0) / 2);
             double distance = Math.Sqrt(
                 distanceX * distanceX
                 + distanceY * distanceY

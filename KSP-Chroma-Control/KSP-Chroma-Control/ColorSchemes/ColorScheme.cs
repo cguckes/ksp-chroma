@@ -3,14 +3,15 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace KSP_Chroma_Control.ColorSchemes
+namespace KspChromaControl.ColorSchemes
 {
     /// <summary>
     /// Represents a base color scheme, saving all the colors per key.
     /// </summary>
+    [Serializable]
     public class ColorScheme : Dictionary<KeyCode, Color>
     {
-        private Color baseColor;
+        public Color baseColor { get; }
 
         /// <summary>
         /// Creates a new ColorScheme rendering all keys black;
@@ -43,10 +44,15 @@ namespace KSP_Chroma_Control.ColorSchemes
 
         public void SetKeyToColor(KeyCode key, Color color)
         {
-            if (this.ContainsKey(key))
-                this[key] = color;
+            if(color.r == baseColor.r && color.g == baseColor.g && color.b == baseColor.b && this.ContainsKey(key))
+                    this.Remove(key);
             else
-                this.Add(key, color);
+            {
+                if (this.ContainsKey(key))
+                    this[key] = color;
+                else
+                    this.Add(key, color);
+            }
         }
 
         public void SetKeyToColor(int x, int y, Color color)

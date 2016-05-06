@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace KSP_Chroma_Control
+namespace KspChromaControl
 {
     /// <summary>
     /// Implement this to use the mod with other devices.

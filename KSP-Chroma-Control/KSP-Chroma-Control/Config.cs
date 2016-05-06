@@ -1,12 +1,12 @@
 ﻿using Corale.Colore.Razer.Keyboard;
-using KSP_Chroma_Control.ColorSchemes;
+using KspChromaControl.ColorSchemes;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using UnityEngine;
 
-namespace KSP_Chroma_Control
+namespace KspChromaControl
 {
     public class Config
     {

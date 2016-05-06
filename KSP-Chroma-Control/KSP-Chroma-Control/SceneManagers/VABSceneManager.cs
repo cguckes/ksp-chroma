@@ -2,11 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using KSP_Chroma_Control.ColorSchemes;
+using KspChromaControl.ColorSchemes;
 using UnityEngine;
 using Corale.Colore.Razer.Keyboard;
 
-namespace KSP_Chroma_Control.SceneManagers
+namespace KspChromaControl.SceneManagers
 {
     /// <summary>
     /// Manages the keyboard colors for VAB and SPH scenes.

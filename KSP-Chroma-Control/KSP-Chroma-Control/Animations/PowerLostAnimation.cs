@@ -1,10 +1,10 @@
 ﻿using System;
-using KSP_Chroma_Control.ColorSchemes;
+using KspChromaControl.ColorSchemes;
 using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
 
-namespace KSP_Chroma_Control
+namespace KspChromaControl
 {
     /// <summary>
     /// Displays a warning on the keyboard, indicating that the vessel is currently out of power and cannot

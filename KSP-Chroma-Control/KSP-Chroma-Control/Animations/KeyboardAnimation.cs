@@ -1,13 +1,13 @@
-﻿using KSP_Chroma_Control.ColorSchemes;
+﻿using KspChromaControl.ColorSchemes;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace KSP_Chroma_Control
+namespace KspChromaControl
 {
     /// <summary>
     /// Implement this to create an animation on your keyboard.
     /// </summary>
-    public abstract class KeyboardAnimation
+    internal abstract class KeyboardAnimation
     {
         protected static ColorScheme[] frames;
 
@@ -37,14 +37,13 @@ namespace KSP_Chroma_Control
                 lastFrameTime = (int)(Time.realtimeSinceStartup * fps);
             }
 
-            if(frames != null && frames.Length > currentFrame)
+            if(frames.Length > currentFrame)
             {
                 myReturn = frames[currentFrame];
             }
             else
             {
-                myReturn = new ColorScheme(Color.black);
-                frames = null;
+                myReturn = frames[frames.Length - 1];
             }
             return myReturn;
         }
@@ -55,7 +54,7 @@ namespace KSP_Chroma_Control
         /// <returns>true, if the animation is finished.</returns>
         public virtual bool isFinished()
         {
-            return !validScenes.Contains(HighLogic.LoadedScene) || frames == null || currentFrame >= frames.Length;
+            return !validScenes.Contains(HighLogic.LoadedScene) || currentFrame >= frames.Length;
         }
     }
 }

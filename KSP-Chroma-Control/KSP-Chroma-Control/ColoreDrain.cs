@@ -1,10 +1,10 @@
 ﻿using System;
-using KSP_Chroma_Control.ColorSchemes;
+using KspChromaControl.ColorSchemes;
 using System.Collections.Generic;
 using Corale.Colore.Razer.Keyboard;
 using UnityEngine;
 
-namespace KSP_Chroma_Control
+namespace KspChromaControl
 {
 
     internal class ColoreDrain : DataDrain

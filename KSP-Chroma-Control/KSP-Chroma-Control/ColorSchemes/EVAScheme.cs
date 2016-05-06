@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using UnityEngine;
 
-namespace KSP_Chroma_Control.ColorSchemes
+namespace KspChromaControl.ColorSchemes
 {
     /// <summary>
     /// Special color scheme for EVA scenes.

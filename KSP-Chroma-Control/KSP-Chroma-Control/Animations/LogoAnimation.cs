@@ -1,12 +1,12 @@
 ﻿using System;
-using KSP_Chroma_Control.ColorSchemes;
+using KspChromaControl.ColorSchemes;
 using System.Collections;
 using UnityEngine;
 using System.Linq;
 using System.Collections.Generic;
-using KSP_Chroma_Control.Animations;
+using KspChromaControl.Animations;
 
-namespace KSP_Chroma_Control
+namespace KspChromaControl
 {
     /// <summary>
     /// Displays a warning on the keyboard, indicating that the vessel is currently out of power and cannot
@@ -29,7 +29,7 @@ namespace KSP_Chroma_Control
             frames = AnimationUtils.InterpolateFrames(new ColorScheme(Color.blue), new LogoScheme(), 20);
         }
 
-        public LogoAnimation() : base(5, validScenes)
+        public LogoAnimation() : base(10, validScenes)
         {
         }
     }

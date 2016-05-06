@@ -7,8 +7,8 @@
     <ProjectGuid>{0F6BE62E-DD49-402E-BB4C-BD51627DD114}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>KSP_Chroma_Control</RootNamespace>
-    <AssemblyName>KSP-Chroma-Control</AssemblyName>
+    <RootNamespace>KspChromaControl</RootNamespace>
+    <AssemblyName>Ksp-chroma-control</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -28,6 +28,7 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Assembly-CSharp">
