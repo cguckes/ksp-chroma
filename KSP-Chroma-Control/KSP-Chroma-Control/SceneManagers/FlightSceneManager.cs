@@ -145,16 +145,30 @@ namespace KspChromaControl.SceneManagers
         /// </summary>
         private void recalculateResources()
         {
-            List<Vessel.ActiveResource> resources = currentVessel.GetActiveResources();
-
-            resources.ForEach(res =>
+            Dictionary<String, KeyValuePair<double, double>> resources = new Dictionary<string, KeyValuePair<double, double>>();
+            foreach (Part part in FlightGlobals.ActiveVessel.parts)
             {
-                if (!currentColorScheme.otherValues.ContainsKey(res.info.name))
-                    currentColorScheme.otherValues.Add(res.info.name, (res.amount / res.maxAmount));
-                else
-                    currentColorScheme.otherValues[res.info.name] = res.amount / res.maxAmount;
+                foreach (PartResource resource in part.Resources)
+                {
+                    if(!resources.ContainsKey(resource.info.name))
+                    {
+                        resources.Add(resource.info.name, new KeyValuePair<double, double>(0.0f, 0.0f));
+                    }
+                    resources[resource.info.name] = new KeyValuePair<double, double>(
+                        resources[resource.info.name].Key + resource.maxAmount,
+                        resources[resource.info.name].Value + resource.amount
+                    );
+                }
+            }
 
-                showGauge(res.info.name, res.amount, res.maxAmount);
+            resources.Keys.ToList().ForEach(res =>
+            {
+                if (!currentColorScheme.otherValues.ContainsKey(res))
+                    currentColorScheme.otherValues.Add(res, (resources[res].Value / resources[res].Key));
+                else
+                    currentColorScheme.otherValues[res] = resources[res].Value / resources[res].Key;
+
+                showGauge(res, resources[res].Value, resources[res].Key);
             });
 
             if (!currentColorScheme.otherValues.ContainsKey("Heat"))
@@ -238,7 +252,7 @@ namespace KspChromaControl.SceneManagers
             /// Updates all toggleable action group keys
             foreach (KeyValuePair<KSPActionGroup, Boolean> agroup in actionGroups)
             {
-                if (agroup.Key != KSPActionGroup.None)
+                if (agroup.Key != KSPActionGroup.None && Config.Instance.actionGroupConf.ContainsKey(agroup.Key))
                 {
                     if (!agroup.Value)
                         currentColorScheme.SetKeyToColor(Config.Instance.actionGroupConf[agroup.Key].Key.primary, Color.black);
@@ -350,7 +364,7 @@ namespace KspChromaControl.SceneManagers
         private double calculateDistanceFromGroundAndTemperaturePercentage()
         {
             maxTemperature = 0.0;
-            Vector3 CoM = currentVessel.findWorldCenterOfMass();  //Gets CoM
+            Vector3 CoM = currentVessel.CurrentCoM;  //Gets CoM
             Vector3 up = FlightGlobals.getUpAxis(CoM); //Gets up axis (needed for the raycast)
             float ASL = FlightGlobals.getAltitudeAtPos(CoM);
             RaycastHit craft;
