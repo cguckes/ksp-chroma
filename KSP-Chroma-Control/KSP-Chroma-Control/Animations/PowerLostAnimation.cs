@@ -68,14 +68,23 @@ namespace KspChromaControl
         /// <returns>true, if the animation is finished, false if not.</returns>
         public override bool isFinished()
         {
-            /// Check if the vessel needs power, and if empty, continue blinking
-            IEnumerable<Vessel.ActiveResource> resource = FlightGlobals.ActiveVessel.GetActiveResources()
-                .Where(res => res.info.name.Equals("ElectricCharge"));
-            if (resource.Count() > 0)
-                return resource.First().amount > 0.0001;
+            double electricity = 0.0f;
+            bool electricityPresent = false;
 
-            /// No energy stored on the ship, end the animation.
-            return true;
+            foreach (Part part in FlightGlobals.ActiveVessel.parts)
+            {
+                foreach (PartResource resource in part.Resources)
+                {
+                    if (resource.info.name.Equals("ElectricCharge"))
+                    {
+                        electricity += resource.amount;
+                        electricityPresent = true;
+                    }
+                }
+            }
+
+            /// Check if the vessel needs power, and if empty, continue blinking
+            return !electricityPresent || electricity > 0.0001;
         }
     }
 }
