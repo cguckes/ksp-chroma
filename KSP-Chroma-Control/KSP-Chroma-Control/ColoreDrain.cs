@@ -2,9 +2,7 @@
 using KspChromaControl.ColorSchemes;
 using System.Collections.Generic;
 using Corale.Colore.Razer.Keyboard;
-using Corale.Colore.Core;
 using UnityEngine;
-using System.Linq;
 
 namespace KspChromaControl
 {
@@ -216,7 +214,7 @@ namespace KspChromaControl
             {
                 foreach (KeyValuePair<KeyCode, Key> key in keyMapping)
                 {
-                    Keyboard.Instance.SetKey(key.Value, colorScheme[key.Key]);
+                    Corale.Colore.Core.Keyboard.Instance.SetKey(key.Value, colorScheme[key.Key]);
                 }
             }
         }
@@ -299,8 +297,8 @@ namespace KspChromaControl
         private void applyGrids()
         {
             Corale.Colore.Core.Mouse.Instance.SetGrid(mouseGrid);
-            Mousepad.Instance.SetCustom(mousePadGrid);
-            Headset.Instance.SetStatic(headSetGrid);
+            Corale.Colore.Core.Mousepad.Instance.SetCustom(mousePadGrid);
+            Corale.Colore.Core.Headset.Instance.SetStatic(headSetGrid);
         }
     }
 }
