@@ -4,9 +4,10 @@
 
 Good News: No messy external tool needed any more, now works out of the box as a normal KSP mod.
 
-Lights up your keyboard to make playing Kerbal Space Program a lot easier. Currently only supports Razer Chroma Keyboards. If you want me to add support for other devices as well, you'll have to send me one. I can send it back after I'm finished implementing the code.
+Lights up your keyboard to make playing Kerbal Space Program a lot easier. Currently only supports Razer Chroma Keyboards, Mousepads, Mice and Headsets. If you want me to add support for other devices as well, you'll have to send me one. I can send it back after I'm finished implementing the code.
 
-The mod is still very beta, so let me know if you experience any difficulties when using it.
+## Known Issues
+Due to a bug in the SDK, some people reported strange flickering. This occurs if you use a custom color scheme on your keyboard. To fix this, switch to the standard color scheme and start the game afterwards.
 
 ## Features
 
@@ -18,11 +19,18 @@ The mod is still very beta, so let me know if you experience any difficulties wh
 
 ## Full list of game effects
 
-- Stylized Kerbal Space Program logo on every scene that does not contain any noteworthy keyboard interaction (pressing Escape to go to the menu not being noteworthy enough to light up the key)
+- Stylized Kerbal Space Program logo that fades in on every scene that does not contain any noteworthy keyboard interaction (pressing Escape to go to the menu not being noteworthy enough to light up the key)
 - In the vessel editor, different kinds of keysets are lit up according to the current editor mode.
 - Control keys and toggleable function keys are lit up in different colors, showing whether the function is switched on or off during flight.
 - Reduced keyset lit for EVA mode
 - Resource gauges displayed on the keypad and the keys above the UpDownLeftRight keys.
+- Power failure animation on vessels that need power to be controllable
+- Crash animation that triggers when crashing a vessel's root part
+- Splashdown animation that triggers, when landing on water.
+- Vessel electricity status displayed on any Razer mouse and mousepad connected
+- Vessel heat displayed in three colors (blue = cool, red = warm/hot, yellow = you're in trouble), uses the scrollwheel and logo on mice and the bottom LEDs on the mousepad.
+- "Dear GF, please don't disturb me now" feature on the headset. The device is colored red, when you can't quicksave right now. Turns green once quicksave is allowed again.
+- Vessel height above ground displayed on F1 to F4 keys (F1 = 10m, F2 = 50m, F3 = 100m, F4 = 1000m). The intensity changes, e.g. if F1 is fully lit and F2 is half lit, you are 30 meters above ground.
 
 ## Installation
 
@@ -32,7 +40,7 @@ The mod is still very beta, so let me know if you experience any difficulties wh
  
 ## Todo
 
-- Make the whole keyboard red, if the vessel is not steerable any more.
-- Add CatastrophicFailure event and SplashedDown event animation.
+- Make fuel gauge position device dependent (Blackwidow Chroma / Blackwidow Chroma TE / Orbweaver)
+- Light up all keys when the player is entering text (vessel name, savegame, etc.)
+- Different colors for different altimeter zoom levels.
 - Linux version (this might take a bit longer, but I'm planning to do it anyway. What good is a c# interface if it is only ever implemented once...)
-- Get it promoted on Reddit (/u/FauserneEist)
