@@ -2,9 +2,7 @@
 
 [![Join the chat at https://gitter.im/cguckes/ksp-chroma](https://badges.gitter.im/cguckes/ksp-chroma.svg)](https://gitter.im/cguckes/ksp-chroma?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
-Good News: No messy external tool needed any more, now works out of the box as a normal KSP mod.
-
-Lights up your keyboard to make playing Kerbal Space Program a lot easier. Currently only supports Razer Chroma Keyboards, Mousepads, Mice and Headsets. If you want me to add support for other devices as well, you'll have to send me one. I can send it back after I'm finished implementing the code.
+Lights up your keyboard to make playing Kerbal Space Program a lot easier. Currently only supports Razer Chroma Keyboards, Mousepads, Mice and Headsets. If you want me to add support for other devices as well, you'll have to send me one. I can send it back after I'm done implementing the code. Enough talk, watch this awesome video by [Game Instructor](https://www.youtube.com/channel/UCeiT-KYAvbos30RKre4W9UQ) to see what this mod really is all about: https://www.youtube.com/watch?v=-nqTzKLMGuU
 
 ## Known Issues
 Due to a bug in the SDK, some people reported strange flickering. This occurs if you use a custom color scheme on your keyboard. To fix this, switch to the standard color scheme and start the game afterwards.
