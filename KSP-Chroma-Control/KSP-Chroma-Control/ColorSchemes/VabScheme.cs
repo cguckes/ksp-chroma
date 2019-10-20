@@ -14,14 +14,14 @@ namespace KspChromaControl.SceneManagers
         public VabScheme()
         {
             SetKeysToColor(new KeyCode[] {
-                GameSettings.Editor_pitchUp.primary, GameSettings.Editor_pitchDown.primary,
-                GameSettings.Editor_rollLeft.primary, GameSettings.Editor_rollRight.primary,
-                GameSettings.Editor_yawLeft.primary, GameSettings.Editor_yawRight.primary
+                GameSettings.Editor_pitchUp.primary.code, GameSettings.Editor_pitchDown.primary.code,
+                GameSettings.Editor_rollLeft.primary.code, GameSettings.Editor_rollRight.primary.code,
+                GameSettings.Editor_yawLeft.primary.code, GameSettings.Editor_yawRight.primary.code
             }, new Color(1f, 1f, 0f));
             SetKeysToColor(new KeyCode[] {
-                GameSettings.Editor_fineTweak.primary,
-                GameSettings.Editor_resetRotation.primary,
-                GameSettings.Editor_coordSystem.primary
+                GameSettings.Editor_fineTweak.primary.code,
+                GameSettings.Editor_resetRotation.primary.code,
+                GameSettings.Editor_coordSystem.primary.code
             }, Color.magenta);
         }
     }
