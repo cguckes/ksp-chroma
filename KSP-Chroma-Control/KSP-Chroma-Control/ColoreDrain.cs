@@ -3,6 +3,7 @@ using KspChromaControl.ColorSchemes;
 using System.Collections.Generic;
 using Corale.Colore.Razer.Keyboard;
 using UnityEngine;
+using Color = Corale.Colore.Core.Color;
 
 namespace KspChromaControl
 {
@@ -14,9 +15,9 @@ namespace KspChromaControl
         /// <summary>
         /// Three colors we use to display craft hotness.
         /// </summary>
-        private static Color cold = Color.blue;
-        private static Color warm = Color.red;
-        private static Color hot = Color.yellow;
+        private static Color cold = Color.Blue;
+        private static Color warm = Color.Red;
+        private static Color hot = Color.Yellow;
 
         /// <summary>
         /// Unity Keybinding <=> UK Layout translation dictionary
@@ -176,8 +177,8 @@ namespace KspChromaControl
             { KeyCode.Z, Key.Z }
         };
 
-        private Corale.Colore.Razer.Mouse.Effects.CustomGrid mouseGrid = new Corale.Colore.Razer.Mouse.Effects.CustomGrid(Color.black);
-        private Corale.Colore.Razer.Mousepad.Effects.Custom mousePadGrid = new Corale.Colore.Razer.Mousepad.Effects.Custom(Color.black);
+        private Corale.Colore.Razer.Mouse.Effects.CustomGrid mouseGrid = new Corale.Colore.Razer.Mouse.Effects.CustomGrid(Color.Black);
+        private Corale.Colore.Razer.Mousepad.Effects.Custom mousePadGrid = new Corale.Colore.Razer.Mousepad.Effects.Custom(Color.Black);
         private Corale.Colore.Razer.Headset.Effects.Static headSetGrid = new Corale.Colore.Razer.Headset.Effects.Static();
 
         /// <summary>
@@ -196,11 +197,11 @@ namespace KspChromaControl
 
         private void displayHeadset(ColorScheme scheme)
         {
-            Color saveStateColor = scheme[KeyCode.F5];
-            if (saveStateColor.r == 1f && saveStateColor.g == 0f && saveStateColor.b == 0f)
-                headSetGrid = new Corale.Colore.Razer.Headset.Effects.Static(Color.red);
+            Color saveStateColor = new Color(scheme[KeyCode.F5].r, scheme[KeyCode.F5].g, scheme[KeyCode.F5].b);
+            if (saveStateColor.R == 1f && saveStateColor.G == 0f && saveStateColor.B == 0f)
+                headSetGrid = new Corale.Colore.Razer.Headset.Effects.Static(Color.Red);
             else
-                headSetGrid = new Corale.Colore.Razer.Headset.Effects.Static(Color.green);
+                headSetGrid = new Corale.Colore.Razer.Headset.Effects.Static(Color.Green);
 
         }
 
@@ -214,7 +215,8 @@ namespace KspChromaControl
             {
                 foreach (KeyValuePair<KeyCode, Key> key in keyMapping)
                 {
-                    Corale.Colore.Core.Keyboard.Instance.SetKey(key.Value, colorScheme[key.Key]);
+                    Color keyColor = new Color(colorScheme[key.Key].r, colorScheme[key.Key].g, colorScheme[key.Key].b);
+                    Corale.Colore.Core.Keyboard.Instance.SetKey(key.Value, keyColor);
                 }
             }
         }
@@ -230,26 +232,26 @@ namespace KspChromaControl
             if (colorScheme.otherValues.ContainsKey("Heat"))
                 heat = colorScheme.otherValues["Heat"];
 
-            // Display heat on all LEDs we have
-            Color heatColor = new Color();
+            
+            float red, green, blue;
 
             if (heat >= 0.5)
             {
                 heat = 2 * heat - 1.0;
-                heatColor.r = warm.r + (hot.r - warm.r) * (float)heat;
-                heatColor.g = warm.g + (hot.g - warm.g) * (float)heat;
-                heatColor.b = warm.b + (hot.b - warm.b) * (float)heat;
-                heatColor.a = 1f;
+                red = warm.R + (hot.R - warm.R) * (float)heat;
+                green = warm.G + (hot.G - warm.G) * (float)heat;
+                blue = warm.B + (hot.B - warm.B) * (float)heat;
             }
             else
             {
                 heat = 2 * heat;
-                heatColor.r = cold.r + (warm.r - cold.r) * (float)heat;
-                heatColor.g = cold.g + (warm.g - cold.g) * (float)heat;
-                heatColor.b = cold.b + (warm.b - cold.b) * (float)heat;
-                heatColor.a = 1f;
+                red = cold.R + (warm.R - cold.R) * (float)heat;
+                green = cold.G + (warm.G - cold.G) * (float)heat;
+                blue = cold.B + (warm.B - cold.B) * (float)heat;
             }
 
+            // Display heat on all LEDs we have
+            Color heatColor = new Color(red, green, blue);
             mouseGrid.Set(heatColor);
             mousePadGrid.Set(heatColor);
         }
@@ -265,32 +267,25 @@ namespace KspChromaControl
             double mouseElectricity = electricity * (Corale.Colore.Razer.Mouse.Constants.MaxRows - 2);
             for(int i = 1; i < Corale.Colore.Razer.Mouse.Constants.MaxRows - 1; i++)
             {
-                Color ledColor = Color.cyan;
-
                 float colorStrength = (float)Math.Min(mouseElectricity - (i - 1), 1.0);
 
-                ledColor.r *= colorStrength;
-                ledColor.g *= colorStrength;
-                ledColor.b *= colorStrength;
-
-                mouseGrid[Corale.Colore.Razer.Mouse.Constants.MaxRows - 1 - i, 0] = ledColor;
-                mouseGrid[Corale.Colore.Razer.Mouse.Constants.MaxRows - 1 - i, Corale.Colore.Razer.Mouse.Constants.MaxColumns - 1] = ledColor;
+                // Cyan has a standard code of 0,1,1; so passing in the raw strength has the same effect.
+                Color padLedColor = new Color(0.0, colorStrength, colorStrength);
+                mouseGrid[Corale.Colore.Razer.Mouse.Constants.MaxRows - 1 - i, 0] = padLedColor;
+                mouseGrid[Corale.Colore.Razer.Mouse.Constants.MaxRows - 1 - i, Corale.Colore.Razer.Mouse.Constants.MaxColumns - 1] = padLedColor;
             }
 
             // Color the outside led rows with an electricity gauge, overwriting heat displays on a mousepad
             double padElectricity = electricity * 5.0;
             for (int i = 0; i < 5; i++)
             {
-                Color ledColor = Color.cyan;
-
                 float colorStrength = (float)Math.Min(padElectricity - i, 1.0);
 
-                ledColor.r *= colorStrength;
-                ledColor.g *= colorStrength;
-                ledColor.b *= colorStrength;
+                // Cyan has a standard code of 0,1,1; so passing in the raw strength has the same effect.
+                Color gripLedColor = new Color(0.0, colorStrength, colorStrength);
 
-                mousePadGrid[4 - i] = ledColor;
-                mousePadGrid[10 + i] = ledColor;
+                mousePadGrid[4 - i] = gripLedColor;
+                mousePadGrid[10 + i] = gripLedColor;
             }
         }
 

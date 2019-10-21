@@ -1,8 +1,5 @@
 ﻿using KspChromaControl.ColorSchemes;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using UnityEngine;
 
 namespace KspChromaControl.Animations

@@ -54,6 +54,12 @@
             Keeps track of the window handle that is registered to receive events.
             </summary>
         </member>
+        <member name="F:Corale.Colore.Core.Chroma._sdkVersion">
+            <summary>
+            Version of the Chroma SDK as retrieved from the registry at
+            the point of initialization.
+            </summary>
+        </member>
         <member name="M:Corale.Colore.Core.Chroma.#ctor">
             <summary>
             Prevents a default instance of the <see cref="T:Corale.Colore.Core.Chroma" /> class from being created.
@@ -102,6 +108,11 @@
             Gets the application-wide instance of the <see cref="T:Corale.Colore.Core.IChroma" /> interface.
             </summary>
         </member>
+        <member name="P:Corale.Colore.Core.Chroma.SdkAvailable">
+            <summary>
+            Gets a value indicating whether the SDK is available on this system.
+            </summary>
+        </member>
         <member name="P:Corale.Colore.Core.Chroma.Keyboard">
             <summary>
             Gets an instance of the <see cref="T:Corale.Colore.Core.IKeyboard" /> interface
@@ -132,17 +143,27 @@
             for interacting with a Razer Chroma keypad.
             </summary>
         </member>
+        <member name="P:Corale.Colore.Core.Chroma.ChromaLink">
+            <summary>
+            Gets an instance of the <see cref="T:Corale.Colore.Core.IChromaLink" /> interface
+            for interacting with ChromaLink devices.
+            </summary>
+        </member>
         <member name="P:Corale.Colore.Core.Chroma.Initialized">
             <summary>
             Gets a value indicating whether the Chroma
             SDK has been initialized or not.
             </summary>
         </member>
-        <member name="M:Corale.Colore.Core.Chroma.IsSdkAvailable">
+        <member name="P:Corale.Colore.Core.Chroma.SdkVersion">
             <summary>
-            Checks if the Chroma SDK is available on this system.
+            Gets the version of the Chroma SDK that Colore is currently using.
             </summary>
-            <returns><c>true</c> if Chroma SDK is available, otherwise <c>false</c>.</returns>
+        </member>
+        <member name="P:Corale.Colore.Core.Chroma.Version">
+            <summary>
+            Gets the <see cref="T:System.Version" /> of Colore.
+            </summary>
         </member>
         <member name="M:Corale.Colore.Core.Chroma.Initialize">
             <summary>
@@ -247,6 +268,92 @@
             </summary>
             <param name="enabled">Whether or not the SDK is supported.</param>
         </member>
+        <member name="T:Corale.Colore.Core.ChromaLink">
+            <summary>
+            Class for interacting with a Chroma Link.
+            </summary>
+        </member>
+        <member name="F:Corale.Colore.Core.ChromaLink.Log">
+            <summary>
+            Logger instance for this class.
+            </summary>
+        </member>
+        <member name="F:Corale.Colore.Core.ChromaLink.InitLock">
+            <summary>
+            Lock object for thread-safe init.
+            </summary>
+        </member>
+        <member name="F:Corale.Colore.Core.ChromaLink._instance">
+            <summary>
+            Singleton instance of this class.
+            </summary>
+        </member>
+        <member name="F:Corale.Colore.Core.ChromaLink._custom">
+            <summary>
+            Internal instance of a <see cref="T:Corale.Colore.Razer.ChromaLink.Effects.Custom" /> struct used for
+            the indexer.
+            </summary>
+        </member>
+        <member name="M:Corale.Colore.Core.ChromaLink.#ctor">
+            <summary>
+            Prevents a default instance of the <see cref="T:Corale.Colore.Core.ChromaLink" /> class from being created.
+            </summary>
+        </member>
+        <member name="P:Corale.Colore.Core.ChromaLink.Instance">
+            <summary>
+            Gets the application-wide instance of the <see cref="T:Corale.Colore.Core.IChromaLink" /> interface.
+            </summary>
+        </member>
+        <member name="P:Corale.Colore.Core.ChromaLink.Item(System.Int32)">
+            <summary>
+            Gets or sets a color at the specified position in the Chroma Link
+            </summary>
+            <param name="index">The index to access (between <c>0</c> and <see cref="F:Corale.Colore.Razer.ChromaLink.Constants.MaxLeds" />, exclusive upper-bound).</param>
+            <returns>The <see cref="T:Corale.Colore.Core.Color" /> at the specified position.</returns>
+        </member>
+        <member name="M:Corale.Colore.Core.ChromaLink.IsSet(System.Int32)">
+            <summary>
+            Returns whether an element has had a custom color set.
+            </summary>
+            <param name="index">The index to query.</param>
+            <returns><c>true</c> if the position has a color set that is not black, otherwise <c>false</c>.</returns>
+        </member>
+        <member name="M:Corale.Colore.Core.ChromaLink.SetAll(Corale.Colore.Core.Color)">
+            <summary>
+            Sets the color of all lights in Chroma Link
+            </summary>
+            <param name="color">Color to set.</param>
+        </member>
+        <member name="M:Corale.Colore.Core.ChromaLink.SetEffect(Corale.Colore.Razer.ChromaLink.Effects.Effect)">
+            <summary>
+            Sets an effect without any parameters.
+            Currently, this only works for the <see cref="F:Corale.Colore.Razer.ChromaLink.Effects.Effect.None" /> and <see cref="F:Corale.Colore.Razer.ChromaLink.Effects.Effect.Static" /> effects.
+            </summary>
+            <param name="effect">Effect options.</param>
+        </member>
+        <member name="M:Corale.Colore.Core.ChromaLink.SetCustom(Corale.Colore.Razer.ChromaLink.Effects.Custom)">
+            <summary>
+            Sets a <see cref="T:Corale.Colore.Razer.ChromaLink.Effects.Custom" /> effect on the Chroma Link.
+            </summary>
+            <param name="effect">An instance of the <see cref="T:Corale.Colore.Razer.ChromaLink.Effects.Custom" /> struct.</param>
+        </member>
+        <member name="M:Corale.Colore.Core.ChromaLink.SetStatic(Corale.Colore.Razer.ChromaLink.Effects.Static)">
+            <summary>
+            Sets a <see cref="T:Corale.Colore.Razer.ChromaLink.Effects.Static" /> effect on the Chroma Link.
+            </summary>
+            <param name="effect">An instance of the <see cref="T:Corale.Colore.Razer.ChromaLink.Effects.Static" /> struct.</param>
+        </member>
+        <member name="M:Corale.Colore.Core.ChromaLink.SetStatic(Corale.Colore.Core.Color)">
+            <summary>
+            Sets a <see cref="T:Corale.Colore.Razer.ChromaLink.Effects.Static" /> effect on the Chroma Link.
+            </summary>
+            <param name="color">Color of the effect.</param>
+        </member>
+        <member name="M:Corale.Colore.Core.ChromaLink.Clear">
+            <summary>
+            Clears the current effect on the Chroma Link.
+            </summary>
+        </member>
         <member name="T:Corale.Colore.Core.Color">
             <summary>
             Represents an RGB color.
@@ -255,64 +362,46 @@
             Represents an RGB color.
             </summary>
         </member>
-        <member name="F:Corale.Colore.Core.Color._value">
-            <summary>
-            Internal color value.
-            </summary>
-            <remarks>
-            Format: <c>0xAABBGGRR</c>.
-            </remarks>
-        </member>
         <member name="M:Corale.Colore.Core.Color.#ctor(System.UInt32)">
             <summary>
             Initializes a new instance of the <see cref="T:Corale.Colore.Core.Color" /> struct using an integer
-            color value in the format <c>0xAABBGGRR</c>. Where the alpha component ranges
-            from <c>0x00</c> (fully transparent) to <c>0xFF</c> (fully opaque).
+            color value in the format <c>0xKKBBGGRR</c>.
             </summary>
             <param name="value">Value to create the color from.</param>
         </member>
-        <member name="M:Corale.Colore.Core.Color.#ctor(System.Byte,System.Byte,System.Byte,System.Byte)">
+        <member name="M:Corale.Colore.Core.Color.#ctor(System.Byte,System.Byte,System.Byte)">
             <summary>
             Initializes a new instance of the <see cref="T:Corale.Colore.Core.Color" /> struct using three
-            distinct R, G, B, and A (optional) byte values. An alpha value of <c>0</c>
-            is treated as fully opaque.
+            distinct R, G, and B byte values.
             </summary>
             <param name="red">The red component.</param>
             <param name="green">The green component.</param>
             <param name="blue">The blue component.</param>
-            <param name="alpha">The alpha component (<c>0</c> = fully opaque).</param>
         </member>
-        <member name="M:Corale.Colore.Core.Color.#ctor(System.Single,System.Single,System.Single,System.Single)">
+        <member name="M:Corale.Colore.Core.Color.#ctor(System.Single,System.Single,System.Single)">
             <summary>
             Initializes a new instance of the <see cref="T:Corale.Colore.Core.Color" /> struct using
             three <see cref="T:System.Single" /> (<c>float</c>) values for the
-            R, G, B, and A (optional) channels.
+            R, G, and B channels.
             </summary>
             <param name="red">The red component (<c>0.0f</c> to <c>1.0f</c>, inclusive).</param>
             <param name="green">The green component (<c>0.0f</c> to <c>1.0f</c>, inclusive).</param>
             <param name="blue">The blue component (<c>0.0f</c> to <c>1.0f</c>, inclusive).</param>
-            <param name="alpha">The alpha component (<c>0.0f</c> to <c>1.0f</c>, inclusive, <c>0.0f</c> = fully opaque).</param>
             <remarks>
             Each parameter value must be between <c>0.0f</c> and <c>1.0f</c> (inclusive).
             </remarks>
         </member>
-        <member name="M:Corale.Colore.Core.Color.#ctor(System.Double,System.Double,System.Double,System.Double)">
+        <member name="M:Corale.Colore.Core.Color.#ctor(System.Double,System.Double,System.Double)">
             <summary>
             Initializes a new instance of the <see cref="T:Corale.Colore.Core.Color" /> struct using
-            three <see cref="T:System.Double" /> values for the R, G, B, and A (optional) channels.
+            three <see cref="T:System.Double" /> values for the R, G, and B channels.
             </summary>
             <param name="red">The red component (<c>0.0</c> to <c>1.0</c>, inclusive).</param>
             <param name="green">The green component (<c>0.0</c> to <c>1.0</c>, inclusive).</param>
             <param name="blue">The blue component (<c>0.0</c> to <c>1.0</c>, inclusive).</param>
-            <param name="alpha">The alpha component (<c>0.0</c> to <c>1.0</c>, inclusive, <c>0.0</c> = fully opaque).</param>
             <remarks>
             Each parameter value must be between <c>0.0</c> and <c>1.0</c> (inclusive).
             </remarks>
-        </member>
-        <member name="P:Corale.Colore.Core.Color.A">
-            <summary>
-            Gets the alpha component of the color as a byte.
-            </summary>
         </member>
         <member name="P:Corale.Colore.Core.Color.B">
             <summary>
@@ -332,7 +421,7 @@
         <member name="P:Corale.Colore.Core.Color.Value">
             <summary>
             Gets the unsigned integer representing
-            the color. On the form <c>0xAABBGGRR</c>.
+            the color. On the form <c>0xKKBBGGRR</c>.
             </summary>
         </member>
         <member name="M:Corale.Colore.Core.Color.op_Implicit(Corale.Colore.Core.Color)~System.UInt32">
@@ -351,44 +440,6 @@
             <param name="value">The <see cref="T:System.UInt32" /> to convert, on the form <c>0x00BBGGRR</c>.</param>
             <returns>An instance of <see cref="T:Corale.Colore.Core.Color" /> representing the color value of <paramref name="value" />.</returns>
         </member>
-        <member name="M:Corale.Colore.Core.Color.op_Implicit(Corale.Colore.Core.Color)~System.Drawing.Color">
-            <summary>
-            Converts a <see cref="T:Corale.Colore.Core.Color" /> struct to a <see cref="T:System.Drawing.Color" /> struct.
-            </summary>
-            <param name="color">The <see cref="T:Corale.Colore.Core.Color" /> to convert.</param>
-            <returns>
-            An instance of <see cref="T:System.Drawing.Color" /> representing the
-            value of the <paramref name="color" /> argument.
-            </returns>
-        </member>
-        <member name="M:Corale.Colore.Core.Color.op_Implicit(System.Drawing.Color)~Corale.Colore.Core.Color">
-            <summary>
-            Converts a <see cref="T:System.Drawing.Color" /> struct to a <see cref="T:Corale.Colore.Core.Color" /> struct.
-            </summary>
-            <param name="color">The <see cref="T:System.Drawing.Color" /> to convert.</param>
-            <returns>
-            An instance of <see cref="T:Corale.Colore.Core.Color" /> representing the value of the <paramref name="color" /> argument.
-            </returns>
-        </member>
-        <member name="M:Corale.Colore.Core.Color.op_Implicit(Corale.Colore.Core.Color)~System.Windows.Media.Color">
-            <summary>
-            Converts a <see cref="T:Corale.Colore.Core.Color" /> struct to a <see cref="T:System.Windows.Media.Color" /> struct.
-            </summary>
-            <param name="color">The <see cref="T:Corale.Colore.Core.Color" /> to convert.</param>
-            <returns>
-            An instance of <see cref="T:System.Windows.Media.Color" /> representing the
-            value of the <paramref name="color" /> argument.
-            </returns>
-        </member>
-        <member name="M:Corale.Colore.Core.Color.op_Implicit(System.Windows.Media.Color)~Corale.Colore.Core.Color">
-            <summary>
-            Converts a <see cref="T:System.Windows.Media.Color" /> struct to a <see cref="T:Corale.Colore.Core.Color" /> struct.
-            </summary>
-            <param name="color">The <see cref="T:System.Windows.Media.Color" /> to convert.</param>
-            <returns>
-            An instance of <see cref="T:Corale.Colore.Core.Color" /> representing the value of the <paramref name="color" /> argument.
-            </returns>
-        </member>
         <member name="M:Corale.Colore.Core.Color.op_Equality(Corale.Colore.Core.Color,System.Object)">
             <summary>
             Checks <paramref name="left" /> and <paramref name="right" /> for equality.
@@ -404,31 +455,6 @@
             <param name="left">Left operand, an instance of the <see cref="T:Corale.Colore.Core.Color" /> struct.</param>
             <param name="right">Right operand, an <see cref="T:System.Object" />.</param>
             <returns><c>true</c> if the two instances are not equal, <c>false</c> otherwise.</returns>
-        </member>
-        <member name="M:Corale.Colore.Core.Color.FromSystemColor(System.Drawing.Color)">
-            <summary>
-            Creates a new <see cref="T:Corale.Colore.Core.Color" /> from the source
-            <see cref="T:System.Drawing.Color" />.
-            </summary>
-            <param name="source">The source object to construct color from.</param>
-            <returns>A new instance of the <see cref="T:Corale.Colore.Core.Color" /> struct.</returns>
-        </member>
-        <member name="M:Corale.Colore.Core.Color.FromWpfColor(System.Windows.Media.Color)">
-            <summary>
-            Creates a new <see cref="T:Corale.Colore.Core.Color" /> from the source
-            <see cref="T:System.Windows.Media.Color" />.
-            </summary>
-            <param name="source">The source object to construct color from.</param>
-            <returns>A new instance of the <see cref="T:Corale.Colore.Core.Color" /> struct.</returns>
-        </member>
-        <member name="M:Corale.Colore.Core.Color.FromArgb(System.UInt32)">
-            <summary>
-            Creates a new <see cref="T:Corale.Colore.Core.Color" /> from an ARGB integer value
-            in the format of <c>0xAARRGGBB</c> where the alpha component
-            ranges from <c>0x00</c> (fully transparent) to <c>0xFF</c> (fully opaque).
-            </summary>
-            <param name="value">The ARGB value to convert from.</param>
-            <returns>A new instance of the <see cref="T:Corale.Colore.Core.Color" /> struct.</returns>
         </member>
         <member name="M:Corale.Colore.Core.Color.FromRgb(System.UInt32)">
             <summary>
@@ -453,6 +479,10 @@
             </summary>
             <param name="other">The <see cref="T:Corale.Colore.Core.Color" /> to check equality against.</param>
             <returns><c>true</c> of the two are equal, false otherwise.</returns>
+            <remarks>
+            Only compares the lower 32 bits of each color value, in order to
+            be able to compare a keymode color to a non-keymode color.
+            </remarks>
         </member>
         <member name="M:Corale.Colore.Core.Color.Equals(System.UInt32)">
             <summary>
@@ -461,24 +491,10 @@
             </summary>
             <param name="other">The <see cref="T:System.UInt32" /> to check equality against.</param>
             <returns><c>true</c> if the two are equal, <c>false</c> otherwise.</returns>
-        </member>
-        <member name="M:Corale.Colore.Core.Color.Equals(System.Drawing.Color)">
-            <summary>
-            Indicates whether the current object is equal to an instance of a
-            <see cref="T:System.Drawing.Color" /> struct.
-            </summary>
-            <returns>
-            <c>true</c> if the current object is equal to the <paramref name="other"/> parameter; otherwise, <c>false</c>.
-            </returns>
-            <param name="other">An instance of <see cref="T:System.Drawing.Color" /> to compare with this object.</param>
-        </member>
-        <member name="M:Corale.Colore.Core.Color.Equals(System.Windows.Media.Color)">
-            <summary>
-            Indicates whether the current object is equal to an instance of a
-            <see cref="T:System.Windows.Media.Color" /> struct.
-            </summary>
-            <param name="other">An instance of <see cref="T:System.Windows.Media.Color" /> to compare with this object.</param>
-            <returns><c>true</c> if the current object is equal to the <paramref name="other" /> parameter; otherwise, <c>false</c>.</returns>
+            <remarks>
+            Only compares the lower 32 bits of each value, in order to
+            be able to compare a keymode color to a non-keymode color.
+            </remarks>
         </member>
         <member name="M:Corale.Colore.Core.Color.GetHashCode">
             <summary>
@@ -568,6 +584,87 @@
             Deletes the currently set effect.
             </summary>
         </member>
+        <member name="T:Corale.Colore.Core.RegistryHelper">
+            <summary>
+            Contains helper methods for accessing the registry.
+            </summary>
+        </member>
+        <member name="F:Corale.Colore.Core.RegistryHelper.Log">
+            <summary>
+            Logger instance for this class.
+            </summary>
+        </member>
+        <member name="F:Corale.Colore.Core.RegistryHelper.SdkRegKeyPath">
+            <summary>
+            The path to the Razer Chroma SDK registry key.
+            </summary>
+        </member>
+        <member name="M:Corale.Colore.Core.RegistryHelper.IsSdkAvailable">
+            <summary>
+            Checks if the Chroma SDK is available on this system.
+            </summary>
+            <returns><c>true</c> if Chroma SDK is available, otherwise <c>false</c>.</returns>
+        </member>
+        <member name="M:Corale.Colore.Core.RegistryHelper.TryGetSdkVersion(Corale.Colore.SdkVersion@)">
+            <summary>
+            Attempts to extract the SDK version from the registry.
+            </summary>
+            <param name="ver">The SDK version will be saved in this variable.</param>
+            <returns>
+            <c>true</c> if the version was retrieved successfully and stored in <paramref name="ver" />,
+            otherwise <c>false</c> with <c>(0, 0, 0)</c> stored in <paramref name="ver" />.
+            </returns>
+        </member>
+        <member name="M:Corale.Colore.Core.RegistryHelper.GetSdkRegKeyPath">
+            <summary>
+            Gets the path to the Razer Chroma SDK registry key.
+            </summary>
+            <returns>Path to the Razer Chroma SDK registry key.</returns>
+        </member>
+        <member name="T:Corale.Colore.Core.IChromaLink">
+            <summary>
+            Interface for Chroma Link functionality.
+            </summary>
+        </member>
+        <member name="P:Corale.Colore.Core.IChromaLink.Item(System.Int32)">
+            <summary>
+            Gets or sets the <see cref="T:Corale.Colore.Core.Color" /> for a specific zone on the Chroma Link device.
+            The SDK will translate this appropriately depending on user configuration.
+            </summary>
+            <param name="index">The zone to access.</param>
+            <returns>The color currently set for the specified key.</returns>
+        </member>
+        <member name="M:Corale.Colore.Core.IChromaLink.SetEffect(Corale.Colore.Razer.ChromaLink.Effects.Effect)">
+            <summary>
+            Sets an effect without any parameters.
+            </summary>
+            <param name="effect">Effect options.</param>
+        </member>
+        <member name="M:Corale.Colore.Core.IChromaLink.IsSet(System.Int32)">
+            <summary>
+            Returns whether an element has had a custom color set.
+            </summary>
+            <param name="index">The index to query.</param>
+            <returns><c>true</c> if the position has a color set that is not black, otherwise <c>false</c>.</returns>
+        </member>
+        <member name="M:Corale.Colore.Core.IChromaLink.SetCustom(Corale.Colore.Razer.ChromaLink.Effects.Custom)">
+            <summary>
+            Sets a <see cref="T:Corale.Colore.Razer.ChromaLink.Effects.Custom" /> effect on the Chroma Link.
+            </summary>
+            <param name="effect">An instance of the <see cref="T:Corale.Colore.Razer.ChromaLink.Effects.Custom" /> struct.</param>
+        </member>
+        <member name="M:Corale.Colore.Core.IChromaLink.SetStatic(Corale.Colore.Razer.ChromaLink.Effects.Static)">
+            <summary>
+            Sets a <see cref="T:Corale.Colore.Razer.ChromaLink.Effects.Static" /> effect on the Chroma Link.
+            </summary>
+            <param name="effect">An instance of the <see cref="T:Corale.Colore.Razer.ChromaLink.Effects.Static" /> struct.</param>
+        </member>
+        <member name="M:Corale.Colore.Core.IChromaLink.SetStatic(Corale.Colore.Core.Color)">
+            <summary>
+            Sets a <see cref="T:Corale.Colore.Razer.ChromaLink.Effects.Static" /> effect on the Chroma Link.
+            </summary>
+            <param name="color">Color of the effect.</param>
+        </member>
         <member name="T:Corale.Colore.Core.GenericDevice">
             <summary>
             A generic device.
@@ -602,6 +699,11 @@
             <param name="deviceId">The ID of the device to get.</param>
             <returns>An instance of <see cref="T:Corale.Colore.Core.IGenericDevice" /> for the requested device.</returns>
         </member>
+        <member name="M:Corale.Colore.Core.GenericDevice.Clear">
+            <summary>
+            Clears the current effect on Generic Devices.
+            </summary>
+        </member>
         <member name="M:Corale.Colore.Core.GenericDevice.SetAll(Corale.Colore.Core.Color)">
             <summary>
             Sets the color of all components on this device.
@@ -620,6 +722,107 @@
             </summary>
             <param name="effect">Effect to set.</param>
             <param name="param">Effect-specific parameter to use.</param>
+        </member>
+        <member name="M:Corale.Colore.Core.GenericDevice.SetBlinking(Corale.Colore.Razer.Effects.Blinking)">
+            <summary>
+            Sets a blinking effect on this device.
+            </summary>
+            <param name="effect">Effect options.</param>
+        </member>
+        <member name="M:Corale.Colore.Core.GenericDevice.SetBlinking(Corale.Colore.Core.Color,System.Int32)">
+            <summary>
+            Sets a blinking effect on this device.
+            </summary>
+            <param name="color">Color of the effect.</param>
+            <param name="parameter">Additional effect parameter.</param>
+        </member>
+        <member name="M:Corale.Colore.Core.GenericDevice.SetBreathing(Corale.Colore.Razer.Effects.Breathing)">
+            <summary>
+            Sets a breathing effect on this device.
+            </summary>
+            <param name="effect">Effect options.</param>
+        </member>
+        <member name="M:Corale.Colore.Core.GenericDevice.SetBreathing(System.Int32)">
+            <summary>
+            Sets a breathing effect on this device,
+            causing it to breathe between random colors.
+            </summary>
+            <param name="parameter">Additional effect parameter.</param>
+        </member>
+        <member name="M:Corale.Colore.Core.GenericDevice.SetBreathing(Corale.Colore.Core.Color,System.Int32)">
+            <summary>
+            Sets a breathing effect on this device,
+            causing it to breathe with a single color.
+            </summary>
+            <param name="color">The color to breathe with.</param>
+            <param name="parameter">Additional effect parameter.</param>
+        </member>
+        <member name="M:Corale.Colore.Core.GenericDevice.SetBreathing(Corale.Colore.Core.Color,Corale.Colore.Core.Color,System.Int32)">
+            <summary>
+            Sets a breathing effect on this device,
+            causing it to breathe between two colors.
+            </summary>
+            <param name="first">The first color to breathe with.</param>
+            <param name="second">The second color to breathe with.</param>
+            <param name="parameter">Additional effect parameter.</param>
+        </member>
+        <member name="M:Corale.Colore.Core.GenericDevice.SetCustom(Corale.Colore.Razer.Effects.Custom)">
+            <summary>
+            Sets a custom effect on this device.
+            </summary>
+            <param name="effect">Effect options.</param>
+        </member>
+        <member name="M:Corale.Colore.Core.GenericDevice.SetReactive(Corale.Colore.Razer.Effects.Reactive)">
+            <summary>
+            Sets a reactive effect on this device.
+            </summary>
+            <param name="effect">Effect options.</param>
+        </member>
+        <member name="M:Corale.Colore.Core.GenericDevice.SetReactive(Corale.Colore.Core.Color,Corale.Colore.Razer.Effects.Duration,System.Int32)">
+            <summary>
+            Sets a reactive effect on this device.
+            </summary>
+            <param name="color">Color to react with.</param>
+            <param name="duration">How long the reaction effect should stay.</param>
+            <param name="parameter">Additional effect parameter.</param>
+        </member>
+        <member name="M:Corale.Colore.Core.GenericDevice.SetSpectrumCycling(Corale.Colore.Razer.Effects.SpectrumCycling)">
+            <summary>
+            Sets a spectrum cycling effect on this device.
+            </summary>
+            <param name="effect">Effect options.</param>
+        </member>
+        <member name="M:Corale.Colore.Core.GenericDevice.SetSpectrumCycling(System.Int32)">
+            <summary>
+            Sets a spectrum cycling effect on this device.
+            </summary>
+            <param name="parameter">Additional effect parameter.</param>
+        </member>
+        <member name="M:Corale.Colore.Core.GenericDevice.SetStatic(Corale.Colore.Razer.Effects.Static)">
+            <summary>
+            Sets a static effect on this device.
+            </summary>
+            <param name="effect">Effect options.</param>
+        </member>
+        <member name="M:Corale.Colore.Core.GenericDevice.SetStatic(Corale.Colore.Core.Color,System.Int32)">
+            <summary>
+            Sets a static effect on this device.
+            </summary>
+            <param name="color">Color to set.</param>
+            <param name="parameter">Additional effect parameter.</param>
+        </member>
+        <member name="M:Corale.Colore.Core.GenericDevice.SetWave(Corale.Colore.Razer.Effects.Wave)">
+            <summary>
+            Sets a wave effect on this device.
+            </summary>
+            <param name="effect">Effect options.</param>
+        </member>
+        <member name="M:Corale.Colore.Core.GenericDevice.SetWave(Corale.Colore.Razer.Effects.Direction,System.Int32)">
+            <summary>
+            Sets a wave effect on this device.
+            </summary>
+            <param name="direction">Direction of the wave.</param>
+            <param name="parameter">Additional effect parameter.</param>
         </member>
         <member name="T:Corale.Colore.Core.Headset">
             <summary>
@@ -692,6 +895,11 @@
             </summary>
             <param name="color"><see cref="T:Corale.Colore.Core.Color"/> of the effect.</param>
         </member>
+        <member name="M:Corale.Colore.Core.Headset.Clear">
+            <summary>
+            Clears the current effect on the Headset.
+            </summary>
+        </member>
         <member name="T:Corale.Colore.Core.IChroma">
             <summary>
             Interface for basic Chroma functionality.
@@ -757,10 +965,26 @@
             for interacting with a Razer Chroma keypad.
             </summary>
         </member>
+        <member name="P:Corale.Colore.Core.IChroma.ChromaLink">
+            <summary>
+            Gets an instance of the <see cref="T:Corale.Colore.Core.IChromaLink" /> interface
+            for interacting with ChromaLink devices.
+            </summary>
+        </member>
         <member name="P:Corale.Colore.Core.IChroma.Initialized">
             <summary>
             Gets a value indicating whether the Chroma
             SDK has been initialized or not.
+            </summary>
+        </member>
+        <member name="P:Corale.Colore.Core.IChroma.SdkVersion">
+            <summary>
+            Gets the version of the Chroma SDK that Colore is currently using.
+            </summary>
+        </member>
+        <member name="P:Corale.Colore.Core.IChroma.Version">
+            <summary>
+            Gets the <see cref="T:System.Version" /> of Colore.
             </summary>
         </member>
         <member name="M:Corale.Colore.Core.IChroma.Initialize">
@@ -884,6 +1108,107 @@
             <param name="effect">Effect to set.</param>
             <param name="param">Effect-specific parameter to use.</param>
         </member>
+        <member name="M:Corale.Colore.Core.IGenericDevice.SetBlinking(Corale.Colore.Razer.Effects.Blinking)">
+            <summary>
+            Sets a blinking effect on this device.
+            </summary>
+            <param name="effect">Effect options.</param>
+        </member>
+        <member name="M:Corale.Colore.Core.IGenericDevice.SetBlinking(Corale.Colore.Core.Color,System.Int32)">
+            <summary>
+            Sets a blinking effect on this device.
+            </summary>
+            <param name="color">Color of the effect.</param>
+            <param name="parameter">Additional effect parameter.</param>
+        </member>
+        <member name="M:Corale.Colore.Core.IGenericDevice.SetBreathing(Corale.Colore.Razer.Effects.Breathing)">
+            <summary>
+            Sets a breathing effect on this device.
+            </summary>
+            <param name="effect">Effect options.</param>
+        </member>
+        <member name="M:Corale.Colore.Core.IGenericDevice.SetBreathing(System.Int32)">
+            <summary>
+            Sets a breathing effect on this device,
+            causing it to breathe between random colors.
+            </summary>
+            <param name="parameter">Additional effect parameter.</param>
+        </member>
+        <member name="M:Corale.Colore.Core.IGenericDevice.SetBreathing(Corale.Colore.Core.Color,System.Int32)">
+            <summary>
+            Sets a breathing effect on this device,
+            causing it to breathe with a single color.
+            </summary>
+            <param name="color">The color to breathe with.</param>
+            <param name="parameter">Additional effect parameter.</param>
+        </member>
+        <member name="M:Corale.Colore.Core.IGenericDevice.SetBreathing(Corale.Colore.Core.Color,Corale.Colore.Core.Color,System.Int32)">
+            <summary>
+            Sets a breathing effect on this device,
+            causing it to breathe between two colors.
+            </summary>
+            <param name="first">The first color to breathe with.</param>
+            <param name="second">The second color to breathe with.</param>
+            <param name="parameter">Additional effect parameter.</param>
+        </member>
+        <member name="M:Corale.Colore.Core.IGenericDevice.SetCustom(Corale.Colore.Razer.Effects.Custom)">
+            <summary>
+            Sets a custom effect on this device.
+            </summary>
+            <param name="effect">Effect options.</param>
+        </member>
+        <member name="M:Corale.Colore.Core.IGenericDevice.SetReactive(Corale.Colore.Razer.Effects.Reactive)">
+            <summary>
+            Sets a reactive effect on this device.
+            </summary>
+            <param name="effect">Effect options.</param>
+        </member>
+        <member name="M:Corale.Colore.Core.IGenericDevice.SetReactive(Corale.Colore.Core.Color,Corale.Colore.Razer.Effects.Duration,System.Int32)">
+            <summary>
+            Sets a reactive effect on this device.
+            </summary>
+            <param name="color">Color to react with.</param>
+            <param name="duration">How long the reaction effect should stay.</param>
+            <param name="parameter">Additional effect parameter.</param>
+        </member>
+        <member name="M:Corale.Colore.Core.IGenericDevice.SetSpectrumCycling(Corale.Colore.Razer.Effects.SpectrumCycling)">
+            <summary>
+            Sets a spectrum cycling effect on this device.
+            </summary>
+            <param name="effect">Effect options.</param>
+        </member>
+        <member name="M:Corale.Colore.Core.IGenericDevice.SetSpectrumCycling(System.Int32)">
+            <summary>
+            Sets a spectrum cycling effect on this device.
+            </summary>
+            <param name="parameter">Additional effect parameter.</param>
+        </member>
+        <member name="M:Corale.Colore.Core.IGenericDevice.SetStatic(Corale.Colore.Razer.Effects.Static)">
+            <summary>
+            Sets a static effect on this device.
+            </summary>
+            <param name="effect">Effect options.</param>
+        </member>
+        <member name="M:Corale.Colore.Core.IGenericDevice.SetStatic(Corale.Colore.Core.Color,System.Int32)">
+            <summary>
+            Sets a static effect on this device.
+            </summary>
+            <param name="color">Color to set.</param>
+            <param name="parameter">Additional effect parameter.</param>
+        </member>
+        <member name="M:Corale.Colore.Core.IGenericDevice.SetWave(Corale.Colore.Razer.Effects.Wave)">
+            <summary>
+            Sets a wave effect on this device.
+            </summary>
+            <param name="effect">Effect options.</param>
+        </member>
+        <member name="M:Corale.Colore.Core.IGenericDevice.SetWave(Corale.Colore.Razer.Effects.Direction,System.Int32)">
+            <summary>
+            Sets a wave effect on this device.
+            </summary>
+            <param name="direction">Direction of the wave.</param>
+            <param name="parameter">Additional effect parameter.</param>
+        </member>
         <member name="T:Corale.Colore.Core.IHeadset">
             <summary>
             Interface for headset functionality.
@@ -937,6 +1262,7 @@
         <member name="P:Corale.Colore.Core.IKeyboard.Item(Corale.Colore.Razer.Keyboard.Key)">
             <summary>
             Gets or sets the <see cref="T:Corale.Colore.Core.Color" /> for a specific <see cref="T:Corale.Colore.Razer.Keyboard.Key" /> on the keyboard.
+            The SDK will translate this appropriately depending on user configuration.
             </summary>
             <param name="key">The key to access.</param>
             <returns>The color currently set for the specified key.</returns>
@@ -984,20 +1310,6 @@
             </summary>
             <param name="color">Color to emit on key press.</param>
             <param name="duration">How long to illuminate the key after being pressed.</param>
-        </member>
-        <member name="M:Corale.Colore.Core.IKeyboard.SetGrid(Corale.Colore.Core.Color[][])">
-            <summary>
-            Sets a custom grid effect on the keyboard using
-            a two dimensional array of color values.
-            </summary>
-            <param name="colors">The grid of colors to use.</param>
-            <remarks>
-            The passed in arrays cannot have more than <see cref="F:Corale.Colore.Razer.Keyboard.Constants.MaxRows" /> rows and
-            not more than <see cref="F:Corale.Colore.Razer.Keyboard.Constants.MaxColumns" /> columns in any row.
-            <para />
-            This will overwrite the internal <see cref="T:Corale.Colore.Razer.Keyboard.Effects.Custom" />
-            struct in the <see cref="T:Corale.Colore.Core.Keyboard" /> class.
-            </remarks>
         </member>
         <member name="M:Corale.Colore.Core.IKeyboard.SetCustom(Corale.Colore.Razer.Keyboard.Effects.Custom)">
             <summary>
@@ -1429,6 +1741,7 @@
         <member name="P:Corale.Colore.Core.Keyboard.Item(Corale.Colore.Razer.Keyboard.Key)">
             <summary>
             Gets or sets the <see cref="T:Corale.Colore.Core.Color" /> for a specific <see cref="T:Corale.Colore.Razer.Keyboard.Key" /> on the keyboard.
+            The SDK will translate this appropriately depending on user configuration.
             </summary>
             <param name="key">The key to access.</param>
             <returns>The color currently set for the specified key.</returns>
@@ -1505,20 +1818,6 @@
             </summary>
             <param name="color">Color to emit on key press.</param>
             <param name="duration">How long to illuminate the key after being pressed.</param>
-        </member>
-        <member name="M:Corale.Colore.Core.Keyboard.SetGrid(Corale.Colore.Core.Color[][])">
-            <summary>
-            Sets a custom grid effect on the keyboard using
-            a two dimensional array of color values.
-            </summary>
-            <param name="colors">The grid of colors to use.</param>
-            <remarks>
-            The passed in arrays cannot have more than <see cref="F:Corale.Colore.Razer.Keyboard.Constants.MaxRows" /> rows and
-            not more than <see cref="F:Corale.Colore.Razer.Keyboard.Constants.MaxColumns" /> columns in any row.
-            <para />
-            This will overwrite the internal <see cref="T:Corale.Colore.Razer.Keyboard.Effects.Custom" />
-            struct in the <see cref="T:Corale.Colore.Core.Keyboard" /> class.
-            </remarks>
         </member>
         <member name="M:Corale.Colore.Core.Keyboard.SetCustom(Corale.Colore.Razer.Keyboard.Effects.Custom)">
             <summary>
@@ -1597,6 +1896,11 @@
             Sets a wave effect on the keyboard.
             </summary>
             <param name="effect">Effect options.</param>
+        </member>
+        <member name="M:Corale.Colore.Core.Keyboard.Clear">
+            <summary>
+            Clears the current effect on the Keyboard.
+            </summary>
         </member>
         <member name="T:Corale.Colore.Core.Keypad">
             <summary>
@@ -1727,6 +2031,11 @@
             Sets a <see cref="T:Corale.Colore.Razer.Keypad.Effects.Wave" /> effect on the keypad.
             </summary>
             <param name="direction">Direction of the wave.</param>
+        </member>
+        <member name="M:Corale.Colore.Core.Keypad.Clear">
+            <summary>
+            Clears the current effect on the Keypad.
+            </summary>
         </member>
         <member name="T:Corale.Colore.Core.Mouse">
             <summary>
@@ -1926,6 +2235,11 @@
             </summary>
             <param name="effect">An instance of the <see cref="T:Corale.Colore.Razer.Mouse.Effects.CustomGrid" /> struct.</param>
         </member>
+        <member name="M:Corale.Colore.Core.Mouse.Clear">
+            <summary>
+            Clears the current effect on the Mouse.
+            </summary>
+        </member>
         <member name="T:Corale.Colore.Core.Mousepad">
             <summary>
             Class for interacting with a Chroma mouse pad.
@@ -2030,6 +2344,11 @@
             </summary>
             <param name="effect">An instance of the <see cref="T:Corale.Colore.Razer.Mousepad.Effects.Custom" /> struct.</param>
         </member>
+        <member name="M:Corale.Colore.Core.Mousepad.Clear">
+            <summary>
+            Clears the current effect on the Mousepad.
+            </summary>
+        </member>
         <member name="T:Corale.Colore.Core.NativeWrapper">
             <summary>
             Helper class to more easily make calls to native Chroma SDK functions.
@@ -2092,6 +2411,14 @@
             <param name="param">Effect-specific parameters.</param>
             <returns>A <see cref="T:System.Guid" /> for the created effect.</returns>
         </member>
+        <member name="M:Corale.Colore.Core.NativeWrapper.CreateChromaLinkEffect(Corale.Colore.Razer.ChromaLink.Effects.Effect,System.IntPtr)">
+            <summary>
+            Creates a Chroma Link effect with the specified parameters.
+            </summary>
+            <param name="effect">The type of Chroma Link effect to create.</param>
+            <param name="param">Effect-specific parameters.</param>
+            <returns>A <see cref="T:System.Guid" /> for the created effect.</returns>
+        </member>
         <member name="M:Corale.Colore.Core.NativeWrapper.DeleteEffect(System.Guid)">
             <summary>
             Deletes an effect with the specified <see cref="T:System.Guid" />.
@@ -2132,6 +2459,16 @@
             <param name="id">Device ID, found in <see cref="T:Corale.Colore.Razer.Devices" />.</param>
             <returns>A populated <see cref="T:Corale.Colore.Razer.DeviceInfo" /> structure with information about the requested device.</returns>
         </member>
+        <member name="M:Corale.Colore.Core.NativeWrapper.CreateDeviceEffect``1(System.Guid,Corale.Colore.Razer.Effect,``0)">
+            <summary>
+            Helper method for creating device effects with relevant structure parameter.
+            </summary>
+            <typeparam name="T">The structure type, needs to be compatible with the effect type.</typeparam>
+            <param name="device">The ID of the device to create the effect for.</param>
+            <param name="effect">The type of effect to create.</param>
+            <param name="struct">The effect structure parameter.</param>
+            <returns>A <see cref="T:System.Guid" /> for the created effect.</returns>
+        </member>
         <member name="M:Corale.Colore.Core.NativeWrapper.CreateKeyboardEffect``1(Corale.Colore.Razer.Keyboard.Effects.Effect,``0)">
             <summary>
             Helper method for creating keyboard effects with relevant structure parameter.
@@ -2171,6 +2508,15 @@
         <member name="M:Corale.Colore.Core.NativeWrapper.CreateKeypadEffect``1(Corale.Colore.Razer.Keypad.Effects.Effect,``0)">
             <summary>
             Helper method for creating keypad effects with parameter struct.
+            </summary>
+            <typeparam name="T">The effect struct type.</typeparam>
+            <param name="effect">The type of effect to create.</param>
+            <param name="struct">Effect options struct.</param>
+            <returns>A <see cref="T:System.Guid" /> for the created effect.</returns>
+        </member>
+        <member name="M:Corale.Colore.Core.NativeWrapper.CreateChromaLinkEffect``1(Corale.Colore.Razer.ChromaLink.Effects.Effect,``0)">
+            <summary>
+            Helper method for creating Chroma Link effects with parameter struct.
             </summary>
             <typeparam name="T">The effect struct type.</typeparam>
             <param name="effect">The type of effect to create.</param>
@@ -2241,6 +2587,436 @@
         <member name="P:Corale.Colore.Events.DeviceAccessEventArgs.Granted">
             <summary>
             Gets a value indicating whether device access has been granted.
+            </summary>
+        </member>
+        <member name="T:Corale.Colore.Logging.ILog">
+            <summary>
+            Describes a logger.
+            </summary>
+        </member>
+        <member name="P:Corale.Colore.Logging.ILog.Name">
+            <summary>
+            Gets the name of the logger.
+            </summary>
+        </member>
+        <member name="P:Corale.Colore.Logging.ILog.Level">
+            <summary>
+            Gets the configured level threshold.
+            </summary>
+        </member>
+        <member name="M:Corale.Colore.Logging.ILog.Log(Corale.Colore.Logging.LogLevel,System.String)">
+            <summary>
+            Logs a message.
+            </summary>
+            <param name="level">The level of the message.</param>
+            <param name="message">The message to log.</param>
+        </member>
+        <member name="M:Corale.Colore.Logging.ILog.Log(Corale.Colore.Logging.LogLevel,System.String,System.Exception)">
+            <summary>
+            Logs a message with an exception.
+            </summary>
+            <param name="level">The level of the message.</param>
+            <param name="message">The message to log.</param>
+            <param name="exception">The exception object to include.</param>
+        </member>
+        <member name="M:Corale.Colore.Logging.ILog.LogFormat(Corale.Colore.Logging.LogLevel,System.String,System.Object[])">
+            <summary>
+            Logs a formatted message.
+            </summary>
+            <param name="level">The level of the message.</param>
+            <param name="format">The format string.</param>
+            <param name="args">Format parameters.</param>
+        </member>
+        <member name="M:Corale.Colore.Logging.ILog.Debug(System.String)">
+            <summary>
+            Logs a message at the <see cref="F:Corale.Colore.Logging.LogLevel.Debug" /> level.
+            </summary>
+            <param name="message">The message to log.</param>
+        </member>
+        <member name="M:Corale.Colore.Logging.ILog.Debug(System.String,System.Exception)">
+            <summary>
+            Logs a message at the <see cref="F:Corale.Colore.Logging.LogLevel.Debug" /> level
+            with an exception object.
+            </summary>
+            <param name="message">The message to log.</param>
+            <param name="exception">The exception object to include.</param>
+        </member>
+        <member name="M:Corale.Colore.Logging.ILog.DebugFormat(System.String,System.Object[])">
+            <summary>
+            Logs a formatted message at the <see cref="F:Corale.Colore.Logging.LogLevel.Debug" /> level.
+            </summary>
+            <param name="format">Format string.</param>
+            <param name="args">Format parameters.</param>
+        </member>
+        <member name="M:Corale.Colore.Logging.ILog.Info(System.String)">
+            <summary>
+            Logs a message at the <see cref="F:Corale.Colore.Logging.LogLevel.Info" /> level.
+            </summary>
+            <param name="message">The message to log.</param>
+        </member>
+        <member name="M:Corale.Colore.Logging.ILog.Info(System.String,System.Exception)">
+            <summary>
+            Logs a message at the <see cref="F:Corale.Colore.Logging.LogLevel.Info" /> level
+            with an exception object.
+            </summary>
+            <param name="message">The message to log.</param>
+            <param name="exception">The exception object to include.</param>
+        </member>
+        <member name="M:Corale.Colore.Logging.ILog.InfoFormat(System.String,System.Object[])">
+            <summary>
+            Logs a formatted message at the <see cref="F:Corale.Colore.Logging.LogLevel.Info" /> level.
+            </summary>
+            <param name="format">Format string.</param>
+            <param name="args">Format parameters.</param>
+        </member>
+        <member name="M:Corale.Colore.Logging.ILog.Warn(System.String)">
+            <summary>
+            Logs a message at the <see cref="F:Corale.Colore.Logging.LogLevel.Warn" /> level.
+            </summary>
+            <param name="message">The message to log.</param>
+        </member>
+        <member name="M:Corale.Colore.Logging.ILog.Warn(System.String,System.Exception)">
+            <summary>
+            Logs a message at the <see cref="F:Corale.Colore.Logging.LogLevel.Warn" /> level
+            with an exception object.
+            </summary>
+            <param name="message">The message to log.</param>
+            <param name="exception">The exception object to include.</param>
+        </member>
+        <member name="M:Corale.Colore.Logging.ILog.WarnFormat(System.String,System.Object[])">
+            <summary>
+            Logs a formatted message at the <see cref="F:Corale.Colore.Logging.LogLevel.Warn" /> level.
+            </summary>
+            <param name="format">Format string.</param>
+            <param name="args">Format parameters.</param>
+        </member>
+        <member name="M:Corale.Colore.Logging.ILog.Error(System.String)">
+            <summary>
+            Logs a message at the <see cref="F:Corale.Colore.Logging.LogLevel.Error" /> level.
+            </summary>
+            <param name="message">The message to log.</param>
+        </member>
+        <member name="M:Corale.Colore.Logging.ILog.Error(System.String,System.Exception)">
+            <summary>
+            Logs a message at the <see cref="F:Corale.Colore.Logging.LogLevel.Error" /> level
+            with an exception object.
+            </summary>
+            <param name="message">The message to log.</param>
+            <param name="exception">The exception object to include.</param>
+        </member>
+        <member name="M:Corale.Colore.Logging.ILog.ErrorFormat(System.String,System.Object[])">
+            <summary>
+            Logs a formatted message at the <see cref="F:Corale.Colore.Logging.LogLevel.Error" /> level.
+            </summary>
+            <param name="format">Format string.</param>
+            <param name="args">Format parameters.</param>
+        </member>
+        <member name="M:Corale.Colore.Logging.ILog.Fatal(System.String)">
+            <summary>
+            Logs a message at the <see cref="F:Corale.Colore.Logging.LogLevel.Fatal" /> level.
+            </summary>
+            <param name="message">The message to log.</param>
+        </member>
+        <member name="M:Corale.Colore.Logging.ILog.Fatal(System.String,System.Exception)">
+            <summary>
+            Logs a message at the <see cref="F:Corale.Colore.Logging.LogLevel.Fatal" /> level
+            with an exception object.
+            </summary>
+            <param name="message">The message to log.</param>
+            <param name="exception">The exception object to include.</param>
+        </member>
+        <member name="M:Corale.Colore.Logging.ILog.FatalFormat(System.String,System.Object[])">
+            <summary>
+            Logs a formatted message at the <see cref="F:Corale.Colore.Logging.LogLevel.Fatal" /> level.
+            </summary>
+            <param name="format">Format string.</param>
+            <param name="args">Format parameters.</param>
+        </member>
+        <member name="T:Corale.Colore.Logging.Logger">
+            <summary>
+            Base logger class implementing some default behaviour like delegating
+            logging commands to the base <c>Log</c> method.
+            </summary>
+        </member>
+        <member name="M:Corale.Colore.Logging.Logger.#ctor(System.String,Corale.Colore.Logging.LogLevel)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Corale.Colore.Logging.Logger" /> class.
+            </summary>
+            <param name="name">The name of the logger.</param>
+            <param name="level">Configured threshold level for logging.</param>
+        </member>
+        <member name="P:Corale.Colore.Logging.Logger.Name">
+            <summary>
+            Gets the name of the logger.
+            </summary>
+        </member>
+        <member name="P:Corale.Colore.Logging.Logger.Level">
+            <summary>
+            Gets the configured level threshold.
+            </summary>
+        </member>
+        <member name="M:Corale.Colore.Logging.Logger.Log(Corale.Colore.Logging.LogLevel,System.String)">
+            <summary>
+            Logs a message.
+            </summary>
+            <param name="level">The level of the message.</param>
+            <param name="message">The message to log.</param>
+        </member>
+        <member name="M:Corale.Colore.Logging.Logger.Log(Corale.Colore.Logging.LogLevel,System.String,System.Exception)">
+            <summary>
+            Logs a message with an exception.
+            </summary>
+            <param name="level">The level of the message.</param>
+            <param name="message">The message to log.</param>
+            <param name="exception">The exception object to include.</param>
+        </member>
+        <member name="M:Corale.Colore.Logging.Logger.LogFormat(Corale.Colore.Logging.LogLevel,System.String,System.Object[])">
+            <summary>
+            Logs a formatted message.
+            </summary>
+            <param name="level">The level of the message.</param>
+            <param name="format">The format string.</param>
+            <param name="args">Format parameters.</param>
+        </member>
+        <member name="M:Corale.Colore.Logging.Logger.Debug(System.String)">
+            <summary>
+            Logs a message at the <see cref="F:Corale.Colore.Logging.LogLevel.Debug" /> level.
+            </summary>
+            <param name="message">The message to log.</param>
+        </member>
+        <member name="M:Corale.Colore.Logging.Logger.Debug(System.String,System.Exception)">
+            <summary>
+            Logs a message at the <see cref="F:Corale.Colore.Logging.LogLevel.Debug" /> level
+            with an exception object.
+            </summary>
+            <param name="message">The message to log.</param>
+            <param name="exception">The exception object to include.</param>
+        </member>
+        <member name="M:Corale.Colore.Logging.Logger.DebugFormat(System.String,System.Object[])">
+            <summary>
+            Logs a formatted message at the <see cref="F:Corale.Colore.Logging.LogLevel.Debug" /> level.
+            </summary>
+            <param name="format">Format string.</param>
+            <param name="args">Format parameters.</param>
+        </member>
+        <member name="M:Corale.Colore.Logging.Logger.Info(System.String)">
+            <summary>
+            Logs a message at the <see cref="F:Corale.Colore.Logging.LogLevel.Info" /> level.
+            </summary>
+            <param name="message">The message to log.</param>
+        </member>
+        <member name="M:Corale.Colore.Logging.Logger.Info(System.String,System.Exception)">
+            <summary>
+            Logs a message at the <see cref="F:Corale.Colore.Logging.LogLevel.Info" /> level
+            with an exception object.
+            </summary>
+            <param name="message">The message to log.</param>
+            <param name="exception">The exception object to include.</param>
+        </member>
+        <member name="M:Corale.Colore.Logging.Logger.InfoFormat(System.String,System.Object[])">
+            <summary>
+            Logs a formatted message at the <see cref="F:Corale.Colore.Logging.LogLevel.Info" /> level.
+            </summary>
+            <param name="format">Format string.</param>
+            <param name="args">Format parameters.</param>
+        </member>
+        <member name="M:Corale.Colore.Logging.Logger.Warn(System.String)">
+            <summary>
+            Logs a message at the <see cref="F:Corale.Colore.Logging.LogLevel.Warn" /> level.
+            </summary>
+            <param name="message">The message to log.</param>
+        </member>
+        <member name="M:Corale.Colore.Logging.Logger.Warn(System.String,System.Exception)">
+            <summary>
+            Logs a message at the <see cref="F:Corale.Colore.Logging.LogLevel.Warn" /> level
+            with an exception object.
+            </summary>
+            <param name="message">The message to log.</param>
+            <param name="exception">The exception object to include.</param>
+        </member>
+        <member name="M:Corale.Colore.Logging.Logger.WarnFormat(System.String,System.Object[])">
+            <summary>
+            Logs a formatted message at the <see cref="F:Corale.Colore.Logging.LogLevel.Warn" /> level.
+            </summary>
+            <param name="format">Format string.</param>
+            <param name="args">Format parameters.</param>
+        </member>
+        <member name="M:Corale.Colore.Logging.Logger.Error(System.String)">
+            <summary>
+            Logs a message at the <see cref="F:Corale.Colore.Logging.LogLevel.Error" /> level.
+            </summary>
+            <param name="message">The message to log.</param>
+        </member>
+        <member name="M:Corale.Colore.Logging.Logger.Error(System.String,System.Exception)">
+            <summary>
+            Logs a message at the <see cref="F:Corale.Colore.Logging.LogLevel.Error" /> level
+            with an exception object.
+            </summary>
+            <param name="message">The message to log.</param>
+            <param name="exception">The exception object to include.</param>
+        </member>
+        <member name="M:Corale.Colore.Logging.Logger.ErrorFormat(System.String,System.Object[])">
+            <summary>
+            Logs a formatted message at the <see cref="F:Corale.Colore.Logging.LogLevel.Error" /> level.
+            </summary>
+            <param name="format">Format string.</param>
+            <param name="args">Format parameters.</param>
+        </member>
+        <member name="M:Corale.Colore.Logging.Logger.Fatal(System.String)">
+            <summary>
+            Logs a message at the <see cref="F:Corale.Colore.Logging.LogLevel.Fatal" /> level.
+            </summary>
+            <param name="message">The message to log.</param>
+        </member>
+        <member name="M:Corale.Colore.Logging.Logger.Fatal(System.String,System.Exception)">
+            <summary>
+            Logs a message at the <see cref="F:Corale.Colore.Logging.LogLevel.Fatal" /> level
+            with an exception object.
+            </summary>
+            <param name="message">The message to log.</param>
+            <param name="exception">The exception object to include.</param>
+        </member>
+        <member name="M:Corale.Colore.Logging.Logger.FatalFormat(System.String,System.Object[])">
+            <summary>
+            Logs a formatted message at the <see cref="F:Corale.Colore.Logging.LogLevel.Fatal" /> level.
+            </summary>
+            <param name="format">Format string.</param>
+            <param name="args">Format parameters.</param>
+        </member>
+        <member name="T:Corale.Colore.Logging.LogLevel">
+            <summary>
+            Available logging levels for the internal loggers.
+            </summary>
+        </member>
+        <member name="F:Corale.Colore.Logging.LogLevel.Debug">
+            <summary>
+            A <c>DEBUG</c> level message.
+            </summary>
+        </member>
+        <member name="F:Corale.Colore.Logging.LogLevel.Info">
+            <summary>
+            An <c>INFO</c> level message.
+            </summary>
+        </member>
+        <member name="F:Corale.Colore.Logging.LogLevel.Warn">
+            <summary>
+            A <c>WARN</c> level message.
+            </summary>
+        </member>
+        <member name="F:Corale.Colore.Logging.LogLevel.Error">
+            <summary>
+            An <c>ERROR</c> level message.
+            </summary>
+        </member>
+        <member name="F:Corale.Colore.Logging.LogLevel.Fatal">
+            <summary>
+            A <c>FATAL</c> level message.
+            </summary>
+        </member>
+        <member name="T:Corale.Colore.Logging.LogManager">
+            <summary>
+            Provides methods to get loggers for classes.
+            </summary>
+        </member>
+        <member name="F:Corale.Colore.Logging.LogManager.Cache">
+            <summary>
+            Caches created logger objects by name.
+            </summary>
+        </member>
+        <member name="M:Corale.Colore.Logging.LogManager.GetLogger(System.String,Corale.Colore.Logging.LogLevel)">
+            <summary>
+            Gets a logger instance with the specified name.
+            </summary>
+            <param name="name">The name to give the logger.</param>
+            <param name="level">The default level to set for the logger.</param>
+            <returns>An instance of a logger with the specified name.</returns>
+        </member>
+        <member name="M:Corale.Colore.Logging.LogManager.GetLogger(System.Type,Corale.Colore.Logging.LogLevel)">
+            <summary>
+            Gets a logger instance for the specified <see cref="T:System.Type" />.
+            </summary>
+            <param name="type">The type to get a logger instance for.</param>
+            <param name="level">The default level to set for the logger.</param>
+            <returns>An instance of a logger implementing <see cref="T:Corale.Colore.Logging.ILog" />.</returns>
+        </member>
+        <member name="T:Corale.Colore.Logging.TraceLogger">
+            <summary>
+            A logger using <c>System.Diagnostics</c> to log messages.
+            </summary>
+        </member>
+        <member name="F:Corale.Colore.Logging.TraceLogger.LevelMapping">
+            <summary>
+            Maps internal logger levels to the ones used in <c>System.Diagnostics</c>.
+            </summary>
+        </member>
+        <member name="F:Corale.Colore.Logging.TraceLogger.EventMapping">
+            <summary>
+            Maps internal logger levels to event types for use with <c>System.Diagnostics</c>.
+            </summary>
+        </member>
+        <member name="F:Corale.Colore.Logging.TraceLogger.SourceCache">
+            <summary>
+            Caches created <see cref="T:System.Diagnostics.TraceSource" /> objects.
+            </summary>
+        </member>
+        <member name="F:Corale.Colore.Logging.TraceLogger._source">
+            <summary>
+            The internal <see cref="T:System.Diagnostics.TraceSource" /> object that this logger uses.
+            </summary>
+        </member>
+        <member name="M:Corale.Colore.Logging.TraceLogger.#ctor(System.String,Corale.Colore.Logging.LogLevel)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Corale.Colore.Logging.TraceLogger" /> class.
+            </summary>
+            <param name="name">The name of this logger.</param>
+            <param name="level">The level to log at.</param>
+        </member>
+        <member name="M:Corale.Colore.Logging.TraceLogger.Log(Corale.Colore.Logging.LogLevel,System.String)">
+            <summary>
+            Logs a message.
+            </summary>
+            <param name="level">The level of the message.</param>
+            <param name="message">The message to log.</param>
+        </member>
+        <member name="M:Corale.Colore.Logging.TraceLogger.Log(Corale.Colore.Logging.LogLevel,System.String,System.Exception)">
+            <summary>
+            Logs a message with an exception.
+            </summary>
+            <param name="level">The level of the message.</param>
+            <param name="message">The message to log.</param>
+            <param name="exception">The exception object to include.</param>
+        </member>
+        <member name="M:Corale.Colore.Logging.TraceLogger.LogFormat(Corale.Colore.Logging.LogLevel,System.String,System.Object[])">
+            <summary>
+            Logs a formatted message.
+            </summary>
+            <param name="level">The level of the message.</param>
+            <param name="format">The format string.</param>
+            <param name="args">Format parameters.</param>
+        </member>
+        <member name="M:Corale.Colore.Logging.TraceLogger.IsConfigured(System.Diagnostics.TraceSource)">
+            <summary>
+            Returns whether the <see cref="T:System.Diagnostics.TraceSource" /> object has
+            a non-default configuration applied.
+            </summary>
+            <param name="source">An instance of <see cref="T:System.Diagnostics.TraceSource" /> to check.</param>
+            <returns><c>true</c> if the source has been configured explicitly, otherwise <c>false</c>.</returns>
+        </member>
+        <member name="M:Corale.Colore.Logging.TraceLogger.GetParent(System.String,System.Diagnostics.SourceLevels)">
+            <summary>
+            Gets the parent <see cref="T:System.Diagnostics.TraceSource" /> object of a named
+            trace source.
+            </summary>
+            <param name="name">The name of the child trace source.</param>
+            <param name="level">The trace level.</param>
+            <returns>
+            An instance of <see cref="T:System.Diagnostics.TraceSource" /> that is the logical
+            parent by name to the specified trace source.
+            </returns>
+        </member>
+        <member name="M:Corale.Colore.Logging.TraceLogger.Configure">
+            <summary>
+            Configures this logger instance.
             </summary>
         </member>
         <member name="T:Corale.Colore.Native.Kernel32.NativeMethods">
@@ -2976,9 +3752,217 @@
             The attribute must be mentioned in your member reordering patterns.
             </remarks>
         </member>
+        <member name="T:Corale.Colore.Razer.ChromaLink.Constants">
+            <summary>
+            Chroma Link constants.
+            </summary>
+        </member>
+        <member name="F:Corale.Colore.Razer.ChromaLink.Constants.MaxLeds">
+            <summary>
+            Maximum number of LEDs.
+            </summary>
+        </member>
+        <member name="T:Corale.Colore.Razer.ChromaLink.Effects.Custom">
+            <summary>
+            Custom effect.
+            </summary>
+        </member>
+        <member name="F:Corale.Colore.Razer.ChromaLink.Effects.Custom._colors">
+            <summary>
+            Color definitions for each element in Chroma Link.
+            </summary>
+            <remarks>
+            The array is 1-dimensional
+            according to: Constants.MaxLeds
+            </remarks>
+        </member>
+        <member name="M:Corale.Colore.Razer.ChromaLink.Effects.Custom.#ctor(Corale.Colore.Core.Color[])">
+            <summary>
+            Initializes a new instance of the <see cref="T:Corale.Colore.Razer.ChromaLink.Effects.Custom" /> struct.
+            </summary>
+            <param name="colors">The colors to use.</param>
+            <exception cref="T:System.ArgumentException">Thrown if the colors array supplied is of an incorrect size.</exception>
+        </member>
+        <member name="M:Corale.Colore.Razer.ChromaLink.Effects.Custom.#ctor(System.Collections.Generic.IList{Corale.Colore.Core.Color})">
+            <summary>
+            Initializes a new instance of the <see cref="T:Corale.Colore.Razer.ChromaLink.Effects.Custom" /> struct.
+            </summary>
+            <param name="colors">The colors to use.</param>
+            <exception cref="T:System.ArgumentException">Thrown if the colors array supplied is of an invalid size.</exception>
+        </member>
+        <member name="M:Corale.Colore.Razer.ChromaLink.Effects.Custom.#ctor(Corale.Colore.Core.Color)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Corale.Colore.Razer.ChromaLink.Effects.Custom" /> struct
+            with every position set to a specific color.
+            </summary>
+            <param name="color">The <see cref="T:Corale.Colore.Core.Color" /> to set each position to.</param>
+        </member>
+        <member name="M:Corale.Colore.Razer.ChromaLink.Effects.Custom.#ctor(Corale.Colore.Razer.ChromaLink.Effects.Custom)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Corale.Colore.Razer.ChromaLink.Effects.Custom" /> struct
+            with color values copied from another struct of the same type.
+            </summary>
+            <param name="other">The struct to copy data from.</param>
+        </member>
+        <member name="P:Corale.Colore.Razer.ChromaLink.Effects.Custom.Item(System.Int32)">
+            <summary>
+            Gets or sets a position in the custom array.
+            </summary>
+            <param name="index">The index to access, zero indexed.</param>
+            <returns>The <see cref="T:Corale.Colore.Core.Color" /> at the specified position.</returns>
+        </member>
+        <member name="M:Corale.Colore.Razer.ChromaLink.Effects.Custom.op_Equality(Corale.Colore.Razer.ChromaLink.Effects.Custom,System.Object)">
+            <summary>
+            Compares an instance of <see cref="T:Corale.Colore.Razer.ChromaLink.Effects.Custom" /> with
+            another object for equality.
+            </summary>
+            <param name="left">The left operand, an instance of <see cref="T:Corale.Colore.Razer.ChromaLink.Effects.Custom" />.</param>
+            <param name="right">The right operand, any type of object.</param>
+            <returns><c>true</c> if the two objects are equal, otherwise <c>false</c>.</returns>
+        </member>
+        <member name="M:Corale.Colore.Razer.ChromaLink.Effects.Custom.op_Inequality(Corale.Colore.Razer.ChromaLink.Effects.Custom,System.Object)">
+            <summary>
+            Compares an instance of <see cref="T:Corale.Colore.Razer.ChromaLink.Effects.Custom" /> with
+            another object for inequality.
+            </summary>
+            <param name="left">The left operand, an instance of <see cref="T:Corale.Colore.Razer.ChromaLink.Effects.Custom" />.</param>
+            <param name="right">The right operand, any type of object.</param>
+            <returns><c>true</c> if the two objects are not equal, otherwise <c>false</c>.</returns>
+        </member>
+        <member name="M:Corale.Colore.Razer.ChromaLink.Effects.Custom.Create">
+            <summary>
+            Creates a new empty <see cref="T:Corale.Colore.Razer.ChromaLink.Effects.Custom" /> struct.
+            </summary>
+            <returns>An instance of <see cref="T:Corale.Colore.Razer.ChromaLink.Effects.Custom" />
+            filled with the color black.</returns>
+        </member>
+        <member name="M:Corale.Colore.Razer.ChromaLink.Effects.Custom.Clone">
+            <summary>
+            Returns a copy of this struct.
+            </summary>
+            <returns>A copy of this struct.</returns>
+        </member>
+        <member name="M:Corale.Colore.Razer.ChromaLink.Effects.Custom.GetHashCode">
+            <summary>
+            Returns the hash code for this instance.
+            </summary>
+            <returns>
+            A 32-bit signed integer that is the hash code for this instance.
+            </returns>
+            <filterpriority>2</filterpriority>
+        </member>
+        <member name="M:Corale.Colore.Razer.ChromaLink.Effects.Custom.Set(Corale.Colore.Core.Color)">
+            <summary>
+            Sets all LED indices to the specified <see cref="T:Corale.Colore.Core.Color" />.
+            </summary>
+            <param name="color">The <see cref="T:Corale.Colore.Core.Color" /> to set.</param>
+        </member>
+        <member name="M:Corale.Colore.Razer.ChromaLink.Effects.Custom.Clear">
+            <summary>
+            Clears the colors from the array, setting them to <see cref="F:Corale.Colore.Core.Color.Black" />.
+            </summary>
+        </member>
+        <member name="M:Corale.Colore.Razer.ChromaLink.Effects.Custom.Equals(System.Object)">
+            <summary>
+            Indicates whether this instance and a specified object are equal.
+            </summary>
+            <returns>
+            <c>true</c> if <paramref name="obj"/> and this instance are of compatible types
+            and represent the same value; otherwise, <c>false</c>.
+            </returns>
+            <param name="obj">Another object to compare to. </param>
+            <filterpriority>2</filterpriority>
+        </member>
+        <member name="M:Corale.Colore.Razer.ChromaLink.Effects.Custom.Equals(Corale.Colore.Razer.ChromaLink.Effects.Custom)">
+            <summary>
+            Indicates whether the current object is equal to another object of the same type.
+            </summary>
+            <returns>
+            <c>true</c> if the current object is equal to the <paramref name="other"/> parameter;
+            otherwise, <c>false</c>.
+            </returns>
+            <param name="other">A <see cref="T:Corale.Colore.Razer.ChromaLink.Effects.Custom" /> to compare with this object.</param>
+        </member>
+        <member name="M:Corale.Colore.Razer.ChromaLink.Effects.Custom.Equals(Corale.Colore.Core.Color[])">
+            <summary>
+            Indicates whether the current object is equal to an instance of
+            an array of <see cref="T:Corale.Colore.Core.Color" />.
+            </summary>
+            <param name="other">An array of <see cref="T:Corale.Colore.Core.Color" /> to compare with this object.</param>
+            <returns>
+            <c>true</c> if the <paramref name="other" /> object has the same
+            number of elements, and contain matching colors; otherwise, <c>false</c>.
+            </returns>
+        </member>
+        <member name="T:Corale.Colore.Razer.ChromaLink.Effects.Effect">
+            <summary>
+            Supported built-in Chroma Link effects.
+            </summary>
+        </member>
+        <member name="F:Corale.Colore.Razer.ChromaLink.Effects.Effect.None">
+            <summary>
+            No effect.
+            </summary>
+        </member>
+        <member name="F:Corale.Colore.Razer.ChromaLink.Effects.Effect.Custom">
+            <summary>
+            No effect.
+            </summary>
+        </member>
+        <member name="F:Corale.Colore.Razer.ChromaLink.Effects.Effect.Static">
+            <summary>
+            No effect.
+            </summary>
+        </member>
+        <member name="F:Corale.Colore.Razer.ChromaLink.Effects.Effect.Breathing">
+            <summary>
+            Slow fade between two colors.
+            </summary>
+        </member>
+        <member name="F:Corale.Colore.Razer.ChromaLink.Effects.Effect.SpectrumCycling">
+            <summary>
+            Cycles the entire spectrum.
+            </summary>
+        </member>
+        <member name="F:Corale.Colore.Razer.ChromaLink.Effects.Effect.Invalid">
+            <summary>
+            No effect.
+            </summary>
+        </member>
+        <member name="T:Corale.Colore.Razer.ChromaLink.Effects.Static">
+            <summary>
+            Static color effect.
+            </summary>
+        </member>
+        <member name="F:Corale.Colore.Razer.ChromaLink.Effects.Static.Color">
+            <summary>
+            Color to use.
+            </summary>
+        </member>
+        <member name="M:Corale.Colore.Razer.ChromaLink.Effects.Static.#ctor(Corale.Colore.Core.Color)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Corale.Colore.Razer.ChromaLink.Effects.Static" /> struct.
+            </summary>
+            <param name="color">Color to set.</param>
+        </member>
         <member name="T:Corale.Colore.Razer.Constants">
             <summary>
             The definitions of generic constant values used in the project
+            </summary>
+        </member>
+        <member name="F:Corale.Colore.Razer.Constants.MaxRows">
+            <summary>
+            Maximum number of rows for a generic custom effect.
+            </summary>
+        </member>
+        <member name="F:Corale.Colore.Razer.Constants.MaxColumns">
+            <summary>
+            Maximum number of columns for a generic custom effect.
+            </summary>
+        </member>
+        <member name="F:Corale.Colore.Razer.Constants.MaxColors">
+            <summary>
+            Maximum number of color entries for a generic custom effect.
             </summary>
         </member>
         <member name="F:Corale.Colore.Razer.Constants.WmChromaEvent">
@@ -3076,9 +4060,24 @@
             Blade Stealth.
             </summary>
         </member>
+        <member name="F:Corale.Colore.Razer.Devices.Blade14">
+            <summary>
+            Blade 14 (2016 edition).
+            </summary>
+        </member>
         <member name="F:Corale.Colore.Razer.Devices.OverwatchKeyboard">
             <summary>
             Overwatch Keyboard.
+            </summary>
+        </member>
+        <member name="F:Corale.Colore.Razer.Devices.BlackwidowX">
+            <summary>
+            Blackwidow X Keyboard.
+            </summary>
+        </member>
+        <member name="F:Corale.Colore.Razer.Devices.BlackwidowXTe">
+            <summary>
+            Blackwidow X TE Keyboard.
             </summary>
         </member>
         <member name="F:Corale.Colore.Razer.Devices.Mamba">
@@ -3094,6 +4093,31 @@
         <member name="F:Corale.Colore.Razer.Devices.NagaEpic">
             <summary>
             Naga Epic Chroma edition.
+            </summary>
+        </member>
+        <member name="F:Corale.Colore.Razer.Devices.NagaHex">
+            <summary>
+            Naga Hex V2
+            </summary>
+        </member>
+        <member name="F:Corale.Colore.Razer.Devices.Core">
+            <summary>
+            Core (external graphics enclosure).
+            </summary>
+        </member>
+        <member name="F:Corale.Colore.Razer.Devices.LenovoY900">
+            <summary>
+            Chroma enabled Lenovo Y900.
+            </summary>
+        </member>
+        <member name="F:Corale.Colore.Razer.Devices.LenovoY27">
+            <summary>
+            Chroma enabled Lenovo Y27.
+            </summary>
+        </member>
+        <member name="F:Corale.Colore.Razer.Devices.Ornata">
+            <summary>
+            Razer Ornata Keyboard.
             </summary>
         </member>
         <member name="M:Corale.Colore.Razer.Devices.IsValidId(System.Guid)">
@@ -3131,6 +4155,16 @@
         <member name="F:Corale.Colore.Razer.DeviceType.Keypad">
             <summary>
             A keypad.
+            </summary>
+        </member>
+        <member name="F:Corale.Colore.Razer.DeviceType.System">
+            <summary>
+            System device.
+            </summary>
+        </member>
+        <member name="F:Corale.Colore.Razer.DeviceType.Invalid">
+            <summary>
+            Invalid device.
             </summary>
         </member>
         <member name="T:Corale.Colore.Razer.Effect">
@@ -3179,10 +4213,448 @@
             A custom effect.
             </summary>
         </member>
+        <member name="F:Corale.Colore.Razer.Effect.Reserved">
+            <summary>
+            Reserved effect.
+            </summary>
+        </member>
         <member name="F:Corale.Colore.Razer.Effect.Invalid">
             <summary>
             Invalid effect.
             </summary>
+        </member>
+        <member name="T:Corale.Colore.Razer.Effects.Blinking">
+            <summary>
+            Describes a blinking effect.
+            </summary>
+        </member>
+        <member name="F:Corale.Colore.Razer.Effects.Blinking.Size">
+            <summary>
+            The size of the struct.
+            </summary>
+        </member>
+        <member name="F:Corale.Colore.Razer.Effects.Blinking.Parameter">
+            <summary>
+            Additional effect parameter.
+            </summary>
+        </member>
+        <member name="F:Corale.Colore.Razer.Effects.Blinking.Color">
+            <summary>
+            Color of the blinking effect.
+            </summary>
+        </member>
+        <member name="M:Corale.Colore.Razer.Effects.Blinking.#ctor(Corale.Colore.Core.Color,System.Int32)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Corale.Colore.Razer.Effects.Blinking" /> struct.
+            </summary>
+            <param name="color">The color to use for the effect.</param>
+            <param name="parameter">Additional parameter value to set.</param>
+        </member>
+        <member name="T:Corale.Colore.Razer.Effects.Breathing">
+            <summary>
+            Describes a breathing effect for a system device.
+            </summary>
+        </member>
+        <member name="F:Corale.Colore.Razer.Effects.Breathing.Size">
+            <summary>
+            The size of the struct.
+            </summary>
+        </member>
+        <member name="F:Corale.Colore.Razer.Effects.Breathing.Parameter">
+            <summary>
+            Additional effect parameter.
+            </summary>
+        </member>
+        <member name="F:Corale.Colore.Razer.Effects.Breathing.Type">
+            <summary>
+            The type of breathing effect.
+            </summary>
+        </member>
+        <member name="F:Corale.Colore.Razer.Effects.Breathing.First">
+            <summary>
+            Primary color to breathe with.
+            </summary>
+        </member>
+        <member name="F:Corale.Colore.Razer.Effects.Breathing.Second">
+            <summary>
+            Secondary color to breathe with.
+            </summary>
+        </member>
+        <member name="M:Corale.Colore.Razer.Effects.Breathing.#ctor(Corale.Colore.Razer.Effects.BreathingType,Corale.Colore.Core.Color,Corale.Colore.Core.Color,System.Int32)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Corale.Colore.Razer.Effects.Breathing" /> struct.
+            </summary>
+            <param name="type">The type of breathing effect to create.</param>
+            <param name="first">Primary effect color.</param>
+            <param name="second">Secondary effect color.</param>
+            <param name="parameter">Additional effect parameter to set.</param>
+        </member>
+        <member name="M:Corale.Colore.Razer.Effects.Breathing.#ctor(Corale.Colore.Core.Color,System.Int32)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Corale.Colore.Razer.Effects.Breathing" /> struct.
+            </summary>
+            <param name="color">Color to breathe with.</param>
+            <param name="parameter">Additional effect parameter to set.</param>
+        </member>
+        <member name="M:Corale.Colore.Razer.Effects.Breathing.#ctor(Corale.Colore.Core.Color,Corale.Colore.Core.Color,System.Int32)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Corale.Colore.Razer.Effects.Breathing" /> struct.
+            </summary>
+            <param name="first">Primary effect color.</param>
+            <param name="second">Secondary effect color.</param>
+            <param name="parameter">Additional effect parameter to set.</param>
+        </member>
+        <member name="M:Corale.Colore.Razer.Effects.Breathing.#ctor(System.Int32)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Corale.Colore.Razer.Effects.Breathing" /> struct.
+            </summary>
+            <param name="parameter">Additional effect parameter to set.</param>
+        </member>
+        <member name="M:Corale.Colore.Razer.Effects.Breathing.Create">
+            <summary>
+            Returns a new instance of the <see cref="T:Corale.Colore.Razer.Effects.Breathing" /> struct
+            setup to perform random breathing with the parameter set to
+            zero.
+            </summary>
+            <returns>A new instance of the <see cref="T:Corale.Colore.Razer.Effects.Breathing" /> struct.</returns>
+        </member>
+        <member name="T:Corale.Colore.Razer.Effects.BreathingType">
+            <summary>
+            Supported breathing effect types for system devices.
+            </summary>
+        </member>
+        <member name="F:Corale.Colore.Razer.Effects.BreathingType.One">
+            <summary>
+            Device fades between one color and no color.
+            </summary>
+        </member>
+        <member name="F:Corale.Colore.Razer.Effects.BreathingType.Two">
+            <summary>
+            Device fades between two specified colors.
+            </summary>
+        </member>
+        <member name="F:Corale.Colore.Razer.Effects.BreathingType.Random">
+            <summary>
+            Device fades between random colors.
+            </summary>
+        </member>
+        <member name="T:Corale.Colore.Razer.Effects.Custom">
+            <summary>
+            Describes a custom effect for a system device.
+            </summary>
+        </member>
+        <member name="F:Corale.Colore.Razer.Effects.Custom.Size">
+            <summary>
+            The size of the effect struct.
+            </summary>
+        </member>
+        <member name="F:Corale.Colore.Razer.Effects.Custom.Parameter">
+            <summary>
+            Additional effect parameter.
+            </summary>
+        </member>
+        <member name="F:Corale.Colore.Razer.Effects.Custom._colors">
+            <summary>
+            Color values for the effect.
+            </summary>
+        </member>
+        <member name="M:Corale.Colore.Razer.Effects.Custom.#ctor(Corale.Colore.Core.Color,System.Int32)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Corale.Colore.Razer.Effects.Custom" /> struct.
+            </summary>
+            <param name="color">Color to set on all cells.</param>
+            <param name="parameter">Additional effect parameter.</param>
+        </member>
+        <member name="M:Corale.Colore.Razer.Effects.Custom.#ctor(Corale.Colore.Razer.Effects.Custom)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Corale.Colore.Razer.Effects.Custom" /> struct.
+            </summary>
+            <param name="other">Another <see cref="T:Corale.Colore.Razer.Effects.Custom" /> struct to copy colors and data from.</param>
+        </member>
+        <member name="M:Corale.Colore.Razer.Effects.Custom.#ctor(System.Collections.Generic.IList{Corale.Colore.Core.Color},System.Int32)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Corale.Colore.Razer.Effects.Custom" /> struct.
+            </summary>
+            <param name="colors">Colors to set.</param>
+            <param name="parameter">Additional effect parameter.</param>
+        </member>
+        <member name="M:Corale.Colore.Razer.Effects.Custom.#ctor(Corale.Colore.Core.Color[0:,0:],System.Int32)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Corale.Colore.Razer.Effects.Custom" /> struct.
+            </summary>
+            <param name="colors">2D array of colors to set.</param>
+            <param name="parameter">Additional effect parameter.</param>
+        </member>
+        <member name="M:Corale.Colore.Razer.Effects.Custom.#ctor(System.Int32)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Corale.Colore.Razer.Effects.Custom" /> struct.
+            </summary>
+            <param name="parameter">Effect parameter to set.</param>
+        </member>
+        <member name="P:Corale.Colore.Razer.Effects.Custom.Item(System.Int32)">
+            <summary>
+            Gets or sets a position in the custom grid.
+            </summary>
+            <param name="index">Index to access.</param>
+            <returns>The <see cref="T:Corale.Colore.Core.Color" /> at the specified position.</returns>
+        </member>
+        <member name="P:Corale.Colore.Razer.Effects.Custom.Item(System.Int32,System.Int32)">
+            <summary>
+            Gets or sets cells in the custom grid.
+            </summary>
+            <param name="row">The row to access.</param>
+            <param name="column">The column to access.</param>
+            <returns>The <see cref="T:Corale.Colore.Core.Color" /> at the specified position.</returns>
+        </member>
+        <member name="M:Corale.Colore.Razer.Effects.Custom.op_Equality(Corale.Colore.Razer.Effects.Custom,System.Object)">
+            <summary>
+            Compares an instance of <see cref="T:Corale.Colore.Razer.Effects.Custom" /> with
+            another object for equality.
+            </summary>
+            <param name="left">The left operand, an instance of <see cref="T:Corale.Colore.Razer.Effects.Custom" />.</param>
+            <param name="right">The right operand, any type of object.</param>
+            <returns><c>true</c> if the two objects are equal, otherwise <c>false</c>.</returns>
+        </member>
+        <member name="M:Corale.Colore.Razer.Effects.Custom.op_Inequality(Corale.Colore.Razer.Effects.Custom,System.Object)">
+            <summary>
+            Compares an instance of <see cref="T:Corale.Colore.Razer.Effects.Custom" /> with
+            another object for inequality.
+            </summary>
+            <param name="left">The left operand, an instance of <see cref="T:Corale.Colore.Razer.Effects.Custom" />.</param>
+            <param name="right">The right operand, any type of object.</param>
+            <returns><c>true</c> if the two objects are not equal, otherwise <c>false</c>.</returns>
+        </member>
+        <member name="M:Corale.Colore.Razer.Effects.Custom.Create">
+            <summary>
+            Creates a new empty <see cref="T:Corale.Colore.Razer.Effects.Custom" /> struct.
+            </summary>
+            <returns>An instance of <see cref="T:Corale.Colore.Razer.Effects.Custom" />
+            filled with the color black.</returns>
+        </member>
+        <member name="M:Corale.Colore.Razer.Effects.Custom.Clone">
+            <summary>
+            Returns a copy of this struct.
+            </summary>
+            <returns>A copy of this struct.</returns>
+        </member>
+        <member name="M:Corale.Colore.Razer.Effects.Custom.Clear">
+            <summary>
+            Clears the colors from the grid, setting them to <see cref="F:Corale.Colore.Core.Color.Black" />.
+            </summary>
+        </member>
+        <member name="M:Corale.Colore.Razer.Effects.Custom.Equals(System.Object)">
+            <summary>
+            Indicates whether this instance and a specified object are equal.
+            </summary>
+            <returns>
+            <c>true</c> if <paramref name="obj"/> and this instance are of compatible types
+            and represent the same value; otherwise, <c>false</c>.
+            </returns>
+            <param name="obj">Another object to compare to. </param>
+            <filterpriority>2</filterpriority>
+        </member>
+        <member name="M:Corale.Colore.Razer.Effects.Custom.Equals(Corale.Colore.Razer.Effects.Custom)">
+            <summary>
+            Indicates whether the current object is equal to another object of the same type.
+            </summary>
+            <returns>
+            <c>true</c> if the current object is equal to the <paramref name="other"/> parameter;
+            otherwise, <c>false</c>.
+            </returns>
+            <param name="other">A <see cref="T:Corale.Colore.Razer.Effects.Custom" /> to compare with this object.</param>
+        </member>
+        <member name="M:Corale.Colore.Razer.Effects.Custom.GetHashCode">
+            <summary>
+            Returns the hash code for this instance.
+            </summary>
+            <returns>A 32-bit signed integer that is the hash code for this instance.</returns>
+        </member>
+        <member name="M:Corale.Colore.Razer.Effects.Custom.Set(Corale.Colore.Core.Color)">
+            <summary>
+            Sets the entire grid to a specific <see cref="T:Corale.Colore.Core.Color" />.
+            </summary>
+            <param name="color">The <see cref="T:Corale.Colore.Core.Color" /> to apply.</param>
+        </member>
+        <member name="T:Corale.Colore.Razer.Effects.Direction">
+            <summary>
+            Supported directions for the system wave effect.
+            </summary>
+        </member>
+        <member name="F:Corale.Colore.Razer.Effects.Direction.LeftToRight">
+            <summary>
+            Left to right.
+            </summary>
+        </member>
+        <member name="F:Corale.Colore.Razer.Effects.Direction.RightToLeft">
+            <summary>
+            Right to left.
+            </summary>
+        </member>
+        <member name="F:Corale.Colore.Razer.Effects.Direction.FrontToBack">
+            <summary>
+            Front to back.
+            </summary>
+        </member>
+        <member name="F:Corale.Colore.Razer.Effects.Direction.BackToFront">
+            <summary>
+            Back to front.
+            </summary>
+        </member>
+        <member name="T:Corale.Colore.Razer.Effects.Duration">
+            <summary>
+            Effect durations for system reactive effect.
+            </summary>
+        </member>
+        <member name="F:Corale.Colore.Razer.Effects.Duration.Short">
+            <summary>
+            Short duration.
+            </summary>
+        </member>
+        <member name="F:Corale.Colore.Razer.Effects.Duration.Medium">
+            <summary>
+            Medium duration.
+            </summary>
+        </member>
+        <member name="F:Corale.Colore.Razer.Effects.Duration.Long">
+            <summary>
+            Long duration.
+            </summary>
+        </member>
+        <member name="T:Corale.Colore.Razer.Effects.None">
+            <summary>
+            Describes the <c>NO_EFFECT</c> effect.
+            </summary>
+        </member>
+        <member name="F:Corale.Colore.Razer.Effects.None.Size">
+            <summary>
+            The size of the struct.
+            </summary>
+        </member>
+        <member name="F:Corale.Colore.Razer.Effects.None.Parameter">
+            <summary>
+            Additional effect parameter.
+            </summary>
+        </member>
+        <member name="M:Corale.Colore.Razer.Effects.None.#ctor(System.Int32)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Corale.Colore.Razer.Effects.None" /> struct.
+            </summary>
+            <param name="parameter">Additional effect parameter to set.</param>
+        </member>
+        <member name="T:Corale.Colore.Razer.Effects.Reactive">
+            <summary>
+            Describes the reactive effect for system devices.
+            </summary>
+        </member>
+        <member name="F:Corale.Colore.Razer.Effects.Reactive.Size">
+            <summary>
+            The size of the struct.
+            </summary>
+        </member>
+        <member name="F:Corale.Colore.Razer.Effects.Reactive.Parameter">
+            <summary>
+            Additional effect parameter.
+            </summary>
+        </member>
+        <member name="F:Corale.Colore.Razer.Effects.Reactive.Duration">
+            <summary>
+            Duration of the effect.
+            </summary>
+        </member>
+        <member name="F:Corale.Colore.Razer.Effects.Reactive.Color">
+            <summary>
+            Color of the effect.
+            </summary>
+        </member>
+        <member name="M:Corale.Colore.Razer.Effects.Reactive.#ctor(Corale.Colore.Razer.Effects.Duration,Corale.Colore.Core.Color,System.Int32)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Corale.Colore.Razer.Effects.Reactive" /> struct.
+            </summary>
+            <param name="duration">Effect duration.</param>
+            <param name="color">Effect color.</param>
+            <param name="parameter">Additional effect parameter.</param>
+        </member>
+        <member name="T:Corale.Colore.Razer.Effects.SpectrumCycling">
+            <summary>
+            Describes the spectrum cycling effect for system devices.
+            </summary>
+        </member>
+        <member name="F:Corale.Colore.Razer.Effects.SpectrumCycling.Size">
+            <summary>
+            The size of the struct.
+            </summary>
+        </member>
+        <member name="F:Corale.Colore.Razer.Effects.SpectrumCycling.Parameter">
+            <summary>
+            Additional effect parameter.
+            </summary>
+        </member>
+        <member name="M:Corale.Colore.Razer.Effects.SpectrumCycling.#ctor(System.Int32)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Corale.Colore.Razer.Effects.SpectrumCycling" /> struct.
+            </summary>
+            <param name="parameter">Additional effect parameter to set.</param>
+        </member>
+        <member name="M:Corale.Colore.Razer.Effects.SpectrumCycling.Create">
+            <summary>
+            Creates a new instance of the <see cref="T:Corale.Colore.Razer.Effects.SpectrumCycling" /> struct
+            with default values.
+            </summary>
+            <returns>A new instance of the <see cref="T:Corale.Colore.Razer.Effects.SpectrumCycling" /> struct.</returns>
+        </member>
+        <member name="T:Corale.Colore.Razer.Effects.Static">
+            <summary>
+            Describes the static effect for system devices.
+            </summary>
+        </member>
+        <member name="F:Corale.Colore.Razer.Effects.Static.Size">
+            <summary>
+            The size of the struct.
+            </summary>
+        </member>
+        <member name="F:Corale.Colore.Razer.Effects.Static.Parameter">
+            <summary>
+            Additional effect parameter.
+            </summary>
+        </member>
+        <member name="F:Corale.Colore.Razer.Effects.Static.Color">
+            <summary>
+            Effect color.
+            </summary>
+        </member>
+        <member name="M:Corale.Colore.Razer.Effects.Static.#ctor(Corale.Colore.Core.Color,System.Int32)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Corale.Colore.Razer.Effects.Static" /> struct.
+            </summary>
+            <param name="color">The color to use.</param>
+            <param name="parameter">Additional effect parameter.</param>
+        </member>
+        <member name="T:Corale.Colore.Razer.Effects.Wave">
+            <summary>
+            Describes the wave effect for a system device.
+            </summary>
+        </member>
+        <member name="F:Corale.Colore.Razer.Effects.Wave.Size">
+            <summary>
+            The size of the struct.
+            </summary>
+        </member>
+        <member name="F:Corale.Colore.Razer.Effects.Wave.Parameter">
+            <summary>
+            Additional effect parameter.
+            </summary>
+        </member>
+        <member name="F:Corale.Colore.Razer.Effects.Wave.Direction">
+            <summary>
+            Direction of the wave.
+            </summary>
+        </member>
+        <member name="M:Corale.Colore.Razer.Effects.Wave.#ctor(Corale.Colore.Razer.Effects.Direction,System.Int32)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Corale.Colore.Razer.Effects.Wave" /> struct.
+            </summary>
+            <param name="direction">Direction of the wave.</param>
+            <param name="parameter">Additional effect parameter.</param>
         </member>
         <member name="T:Corale.Colore.Razer.Headset.Effects.Breathing">
             <summary>
@@ -3223,6 +4695,11 @@
         <member name="F:Corale.Colore.Razer.Headset.Effects.Effect.SpectrumCycling">
             <summary>
             Cycles the entire spectrum.
+            </summary>
+        </member>
+        <member name="F:Corale.Colore.Razer.Headset.Effects.Effect.Custom">
+            <summary>
+            Custom headset effect.
             </summary>
         </member>
         <member name="F:Corale.Colore.Razer.Headset.Effects.Effect.Invalid">
@@ -3271,6 +4748,11 @@
             The maximum number of custom effects based on the maximum keys
             </summary>
         </member>
+        <member name="F:Corale.Colore.Razer.Keyboard.Constants.KeyFlag">
+            <summary>
+            The bit that needs to be set for key mode to be active on a color.
+            </summary>
+        </member>
         <member name="T:Corale.Colore.Razer.Keyboard.Effects.Breathing">
             <summary>
             Describes the breathing effect.
@@ -3309,7 +4791,7 @@
         </member>
         <member name="T:Corale.Colore.Razer.Keyboard.Effects.BreathingType">
             <summary>
-            Supported breathing effect types for mouse pads.
+            Supported breathing effect types for keyboards.
             </summary>
         </member>
         <member name="F:Corale.Colore.Razer.Keyboard.Effects.BreathingType.Two">
@@ -3332,21 +4814,25 @@
             Describes a custom grid effect for every key.
             </summary>
         </member>
-        <member name="F:Corale.Colore.Razer.Keyboard.Effects.Custom._rows">
+        <member name="F:Corale.Colore.Razer.Keyboard.Effects.Custom._colors">
             <summary>
             Color definitions for each key on the keyboard.
             </summary>
             <remarks>
-            The array is 2-dimensional, with the first dimension
-            specifying the row for the key, and the second the column.
+            The array is 1-dimensional, but will be passed to code expecting
+            a 2-dimensional array. Access to this array is done using indices
+            according to: <c>column + row * Constants.MaxColumns</c>
             </remarks>
         </member>
-        <member name="M:Corale.Colore.Razer.Keyboard.Effects.Custom.#ctor(Corale.Colore.Core.Color[][])">
+        <member name="F:Corale.Colore.Razer.Keyboard.Effects.Custom._keys">
             <summary>
-            Initializes a new instance of the <see cref="T:Corale.Colore.Razer.Keyboard.Effects.Custom" /> struct.
+            Color definitions for the key translation mode.
             </summary>
-            <param name="colors">The colors to use.</param>
-            <exception cref="T:System.ArgumentException">Thrown if the colors array supplied is of an incorrect size.</exception>
+            <remarks>
+            Colors set in here will, if flagged with <c>0x01000000</c>,
+            automatically be translated to the proper keyboard location
+            depending on the users keyboard configuration.
+            </remarks>
         </member>
         <member name="M:Corale.Colore.Razer.Keyboard.Effects.Custom.#ctor(Corale.Colore.Core.Color)">
             <summary>
@@ -3354,6 +4840,13 @@
             with every position set to a specific color.
             </summary>
             <param name="color">The <see cref="T:Corale.Colore.Core.Color" /> to set each position to.</param>
+        </member>
+        <member name="M:Corale.Colore.Razer.Keyboard.Effects.Custom.#ctor(Corale.Colore.Razer.Keyboard.Effects.Custom)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Corale.Colore.Razer.Keyboard.Effects.Custom" /> struct
+            with the colors copied from another struct of the same type.
+            </summary>
+            <param name="other">The <see cref="T:Corale.Colore.Razer.Keyboard.Effects.Custom" /> struct to copy data from.</param>
         </member>
         <member name="P:Corale.Colore.Razer.Keyboard.Effects.Custom.Item(System.Int32,System.Int32)">
             <summary>
@@ -3363,9 +4856,18 @@
             <param name="column">Column to access, zero indexed.</param>
             <returns>The <see cref="T:Corale.Colore.Core.Color" /> at the specified position.</returns>
         </member>
+        <member name="P:Corale.Colore.Razer.Keyboard.Effects.Custom.Item(System.Int32)">
+            <summary>
+            Gets or sets a position in the custom grid.
+            </summary>
+            <param name="index">The index to access, zero indexed.</param>
+            <returns>The <see cref="T:Corale.Colore.Core.Color" /> at the specified position.</returns>
+        </member>
         <member name="P:Corale.Colore.Razer.Keyboard.Effects.Custom.Item(Corale.Colore.Razer.Keyboard.Key)">
             <summary>
             Gets or sets the color for a specific key in the custom grid.
+            The SDK will handle translation of location data to access the
+            correct key depending on user configuration.
             </summary>
             <param name="key">The <see cref="T:Corale.Colore.Razer.Keyboard.Key" /> to access.</param>
             <returns>The <see cref="T:Corale.Colore.Core.Color" /> for the specified key.</returns>
@@ -3400,19 +4902,22 @@
             <returns>An instance of <see cref="T:Corale.Colore.Razer.Keyboard.Effects.Custom" />
             filled with the color black.</returns>
         </member>
-        <member name="M:Corale.Colore.Razer.Keyboard.Effects.Custom.GetHashCode">
+        <member name="M:Corale.Colore.Razer.Keyboard.Effects.Custom.Clone">
             <summary>
-            Returns the hash code for this instance.
+            Returns a copy of this struct.
             </summary>
-            <returns>
-            A 32-bit signed integer that is the hash code for this instance.
-            </returns>
-            <filterpriority>2</filterpriority>
+            <returns>A copy of this struct.</returns>
         </member>
         <member name="M:Corale.Colore.Razer.Keyboard.Effects.Custom.Clear">
             <summary>
             Clears the colors from the grid, setting them to <see cref="F:Corale.Colore.Core.Color.Black" />.
             </summary>
+        </member>
+        <member name="M:Corale.Colore.Razer.Keyboard.Effects.Custom.GetHashCode">
+            <summary>
+            Returns the hash code for this instance.
+            </summary>
+            <returns>A 32-bit signed integer that is the hash code for this instance.</returns>
         </member>
         <member name="M:Corale.Colore.Razer.Keyboard.Effects.Custom.Equals(System.Object)">
             <summary>
@@ -3435,74 +4940,9 @@
             </returns>
             <param name="other">A <see cref="T:Corale.Colore.Razer.Keyboard.Effects.Custom" /> to compare with this object.</param>
         </member>
-        <member name="M:Corale.Colore.Razer.Keyboard.Effects.Custom.Equals(Corale.Colore.Core.Color[][])">
-            <summary>
-            Indicates whether the current object is equal to an instance of
-            a 2-dimensional array of <see cref="T:Corale.Colore.Core.Color" />.
-            </summary>
-            <returns>
-            <c>true</c> if the <paramref name="other" /> object has the same
-            number of rows and columns, and contain matching colors; otherwise, <c>false</c>.
-            </returns>
-            <param name="other">
-            A 2-dimensional array of <see cref="T:Corale.Colore.Core.Color" /> to compare with this object.
-            </param>
-        </member>
         <member name="M:Corale.Colore.Razer.Keyboard.Effects.Custom.Set(Corale.Colore.Core.Color)">
             <summary>
             Sets the entire grid to a specific <see cref="T:Corale.Colore.Core.Color" />.
-            </summary>
-            <param name="color">The <see cref="T:Corale.Colore.Core.Color" /> to apply.</param>
-        </member>
-        <member name="T:Corale.Colore.Razer.Keyboard.Effects.Custom.Row">
-            <summary>
-            Container struct holding color definitions for a single row in the custom grid.
-            </summary>
-        </member>
-        <member name="F:Corale.Colore.Razer.Keyboard.Effects.Custom.Row._columns">
-            <summary>
-            Color definitions for the columns of this row.
-            </summary>
-        </member>
-        <member name="M:Corale.Colore.Razer.Keyboard.Effects.Custom.Row.#ctor(System.Collections.Generic.IList{Corale.Colore.Core.Color})">
-            <summary>
-            Initializes a new instance of the <see cref="T:Corale.Colore.Razer.Keyboard.Effects.Custom.Row" /> struct.
-            </summary>
-            <param name="colors">Colors for this row.</param>
-        </member>
-        <member name="M:Corale.Colore.Razer.Keyboard.Effects.Custom.Row.#ctor(Corale.Colore.Core.Color)">
-            <summary>
-            Initializes a new instance of the <see cref="T:Corale.Colore.Razer.Keyboard.Effects.Custom.Row" /> struct
-            setting each column to a specific color.
-            </summary>
-            <param name="color">The <see cref="T:Corale.Colore.Core.Color" /> to set each column to.</param>
-        </member>
-        <member name="P:Corale.Colore.Razer.Keyboard.Effects.Custom.Row.Item(System.Int32)">
-            <summary>
-            Gets or sets a column's <see cref="T:Corale.Colore.Core.Color" />.
-            </summary>
-            <param name="column">The column index to access (zero-index).</param>
-            <returns>The <see cref="T:Corale.Colore.Core.Color" /> at the specified column index.</returns>
-        </member>
-        <member name="M:Corale.Colore.Razer.Keyboard.Effects.Custom.Row.op_Implicit(Corale.Colore.Razer.Keyboard.Effects.Custom.Row)~System.UInt32[]">
-            <summary>
-            Converts an instance of the <see cref="T:Corale.Colore.Razer.Keyboard.Effects.Custom.Row" /> struct to an array of unsigned integers.
-            </summary>
-            <param name="row">The <see cref="T:Corale.Colore.Razer.Keyboard.Effects.Custom.Row" /> object to convert.</param>
-            <returns>An array of unsigned integeres representing the colors of the row.</returns>
-        </member>
-        <member name="M:Corale.Colore.Razer.Keyboard.Effects.Custom.Row.GetHashCode">
-            <summary>
-            Returns the hash code for this instance.
-            </summary>
-            <returns>
-            A 32-bit signed integer that is the hash code for this instance.
-            </returns>
-            <filterpriority>2</filterpriority>
-        </member>
-        <member name="M:Corale.Colore.Razer.Keyboard.Effects.Custom.Row.Set(Corale.Colore.Core.Color)">
-            <summary>
-            Sets the entire row to a specific <see cref="T:Corale.Colore.Core.Color" />.
             </summary>
             <param name="color">The <see cref="T:Corale.Colore.Core.Color" /> to apply.</param>
         </member>
@@ -3601,6 +5041,16 @@
             Wave effect.
             </summary>
         </member>
+        <member name="F:Corale.Colore.Razer.Keyboard.Effects.Effect.Reserved">
+            <summary>
+            Reserved effect.
+            </summary>
+        </member>
+        <member name="F:Corale.Colore.Razer.Keyboard.Effects.Effect.CustomKey">
+            <summary>
+            Custom effect with keys.
+            </summary>
+        </member>
         <member name="F:Corale.Colore.Razer.Keyboard.Effects.Effect.Invalid">
             <summary>
             Invalid effect.
@@ -3663,6 +5113,11 @@
         <member name="T:Corale.Colore.Razer.Keyboard.Key">
             <summary>
             Definition of all keys available on the keyboard.
+            </summary>
+        </member>
+        <member name="F:Corale.Colore.Razer.Keyboard.Key.Logo">
+            <summary>
+            The Razer logo on the keyboard.
             </summary>
         </member>
         <member name="F:Corale.Colore.Razer.Keyboard.Key.Escape">
@@ -4180,9 +5635,9 @@
             Right square bracket (]) key.
             </summary>
         </member>
-        <member name="F:Corale.Colore.Razer.Keyboard.Key.OemSlash">
+        <member name="F:Corale.Colore.Razer.Keyboard.Key.OemBackslash">
             <summary>
-            Forwards slash (/) key.
+            Backslash (\) key.
             </summary>
         </member>
         <member name="F:Corale.Colore.Razer.Keyboard.Key.OemSemicolon">
@@ -4205,9 +5660,9 @@
             Period/full stop (.) key.
             </summary>
         </member>
-        <member name="F:Corale.Colore.Razer.Keyboard.Key.OemBackslash">
+        <member name="F:Corale.Colore.Razer.Keyboard.Key.OemSlash">
             <summary>
-            Backslash (\) key.
+            Forwards slash (/) key.
             </summary>
         </member>
         <member name="F:Corale.Colore.Razer.Keyboard.Key.EurPound">
@@ -4381,13 +5836,14 @@
             Custom effect.
             </summary>
         </member>
-        <member name="F:Corale.Colore.Razer.Keypad.Effects.Custom._rows">
+        <member name="F:Corale.Colore.Razer.Keypad.Effects.Custom._colors">
             <summary>
             Color definitions for each key on the keypad.
             </summary>
             <remarks>
-            The array is 2-dimensional, with the first dimension
-            specifying the row for the key, and the second the column.
+            The array is 1-dimensional, but will be passed to code expecting
+            a 2-dimensional array. Access to this array is done using indices
+            according to: <c>column + row * Constants.MaxColumns</c>
             </remarks>
         </member>
         <member name="M:Corale.Colore.Razer.Keypad.Effects.Custom.#ctor(Corale.Colore.Core.Color[][])">
@@ -4397,6 +5853,13 @@
             <param name="colors">The colors to use.</param>
             <exception cref="T:System.ArgumentException">Thrown if the colors array supplied is of an incorrect size.</exception>
         </member>
+        <member name="M:Corale.Colore.Razer.Keypad.Effects.Custom.#ctor(System.Collections.Generic.IList{Corale.Colore.Core.Color})">
+            <summary>
+            Initializes a new instance of the <see cref="T:Corale.Colore.Razer.Keypad.Effects.Custom" /> struct.
+            </summary>
+            <param name="colors">The colors to use.</param>
+            <exception cref="T:System.ArgumentException">Thrown if the colors array supplied is of an invalid size.</exception>
+        </member>
         <member name="M:Corale.Colore.Razer.Keypad.Effects.Custom.#ctor(Corale.Colore.Core.Color)">
             <summary>
             Initializes a new instance of the <see cref="T:Corale.Colore.Razer.Keypad.Effects.Custom" /> struct
@@ -4404,12 +5867,26 @@
             </summary>
             <param name="color">The <see cref="T:Corale.Colore.Core.Color" /> to set each position to.</param>
         </member>
+        <member name="M:Corale.Colore.Razer.Keypad.Effects.Custom.#ctor(Corale.Colore.Razer.Keypad.Effects.Custom)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Corale.Colore.Razer.Keypad.Effects.Custom" /> struct
+            with color values copied from another struct of the same type.
+            </summary>
+            <param name="other">The struct to copy data from.</param>
+        </member>
         <member name="P:Corale.Colore.Razer.Keypad.Effects.Custom.Item(System.Int32,System.Int32)">
             <summary>
             Gets or sets cells in the custom grid.
             </summary>
             <param name="row">Row to access, zero indexed.</param>
             <param name="column">Column to access, zero indexed.</param>
+            <returns>The <see cref="T:Corale.Colore.Core.Color" /> at the specified position.</returns>
+        </member>
+        <member name="P:Corale.Colore.Razer.Keypad.Effects.Custom.Item(System.Int32)">
+            <summary>
+            Gets or sets a position in the custom grid.
+            </summary>
+            <param name="index">The index to access, zero indexed.</param>
             <returns>The <see cref="T:Corale.Colore.Core.Color" /> at the specified position.</returns>
         </member>
         <member name="M:Corale.Colore.Razer.Keypad.Effects.Custom.op_Equality(Corale.Colore.Razer.Keypad.Effects.Custom,System.Object)">
@@ -4436,6 +5913,12 @@
             </summary>
             <returns>An instance of <see cref="T:Corale.Colore.Razer.Keypad.Effects.Custom" />
             filled with the color black.</returns>
+        </member>
+        <member name="M:Corale.Colore.Razer.Keypad.Effects.Custom.Clone">
+            <summary>
+            Returns a copy of this struct.
+            </summary>
+            <returns>A copy of this struct.</returns>
         </member>
         <member name="M:Corale.Colore.Razer.Keypad.Effects.Custom.GetHashCode">
             <summary>
@@ -4491,57 +5974,16 @@
             A 2-dimensional array of <see cref="T:Corale.Colore.Core.Color" /> to compare with this object.
             </param>
         </member>
-        <member name="T:Corale.Colore.Razer.Keypad.Effects.Custom.Row">
+        <member name="M:Corale.Colore.Razer.Keypad.Effects.Custom.Equals(Corale.Colore.Core.Color[])">
             <summary>
-            Container struct holding color definitions for a single row in the custom grid.
+            Indicates whether the current object is equal to an instance of
+            an array of <see cref="T:Corale.Colore.Core.Color" />.
             </summary>
-        </member>
-        <member name="F:Corale.Colore.Razer.Keypad.Effects.Custom.Row._columns">
-            <summary>
-            Color definitions for the columns of this row.
-            </summary>
-        </member>
-        <member name="M:Corale.Colore.Razer.Keypad.Effects.Custom.Row.#ctor(System.Collections.Generic.IList{Corale.Colore.Core.Color})">
-            <summary>
-            Initializes a new instance of the <see cref="T:Corale.Colore.Razer.Keypad.Effects.Custom.Row" /> struct.
-            </summary>
-            <param name="colors">Colors for this row.</param>
-        </member>
-        <member name="M:Corale.Colore.Razer.Keypad.Effects.Custom.Row.#ctor(Corale.Colore.Core.Color)">
-            <summary>
-            Initializes a new instance of the <see cref="T:Corale.Colore.Razer.Keypad.Effects.Custom.Row" /> struct
-            setting each column to a specific color.
-            </summary>
-            <param name="color">The <see cref="T:Corale.Colore.Core.Color" /> to set each column to.</param>
-        </member>
-        <member name="P:Corale.Colore.Razer.Keypad.Effects.Custom.Row.Item(System.Int32)">
-            <summary>
-            Gets or sets a column's <see cref="T:Corale.Colore.Core.Color" />.
-            </summary>
-            <param name="column">The column index to access (zero-index).</param>
-            <returns>The <see cref="T:Corale.Colore.Core.Color" /> at the specified column index.</returns>
-        </member>
-        <member name="M:Corale.Colore.Razer.Keypad.Effects.Custom.Row.op_Implicit(Corale.Colore.Razer.Keypad.Effects.Custom.Row)~System.UInt32[]">
-            <summary>
-            Converts an instance of the <see cref="T:Corale.Colore.Razer.Keypad.Effects.Custom.Row" /> struct to an array of unsigned integers.
-            </summary>
-            <param name="row">The <see cref="T:Corale.Colore.Razer.Keypad.Effects.Custom.Row" /> object to convert.</param>
-            <returns>An array of unsigned integeres representing the colors of the row.</returns>
-        </member>
-        <member name="M:Corale.Colore.Razer.Keypad.Effects.Custom.Row.GetHashCode">
-            <summary>
-            Returns the hash code for this instance.
-            </summary>
+            <param name="other">An array of <see cref="T:Corale.Colore.Core.Color" /> to compare with this object.</param>
             <returns>
-            A 32-bit signed integer that is the hash code for this instance.
+            <c>true</c> if the <paramref name="other" /> object has the same
+            number of elements, and contain matching colors; otherwise, <c>false</c>.
             </returns>
-            <filterpriority>2</filterpriority>
-        </member>
-        <member name="M:Corale.Colore.Razer.Keypad.Effects.Custom.Row.Set(Corale.Colore.Core.Color)">
-            <summary>
-            Sets the entire row to a specific <see cref="T:Corale.Colore.Core.Color" />.
-            </summary>
-            <param name="color">The <see cref="T:Corale.Colore.Core.Color" /> to apply.</param>
         </member>
         <member name="T:Corale.Colore.Razer.Keypad.Effects.Direction">
             <summary>
@@ -4787,6 +6229,13 @@
             <param name="colors">The colors to use.</param>
             <exception cref="T:System.ArgumentException">Thrown if the colors list supplied is of an incorrect size.</exception>
         </member>
+        <member name="M:Corale.Colore.Razer.Mousepad.Effects.Custom.#ctor(Corale.Colore.Razer.Mousepad.Effects.Custom)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Corale.Colore.Razer.Mousepad.Effects.Custom" /> struct
+            with the colors copied from another struct of the same type.
+            </summary>
+            <param name="other">The struct to copy data from.</param>
+        </member>
         <member name="P:Corale.Colore.Razer.Mousepad.Effects.Custom.Item(System.Int32)">
             <summary>
             Gets or sets LEDs in the custom array.
@@ -4817,6 +6266,12 @@
             Create a new empty <see cref="T:Corale.Colore.Razer.Mousepad.Effects.Custom" /> struct.
             </summary>
             <returns>An instance of <see cref="T:Corale.Colore.Razer.Mousepad.Effects.Custom" /> filled with the color black.</returns>
+        </member>
+        <member name="M:Corale.Colore.Razer.Mousepad.Effects.Custom.Clone">
+            <summary>
+            Returns a copy of this struct.
+            </summary>
+            <returns>A copy of this struct.</returns>
         </member>
         <member name="M:Corale.Colore.Razer.Mousepad.Effects.Custom.GetHashCode">
             <summary>
@@ -4985,6 +6440,11 @@
             Maximum number of LED columns.
             </summary>
         </member>
+        <member name="F:Corale.Colore.Razer.Mouse.Constants.MaxGridLeds">
+            <summary>
+            Maximum number of LEDs on the grid layout.
+            </summary>
+        </member>
         <member name="T:Corale.Colore.Razer.Mouse.Effects.Blinking">
             <summary>
             Mouse effect that causes a specified LED to blink.
@@ -5133,6 +6593,13 @@
             <param name="colors">The colors to use.</param>
             <exception cref="T:System.ArgumentException">Thrown if the colors list supplied is of an incorrect size.</exception>
         </member>
+        <member name="M:Corale.Colore.Razer.Mouse.Effects.Custom.#ctor(Corale.Colore.Razer.Mouse.Effects.Custom)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Corale.Colore.Razer.Mouse.Effects.Custom" /> struct
+            with the colors copied from another struct of the same type.
+            </summary>
+            <param name="other">The struct to copy data from.</param>
+        </member>
         <member name="P:Corale.Colore.Razer.Mouse.Effects.Custom.Item(System.Int32)">
             <summary>
             Gets or sets LEDs in the custom array.
@@ -5170,6 +6637,12 @@
             Create a new empty <see cref="T:Corale.Colore.Razer.Mouse.Effects.Custom" /> struct.
             </summary>
             <returns>An instance of <see cref="T:Corale.Colore.Razer.Mouse.Effects.Custom" /> filled with the color black.</returns>
+        </member>
+        <member name="M:Corale.Colore.Razer.Mouse.Effects.Custom.Clone">
+            <summary>
+            Returns a copy of this struct.
+            </summary>
+            <returns>A copy of this struct.</returns>
         </member>
         <member name="M:Corale.Colore.Razer.Mouse.Effects.Custom.Set(Corale.Colore.Core.Color)">
             <summary>
@@ -5226,13 +6699,14 @@
             Custom grid effect for mouse LEDs.
             </summary>
         </member>
-        <member name="F:Corale.Colore.Razer.Mouse.Effects.CustomGrid._rows">
+        <member name="F:Corale.Colore.Razer.Mouse.Effects.CustomGrid._colors">
             <summary>
             Color definitions for each led on the mouse.
             </summary>
             <remarks>
-            The array is 2-dimensional, with the first dimension
-            specifying the row for the led, and the second the column.
+            The array is 1-dimensional, but will be passed to code expecting
+            a 2-dimensional array. Access to this array is done using indices
+            according to: <c>column + row * Constants.MaxColumns</c>
             </remarks>
         </member>
         <member name="M:Corale.Colore.Razer.Mouse.Effects.CustomGrid.#ctor(Corale.Colore.Core.Color[][])">
@@ -5242,12 +6716,26 @@
             <param name="colors">The colors to use.</param>
             <exception cref="T:System.ArgumentException">Thrown if the colors array supplied is of an incorrect size.</exception>
         </member>
+        <member name="M:Corale.Colore.Razer.Mouse.Effects.CustomGrid.#ctor(System.Collections.Generic.IList{Corale.Colore.Core.Color})">
+            <summary>
+            Initializes a new instance of the <see cref="T:Corale.Colore.Razer.Mouse.Effects.CustomGrid" /> struct.
+            </summary>
+            <param name="colors">The colors to use.</param>
+            <exception cref="T:System.ArgumentException">Thrown if the colors array supplied is of an invalid size.</exception>
+        </member>
         <member name="M:Corale.Colore.Razer.Mouse.Effects.CustomGrid.#ctor(Corale.Colore.Core.Color)">
             <summary>
             Initializes a new instance of the <see cref="T:Corale.Colore.Razer.Mouse.Effects.CustomGrid" /> struct
             with every position set to a specific color.
             </summary>
             <param name="color">The <see cref="T:Corale.Colore.Core.Color" /> to set each position to.</param>
+        </member>
+        <member name="M:Corale.Colore.Razer.Mouse.Effects.CustomGrid.#ctor(Corale.Colore.Razer.Mouse.Effects.CustomGrid)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Corale.Colore.Razer.Mouse.Effects.CustomGrid" /> struct
+            with the colors copied from another struct of the same type.
+            </summary>
+            <param name="other">The <see cref="T:Corale.Colore.Razer.Mouse.Effects.CustomGrid" /> struct to copy data from.</param>
         </member>
         <member name="P:Corale.Colore.Razer.Mouse.Effects.CustomGrid.Item(System.Int32,System.Int32)">
             <summary>
@@ -5256,6 +6744,13 @@
             <param name="row">Row to access, zero indexed.</param>
             <param name="column">Column to access, zero indexed.</param>
             <returns>The <see cref="T:Corale.Colore.Core.Color" /> at the specified position.</returns>
+        </member>
+        <member name="P:Corale.Colore.Razer.Mouse.Effects.CustomGrid.Item(System.Int32)">
+            <summary>
+            Gets or sets a position in the custom grid.
+            </summary>
+            <param name="index">The index to access, zero indexed.</param>
+            <exception cref="T:System.ArgumentOutOfRangeException">Thrown if the requested index is out of range.</exception>
         </member>
         <member name="P:Corale.Colore.Razer.Mouse.Effects.CustomGrid.Item(Corale.Colore.Razer.Mouse.GridLed)">
             <summary>
@@ -5288,6 +6783,12 @@
             </summary>
             <returns>An instance of <see cref="T:Corale.Colore.Razer.Mouse.Effects.CustomGrid" />
             filled with the color black.</returns>
+        </member>
+        <member name="M:Corale.Colore.Razer.Mouse.Effects.CustomGrid.Clone">
+            <summary>
+            Returns a copy of this struct.
+            </summary>
+            <returns>A copy of this struct.</returns>
         </member>
         <member name="M:Corale.Colore.Razer.Mouse.Effects.CustomGrid.GetHashCode">
             <summary>
@@ -5335,61 +6836,20 @@
             number of rows and columns, and contain matching colors; otherwise, <c>false</c>.
             </returns>
         </member>
+        <member name="M:Corale.Colore.Razer.Mouse.Effects.CustomGrid.Equals(Corale.Colore.Core.Color[])">
+            <summary>
+            Indicates whether the current object is equal to an instance of
+            an array of <see cref="T:Corale.Colore.Core.Color" />.
+            </summary>
+            <param name="other">An array of <see cref="T:Corale.Colore.Core.Color" /> to compare with this object.</param>
+            <returns>
+            <c>true</c> if the <paramref name="other" /> object has the same
+            number of elements, and contain matching colors; otherwise, <c>false</c>.
+            </returns>
+        </member>
         <member name="M:Corale.Colore.Razer.Mouse.Effects.CustomGrid.Set(Corale.Colore.Core.Color)">
             <summary>
             Sets the entire grid to a specific <see cref="T:Corale.Colore.Core.Color" />.
-            </summary>
-            <param name="color">The <see cref="T:Corale.Colore.Core.Color" /> to apply.</param>
-        </member>
-        <member name="T:Corale.Colore.Razer.Mouse.Effects.CustomGrid.Row">
-            <summary>
-            Container struct holding color definitions for a single row in the custom grid.
-            </summary>
-        </member>
-        <member name="F:Corale.Colore.Razer.Mouse.Effects.CustomGrid.Row._columns">
-            <summary>
-            Color definitions for the columns of this row.
-            </summary>
-        </member>
-        <member name="M:Corale.Colore.Razer.Mouse.Effects.CustomGrid.Row.#ctor(System.Collections.Generic.IList{Corale.Colore.Core.Color})">
-            <summary>
-            Initializes a new instance of the <see cref="T:Corale.Colore.Razer.Mouse.Effects.CustomGrid.Row" /> struct.
-            </summary>
-            <param name="colors">Colors for this row.</param>
-        </member>
-        <member name="M:Corale.Colore.Razer.Mouse.Effects.CustomGrid.Row.#ctor(Corale.Colore.Core.Color)">
-            <summary>
-            Initializes a new instance of the <see cref="T:Corale.Colore.Razer.Mouse.Effects.CustomGrid.Row" /> struct
-            setting each column to a specific color.
-            </summary>
-            <param name="color">The <see cref="T:Corale.Colore.Core.Color" /> to set each column to.</param>
-        </member>
-        <member name="P:Corale.Colore.Razer.Mouse.Effects.CustomGrid.Row.Item(System.Int32)">
-            <summary>
-            Gets or sets a column's <see cref="T:Corale.Colore.Core.Color" />.
-            </summary>
-            <param name="column">The column index to access (zero-index).</param>
-            <returns>The <see cref="T:Corale.Colore.Core.Color" /> at the specified column index.</returns>
-        </member>
-        <member name="M:Corale.Colore.Razer.Mouse.Effects.CustomGrid.Row.op_Implicit(Corale.Colore.Razer.Mouse.Effects.CustomGrid.Row)~System.UInt32[]">
-            <summary>
-            Converts an instance of the <see cref="T:Corale.Colore.Razer.Mouse.Effects.CustomGrid.Row" /> struct to an array of unsigned integers.
-            </summary>
-            <param name="row">The <see cref="T:Corale.Colore.Razer.Mouse.Effects.CustomGrid.Row" /> object to convert.</param>
-            <returns>An array of unsigned integeres representing the colors of the row.</returns>
-        </member>
-        <member name="M:Corale.Colore.Razer.Mouse.Effects.CustomGrid.Row.GetHashCode">
-            <summary>
-            Returns the hash code for this instance.
-            </summary>
-            <returns>
-            A 32-bit signed integer that is the hash code for this instance.
-            </returns>
-            <filterpriority>2</filterpriority>
-        </member>
-        <member name="M:Corale.Colore.Razer.Mouse.Effects.CustomGrid.Row.Set(Corale.Colore.Core.Color)">
-            <summary>
-            Sets the entire row to a specific <see cref="T:Corale.Colore.Core.Color" />.
             </summary>
             <param name="color">The <see cref="T:Corale.Colore.Core.Color" /> to apply.</param>
         </member>
@@ -5861,11 +7321,6 @@
             Calling convention for API functions.
             </summary>
         </member>
-        <member name="F:Corale.Colore.Razer.NativeMethods.SystemArchitecture">
-            <summary>
-            Architecture of the current system.
-            </summary>
-        </member>
         <member name="F:Corale.Colore.Razer.NativeMethods.Init">
             <summary>
             Stores a reference to the loaded <see cref="T:Corale.Colore.Razer.NativeMethods.InitDelegate" />.
@@ -5906,6 +7361,11 @@
             Stores a reference to the loaded <see cref="T:Corale.Colore.Razer.NativeMethods.CreateKeypadEffectDelegate" />.
             </summary>
         </member>
+        <member name="F:Corale.Colore.Razer.NativeMethods.CreateChromaLinkEffect">
+            <summary>
+            Stores a reference to the loaded <see cref="T:Corale.Colore.Razer.NativeMethods.CreateChromaLinkEffectDelegate" />.
+            </summary>
+        </member>
         <member name="F:Corale.Colore.Razer.NativeMethods.DeleteEffect">
             <summary>
             Stores a reference to the loaded <see cref="T:Corale.Colore.Razer.NativeMethods.DeleteEffectDelegate" />.
@@ -5929,11 +7389,6 @@
         <member name="F:Corale.Colore.Razer.NativeMethods.QueryDevice">
             <summary>
             Stores a reference to the loaded <see cref="T:Corale.Colore.Razer.NativeMethods.QueryDeviceDelegate" />.
-            </summary>
-        </member>
-        <member name="F:Corale.Colore.Razer.NativeMethods.ChromaSdkPointer">
-            <summary>
-            Stores the pointer to the loaded Chroma SDK library DLL.
             </summary>
         </member>
         <member name="M:Corale.Colore.Razer.NativeMethods.#cctor">
@@ -6068,6 +7523,15 @@
             <param name="effectId">Valid effect ID if successful. Pass <see cref="F:System.IntPtr.Zero" /> if not required.</param>
             <returns><see cref="T:Corale.Colore.Razer.Result" /> value indicating success.</returns>
         </member>
+        <member name="T:Corale.Colore.Razer.NativeMethods.CreateChromaLinkEffectDelegate">
+            <summary>
+            Create Chroma Link effect.
+            </summary>
+            <param name="effect">Chroma Link effect type.</param>
+            <param name="param">Pointer to a parameter type specified by <paramref name="effect" />.</param>
+            <param name="effectId">Valid effect ID if successful. Pass <see cref="F:System.IntPtr.Zero" /> if not required.</param>
+            <returns><see cref="T:Corale.Colore.Razer.Result" /> value indicating success.</returns>
+        </member>
         <member name="T:Corale.Colore.Razer.NativeMethods.DeleteEffectDelegate">
             <summary>
             Delete effect.
@@ -6144,21 +7608,6 @@
             <param name="deviceId">Device ID, found in <see cref="T:Corale.Colore.Razer.Devices" />.</param>
             <param name="info">Will contain device information for the device specified by <paramref name="deviceId" />.</param>
             <returns><see cref="T:Corale.Colore.Razer.Result" /> value indicating success.</returns>
-        </member>
-        <member name="T:Corale.Colore.Razer.NativeMethods.Architecture">
-            <summary>
-            System architecture types.
-            </summary>
-        </member>
-        <member name="F:Corale.Colore.Razer.NativeMethods.Architecture.X86">
-            <summary>
-            32-bit system.
-            </summary>
-        </member>
-        <member name="F:Corale.Colore.Razer.NativeMethods.Architecture.X64">
-            <summary>
-            64-bit system.
-            </summary>
         </member>
         <member name="M:Corale.Colore.Razer.NativeMethods.GetDelegateFromLibrary``1(System.IntPtr,System.String)">
             <summary>
@@ -6451,6 +7900,179 @@
             </summary>
             <param name="info">Serialization info object.</param>
             <param name="context">Streaming context.</param>
+        </member>
+        <member name="T:Corale.Colore.SdkVersion">
+            <summary>
+            Describes an SDK version.
+            </summary>
+        </member>
+        <member name="F:Corale.Colore.SdkVersion.Major">
+            <summary>
+            The major part of the version.
+            </summary>
+        </member>
+        <member name="F:Corale.Colore.SdkVersion.Minor">
+            <summary>
+            The minor part of the version.
+            </summary>
+        </member>
+        <member name="F:Corale.Colore.SdkVersion.Revision">
+            <summary>
+            The revision part of the version.
+            </summary>
+        </member>
+        <member name="M:Corale.Colore.SdkVersion.#ctor(System.Int32,System.Int32,System.Int32)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Corale.Colore.SdkVersion" /> struct.
+            </summary>
+            <param name="major">The major component of the version.</param>
+            <param name="minor">The minor component of the version.</param>
+            <param name="revision">The revision component of the version.</param>
+        </member>
+        <member name="M:Corale.Colore.SdkVersion.op_Equality(Corale.Colore.SdkVersion,System.Object)">
+            <summary>
+            Compares an instance of <see cref="T:Corale.Colore.SdkVersion" /> with
+            another object for equality.
+            </summary>
+            <param name="left">The left operand, an instance of <see cref="T:Corale.Colore.SdkVersion" />.</param>
+            <param name="right">The right operand, any type of object.</param>
+            <returns><c>true</c> if the two objects are equal, otherwise <c>false</c>.</returns>
+        </member>
+        <member name="M:Corale.Colore.SdkVersion.op_Inequality(Corale.Colore.SdkVersion,System.Object)">
+            <summary>
+            Compares an instance of <see cref="T:Corale.Colore.SdkVersion" /> with
+            another object for inequality.
+            </summary>
+            <param name="left">The left operand, an instance of <see cref="T:Corale.Colore.SdkVersion" />.</param>
+            <param name="right">The right operand, any type of object.</param>
+            <returns><c>true</c> if the two objects are not equal, otherwise <c>false</c>.</returns>
+        </member>
+        <member name="M:Corale.Colore.SdkVersion.op_LessThan(Corale.Colore.SdkVersion,System.Object)">
+            <summary>
+            Checks if an instance of <see cref="T:Corale.Colore.SdkVersion" /> is considered
+            less than another object.
+            </summary>
+            <param name="left">The left operand, an instance of <see cref="T:Corale.Colore.SdkVersion" />.</param>
+            <param name="right">The right operand, any type of object.</param>
+            <returns><c>true</c> if <paramref name="left" /> is less than <paramref name="right" />, otherwise <c>false</c>.</returns>
+        </member>
+        <member name="M:Corale.Colore.SdkVersion.op_GreaterThan(Corale.Colore.SdkVersion,System.Object)">
+            <summary>
+            Checks if an instance of <see cref="T:Corale.Colore.SdkVersion" /> is considered
+            greater than another object.
+            </summary>
+            <param name="left">The left operand, an instance of <see cref="T:Corale.Colore.SdkVersion" />.</param>
+            <param name="right">The right operand, any type of object.</param>
+            <returns><c>true</c> if <paramref name="left" /> is greater than <paramref name="right" />, otherwise <c>false</c>.</returns>
+        </member>
+        <member name="M:Corale.Colore.SdkVersion.op_LessThanOrEqual(Corale.Colore.SdkVersion,System.Object)">
+            <summary>
+            Checks if an instance of <see cref="T:Corale.Colore.SdkVersion" /> is considered
+            to be less than or equal to another object.
+            </summary>
+            <param name="left">The left operand, an instance of <see cref="T:Corale.Colore.SdkVersion" />.</param>
+            <param name="right">The right operand, any type of object.</param>
+            <returns><c>true</c> if <paramref name="left" /> is less than or equal to <paramref name="right" />, otherwise <c>false</c>.</returns>
+        </member>
+        <member name="M:Corale.Colore.SdkVersion.op_GreaterThanOrEqual(Corale.Colore.SdkVersion,System.Object)">
+            <summary>
+            Checks if an instance of <see cref="T:Corale.Colore.SdkVersion" /> is considered
+            to be greater than or equal to another object.
+            </summary>
+            <param name="left">The left operand, an instance of <see cref="T:Corale.Colore.SdkVersion" />.</param>
+            <param name="right">The right operand, any type of object.</param>
+            <returns><c>true</c> if <paramref name="left" /> is greater than or equal to <paramref name="right" />, otherwise <c>false</c>.</returns>
+        </member>
+        <member name="M:Corale.Colore.SdkVersion.Equals(Corale.Colore.SdkVersion)">
+            <summary>
+            Indicates whether the current object is equal to another object of the same type.
+            </summary>
+            <returns>
+            true if the current object is equal to the <paramref name="other"/> parameter; otherwise, false.
+            </returns>
+            <param name="other">An object to compare with this object.</param>
+        </member>
+        <member name="M:Corale.Colore.SdkVersion.Equals(System.Object)">
+            <summary>
+            Indicates whether this instance and a specified object are equal.
+            </summary>
+            <returns>
+            true if <paramref name="obj"/> and this instance are the same type and represent the same value; otherwise, false.
+            </returns>
+            <param name="obj">Another object to compare to. </param>
+        </member>
+        <member name="M:Corale.Colore.SdkVersion.GetHashCode">
+            <summary>
+            Returns the hash code for this instance.
+            </summary>
+            <returns>
+            A 32-bit signed integer that is the hash code for this instance.
+            </returns>
+        </member>
+        <member name="M:Corale.Colore.SdkVersion.CompareTo(Corale.Colore.SdkVersion)">
+            <summary>
+            Compares the current object with another object of the same type.
+            </summary>
+            <returns>
+            A 32-bit signed integer that indicates the relative order of the objects being compared.
+            The return value has the following meanings:
+            <list type="table">
+            <listheader>
+            <item>Value</item>
+            <item>Meaning</item>
+            </listheader>
+            <item>
+            <term>Less than zero</term>
+            <term>This object is less than the <paramref name="other" /> parameter</term>
+            </item>
+            <item>
+            <term>Zero</term>
+            <term>This object is equal to <paramref name="other" /></term>
+            </item>
+            <item>
+            <term>Greater than zero</term>
+            <term>This object is greater than <paramref name="other" /></term>
+            </item>
+            </list>
+            </returns>
+            <param name="other">An object to compare with this object.</param>
+        </member>
+        <member name="M:Corale.Colore.SdkVersion.CompareTo(System.Object)">
+            <summary>
+            Compares the current instance with another object of the same type and returns an integer that indicates
+            whether the current instance precedes, follows, or occurs in the same position in the sort order as the other object.
+            </summary>
+            <returns>
+            A 32-bit signed integer that indicates the relative order of the objects being compared. The return value has these meanings:
+            <list type="table">
+            <listheader>
+            <item>Value</item>
+            <item>Meaning</item>
+            </listheader>
+            <item>
+            <term>Less than zero</term>
+            <term>This object is less than the <paramref name="obj" /> parameter</term>
+            </item>
+            <item>
+            <term>Zero</term>
+            <term>This object is equal to <paramref name="obj" /></term>
+            </item>
+            <item>
+            <term>Greater than zero</term>
+            <term>This object is greater than <paramref name="obj" /></term>
+            </item>
+            </list>
+            </returns>
+            <param name="obj">An object to compare with this instance. </param>
+            <exception cref="T:System.ArgumentException"><paramref name="obj"/> is not the same type as this instance. </exception>
+        </member>
+        <member name="M:Corale.Colore.SdkVersion.ToString">
+            <summary>
+            Returns the string representation of this SDK version.
+            </summary>
+            <returns>
+            A <see cref="T:System.String"/> representing this struct instance.
+            </returns>
         </member>
     </members>
 </doc>
