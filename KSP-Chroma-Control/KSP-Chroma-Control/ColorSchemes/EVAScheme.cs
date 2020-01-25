@@ -1,17 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using UnityEngine;
-
-namespace KspChromaControl.ColorSchemes
+﻿namespace KspChromaControl.ColorSchemes
 {
+    using UnityEngine;
+
     /// <summary>
-    /// Special color scheme for EVA scenes.
+    ///     Special color scheme for EVA scenes.
     /// </summary>
-    internal class EVAScheme : ColorScheme
+    internal class EvaScheme : ColorScheme
     {
-        private readonly KeyCode[] movementKeys = {
+        private readonly KeyCode[] movementKeys =
+        {
             GameSettings.EVA_back.primary.code,
             GameSettings.EVA_forward.primary.code,
             GameSettings.EVA_left.primary.code,
@@ -20,13 +17,8 @@ namespace KspChromaControl.ColorSchemes
             GameSettings.EVA_Run.primary.code
         };
 
-        private readonly KeyCode[] useKeys = {
-            GameSettings.EVA_Use.primary.code,
-            GameSettings.EVA_Board.primary.code,
-            GameSettings.EVA_ToggleMovementMode.primary.code,
-        };
-
-        private readonly KeyCode[] packKeys = {
+        private readonly KeyCode[] packKeys =
+        {
             GameSettings.EVA_back.primary.code,
             GameSettings.EVA_forward.primary.code,
             GameSettings.EVA_left.primary.code,
@@ -40,34 +32,47 @@ namespace KspChromaControl.ColorSchemes
         };
 
 
-        private readonly KeyCode[] switchKeys = {
+        private readonly KeyCode[] switchKeys =
+        {
             GameSettings.FOCUS_NEXT_VESSEL.primary.code,
             GameSettings.FOCUS_PREV_VESSEL.primary.code
         };
+
+        private readonly KeyCode[] useKeys =
+        {
+            GameSettings.EVA_Use.primary.code,
+            GameSettings.EVA_Board.primary.code,
+            GameSettings.EVA_ToggleMovementMode.primary.code
+        };
+
         /// <summary>
-        /// Overlays the defined keys over a black base layout.
+        ///     Overlays the defined keys over a black base layout.
         /// </summary>
-        public EVAScheme()
+        public EvaScheme()
         {
             if (FlightGlobals.ActiveVessel.evaController.JetpackDeployed)
             {
-                SetKeysToColor(packKeys, Color.yellow);
-                SetKeyToColor(GameSettings.EVA_TogglePack.primary.code, Color.green);
+                this.SetKeysToColor(this.packKeys, Color.yellow);
+                this.SetKeyToColor(GameSettings.EVA_TogglePack.primary.code, Color.green);
             }
             else
             {
-                SetKeysToColor(movementKeys, Color.white);
-                SetKeyToColor(GameSettings.EVA_TogglePack.primary.code, Color.red);
+                this.SetKeysToColor(this.movementKeys, Color.white);
+                this.SetKeyToColor(GameSettings.EVA_TogglePack.primary.code, Color.red);
             }
 
             if (FlightGlobals.ActiveVessel.evaController.lampOn)
-                SetKeyToColor(GameSettings.EVA_Lights.primary.code, Color.green);
+            {
+                this.SetKeyToColor(GameSettings.EVA_Lights.primary.code, Color.green);
+            }
             else
-                SetKeyToColor(GameSettings.EVA_Lights.primary.code, Color.red);
+            {
+                this.SetKeyToColor(GameSettings.EVA_Lights.primary.code, Color.red);
+            }
 
-            SetKeysToColor(useKeys, Color.cyan);
+            this.SetKeysToColor(this.useKeys, Color.cyan);
 
-            SetKeysToColor(switchKeys, Color.blue);
+            this.SetKeysToColor(this.switchKeys, Color.blue);
         }
     }
 }

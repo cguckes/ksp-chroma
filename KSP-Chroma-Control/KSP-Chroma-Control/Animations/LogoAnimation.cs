@@ -1,27 +1,24 @@
-﻿using System;
-using KspChromaControl.ColorSchemes;
-using System.Collections;
-using UnityEngine;
-using System.Linq;
-using System.Collections.Generic;
-using KspChromaControl.Animations;
-
-namespace KspChromaControl
+﻿namespace KspChromaControl.Animations
 {
+    using System.Collections.Generic;
+    using KspChromaControl.ColorSchemes;
+    using UnityEngine;
+
     /// <summary>
-    /// Slowly displays the KSP logo from a blue base scheme.
+    ///     Slowly displays the KSP logo from a blue base scheme.
     /// </summary>
     internal class LogoAnimation : KeyboardAnimation
     {
         /// <summary>
-        /// The frames this animation consists of.
+        ///     The frames this animation consists of.
         /// </summary>
-        private static ColorScheme[] frames;
+        private static readonly ColorScheme[] frames;
 
         /// <summary>
-        /// List of scenes this animation is valid in.
+        ///     List of scenes this animation is valid in.
         /// </summary>
-        private static List<GameScenes> validScenes = new List<GameScenes>() {
+        private static readonly List<GameScenes> validScenes = new List<GameScenes>
+        {
             GameScenes.MAINMENU,
             GameScenes.SPACECENTER,
             GameScenes.TRACKSTATION,
@@ -29,7 +26,7 @@ namespace KspChromaControl
         };
 
         /// <summary>
-        /// Static constructor interpolates from blue to logo.
+        ///     Static constructor interpolates from blue to logo.
         /// </summary>
         static LogoAnimation()
         {
@@ -37,7 +34,7 @@ namespace KspChromaControl
         }
 
         /// <summary>
-        /// Initializes the base keyboard animation object.
+        ///     Initializes the base keyboard animation object.
         /// </summary>
         public LogoAnimation() : base(10, validScenes, frames)
         {

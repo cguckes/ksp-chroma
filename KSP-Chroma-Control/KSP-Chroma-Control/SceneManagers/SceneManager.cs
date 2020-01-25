@@ -1,19 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-namespace KspChromaControl.SceneManagers
+﻿namespace KspChromaControl.SceneManagers
 {
+    using KspChromaControl.ColorSchemes;
+
     /// <summary>
-    /// Allows creation of keyboard color managers for multiple scenes.
+    ///     Allows creation of keyboard color managers for multiple scenes.
     /// </summary>
-    internal interface SceneManager
+    internal interface ISceneManager
     {
         /// <summary>
-        /// Gets the keyboard color scheme for the current frame.
+        ///     Gets the keyboard color scheme for the current frame.
         /// </summary>
         /// <returns>The new color scheme.</returns>
-        ColorSchemes.ColorScheme getScheme();
+        ColorScheme GetScheme();
     }
 }

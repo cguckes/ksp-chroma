@@ -1,43 +1,43 @@
-﻿using System;
-using KspChromaControl.ColorSchemes;
-using System.Collections.Generic;
-using UnityEngine;
-using System.Linq;
-
-namespace KspChromaControl
+﻿namespace KspChromaControl.Animations
 {
+    using System.Collections.Generic;
+    using KspChromaControl.ColorSchemes;
+    using UnityEngine;
+
     /// <summary>
-    /// Displays a warning on the keyboard, indicating that the vessel is currently out of power and cannot
-    /// be controlled. Consists of two frames alternating at 1fps.
+    ///     Displays a warning on the keyboard, indicating that the vessel is currently out of power and cannot
+    ///     be controlled. Consists of two frames alternating at 1fps.
     /// </summary>
     internal class PowerLostAnimation : KeyboardAnimation
     {
         /// <summary>
-        /// The red frame
+        ///     The red frame
         /// </summary>
-        private static ColorScheme red = new ColorScheme(Color.red);
+        private static readonly ColorScheme red = new ColorScheme(Color.red);
 
         /// <summary>
-        /// The blue frame
+        ///     The blue frame
         /// </summary>
-        private static ColorScheme blue = new ColorScheme(Color.blue);
+        private static readonly ColorScheme blue = new ColorScheme(Color.blue);
 
-        private static List<GameScenes> validScenes = new List<GameScenes>() {
+        private static readonly List<GameScenes> validScenes = new List<GameScenes>
+        {
             GameScenes.FLIGHT
         };
 
         /// <summary>
-        /// Static constructor adds lightning bolts in different colors to both frames
+        ///     Static constructor adds lightning bolts in different colors to both frames
         /// </summary>
         static PowerLostAnimation()
         {
-            KeyCode[] lightningKeys = new KeyCode[]
+            KeyCode[] lightningKeys =
             {
-                /// Left lightning
+                // Left lightning
                 KeyCode.F2, KeyCode.Alpha3, KeyCode.W, KeyCode.E, KeyCode.R, KeyCode.D, KeyCode.X, KeyCode.LeftAlt,
 
-                /// Right lightning
-                KeyCode.F9, KeyCode.Alpha0, KeyCode.O, KeyCode.P, KeyCode.LeftBracket, KeyCode.Semicolon, KeyCode.Period,
+                // Right lightning
+                KeyCode.F9, KeyCode.Alpha0, KeyCode.O, KeyCode.P, KeyCode.LeftBracket, KeyCode.Semicolon,
+                KeyCode.Period,
                 KeyCode.RightAlt
             };
 
@@ -46,34 +46,31 @@ namespace KspChromaControl
         }
 
         /// <summary>
-        /// Constructor that initializes the keyboard animation object. frames can be null here, because the
-        /// getFrame method relies on alternating between two fixed frames rather than a sequence.
+        ///     Constructor that initializes the keyboard animation object. frames can be null here, because the
+        ///     getFrame method relies on alternating between two fixed frames rather than a sequence.
         /// </summary>
         public PowerLostAnimation() : base(1, validScenes, null)
         {
         }
 
         /// <summary>
-        /// <see cref="KeyboardAnimation.getFrame"/>
+        ///     <see cref="KeyboardAnimation.GetFrame" />
         /// </summary>
         /// <returns>the current animation frame.</returns>
-        public override ColorScheme getFrame()
-        {
-            return (((int)Time.realtimeSinceStartup) % 2 == 0) ? red : blue;
-        }
+        public override ColorScheme GetFrame() => (int) Time.realtimeSinceStartup % 2 == 0 ? red : blue;
 
         /// <summary>
-        /// <see cref="KeyboardAnimation.isFinished"/>
+        ///     <see cref="KeyboardAnimation.IsFinished" />
         /// </summary>
         /// <returns>true, if the animation is finished, false if not.</returns>
-        public override bool isFinished()
+        public override bool IsFinished()
         {
             double electricity = 0.0f;
-            bool electricityPresent = false;
+            var electricityPresent = false;
 
-            foreach (Part part in FlightGlobals.ActiveVessel.parts)
+            foreach (var part in FlightGlobals.ActiveVessel.parts)
             {
-                foreach (PartResource resource in part.Resources)
+                foreach (var resource in part.Resources)
                 {
                     if (resource.info.name.Equals("ElectricCharge"))
                     {
@@ -83,7 +80,7 @@ namespace KspChromaControl
                 }
             }
 
-            /// Check if the vessel needs power, and if empty, continue blinking
+            // Check if the vessel needs power, and if empty, continue blinking
             return !electricityPresent || electricity > 0.0001;
         }
     }

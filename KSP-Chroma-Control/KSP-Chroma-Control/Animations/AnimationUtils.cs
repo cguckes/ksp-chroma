@@ -1,16 +1,16 @@
-﻿using KspChromaControl.ColorSchemes;
-using System;
-using UnityEngine;
-
-namespace KspChromaControl.Animations
+﻿namespace KspChromaControl.Animations
 {
+    using System;
+    using KspChromaControl.ColorSchemes;
+    using UnityEngine;
+
     /// <summary>
-    /// Utility class that contains many useful functions for displaying animations on the keyboard.
+    ///     Utility class that contains many useful functions for displaying animations on the keyboard.
     /// </summary>
-    internal class AnimationUtils
+    internal static class AnimationUtils
     {
         /// <summary>
-        /// Interpolates a number of frames for a smooth transition between the provided color schemes.
+        ///     Interpolates a number of frames for a smooth transition between the provided color schemes.
         /// </summary>
         /// <param name="from">The color scheme to transition from</param>
         /// <param name="to">The color scheme to transition to</param>
@@ -18,22 +18,22 @@ namespace KspChromaControl.Animations
         /// <returns></returns>
         public static ColorScheme[] InterpolateFrames(ColorScheme from, ColorScheme to, int steps)
         {
-            ColorScheme[] myReturn = new ColorScheme[steps];
+            var myReturn = new ColorScheme[steps];
             myReturn[0] = from;
             myReturn[steps - 1] = to;
-            KeyCode[,] keys = Config.Instance.KeyByPosition;
+            var keys = Config.Instance.KeyByPosition;
 
-            for (int frame = 1; frame < steps - 1; frame++)
+            for (var frame = 1; frame < steps - 1; frame++)
             {
-                ColorScheme frameScheme = new ColorScheme(myReturn[0].baseColor);
+                var frameScheme = new ColorScheme(myReturn[0].BaseColor);
 
-                foreach (KeyCode key in keys)
+                foreach (var key in keys)
                 {
-                    float newR = myReturn[frame - 1][key].r + (to[key].r - from[key].r) / steps;
-                    float newG = myReturn[frame - 1][key].g + (to[key].g - from[key].g) / steps;
-                    float newB = myReturn[frame - 1][key].b + (to[key].b - from[key].b) / steps;
+                    var newR = myReturn[frame - 1][key].r + (to[key].r - from[key].r) / steps;
+                    var newG = myReturn[frame - 1][key].g + (to[key].g - from[key].g) / steps;
+                    var newB = myReturn[frame - 1][key].b + (to[key].b - from[key].b) / steps;
 
-                    Color keyColor = new Color(newR, newG, newB);
+                    var keyColor = new Color(newR, newG, newB);
                     frameScheme[key] = keyColor;
                 }
 
@@ -44,25 +44,24 @@ namespace KspChromaControl.Animations
         }
 
         /// <summary>
-        /// Calculates the distance of a key from the center of the keyboard.
+        ///     Calculates the distance of a key from the center of the keyboard.
         /// </summary>
         /// <param name="x">The x coordinate of the key</param>
         /// <param name="y">The y coordinate of the key</param>
         /// <returns></returns>
         public static double GetDistanceFromCenter(int x, int y)
         {
-            int distanceX = x - (Config.Instance.KeyByPosition.GetLength(1) / 2);
-            int distanceY = y - (Config.Instance.KeyByPosition.GetLength(0) / 2);
-            double distance = Math.Sqrt(
-                distanceX * distanceX
-                + distanceY * distanceY
+            var distanceX = x - Config.Instance.KeyByPosition.GetLength(1) / 2;
+            var distanceY = y - Config.Instance.KeyByPosition.GetLength(0) / 2;
+            var distance = Math.Sqrt(
+                distanceX * distanceX + distanceY * distanceY
             );
 
             return distance;
         }
 
         /// <summary>
-        /// Colors the keyboard in a circular sine wave from the center with the given offset.
+        ///     Colors the keyboard in a circular sine wave from the center with the given offset.
         /// </summary>
         /// <param name="one">The base color</param>
         /// <param name="two">The color for the wave peaks</param>
@@ -70,18 +69,18 @@ namespace KspChromaControl.Animations
         /// <returns></returns>
         public static ColorScheme CircularSineWave(Color one, Color two, double offset)
         {
-            ColorScheme myReturn = new ColorScheme(one);
+            var myReturn = new ColorScheme(one);
 
-            for (int y = 0; y < Config.Instance.KeyByPosition.GetLength(0); y++)
-                for (int x = 0; x < Config.Instance.KeyByPosition.GetLength(1); x++)
+            for (var y = 0; y < Config.Instance.KeyByPosition.GetLength(0); y++)
+            {
+                for (var x = 0; x < Config.Instance.KeyByPosition.GetLength(1); x++)
                 {
-                    Color newColor = new Color();
-                    double distance = GetDistanceFromCenter(x, y);
+                    var newColor = new Color();
+                    var distance = GetDistanceFromCenter(x, y);
 
                     if (offset > distance)
                     {
-
-                        float sinus = (float)Math.Sin(distance - (offset * Math.PI / 10.0)) + 1f;
+                        var sinus = (float) Math.Sin(distance - offset * Math.PI / 10.0) + 1f;
 
                         newColor.r = (one.r * (2f - sinus) + two.r * sinus) / 2f;
                         newColor.g = (one.g * (2f - sinus) + two.g * sinus) / 2f;
@@ -91,51 +90,63 @@ namespace KspChromaControl.Animations
                         myReturn.SetKeyToColor(x, y, newColor);
                     }
                 }
+            }
 
             return myReturn;
         }
 
         /// <summary>
-        /// Very simple gauss blur over the current color scheme.
+        ///     Very simple gauss blur over the current color scheme.
         /// </summary>
         /// <param name="original">the original color scheme</param>
         /// <returns>the gauss-smoothed color scheme</returns>
         public static ColorScheme GaussBlur(ColorScheme original)
         {
-            float[,] matrix = new float[3, 3]
+            var matrix = new[,]
             {
-                { 1/16f, 2/16f, 1/16f },
-                { 2/16f, 16/16f, 2/16f },
-                { 1/16f, 2/16f, 1/16f }
+                {1 / 16f, 2 / 16f, 1 / 16f},
+                {2 / 16f, 16 / 16f, 2 / 16f},
+                {1 / 16f, 2 / 16f, 1 / 16f}
             };
 
             return ApplyMatrixFilter(original, matrix);
         }
 
         /// <summary>
-        /// Allows you to apply any matrix filter to a given color scheme, as long as the matrix is of uneven
-        /// width and height.
+        ///     Allows you to apply any matrix filter to a given color scheme, as long as the matrix is of uneven
+        ///     width and height.
         /// </summary>
         /// <param name="original">the original color scheme</param>
         /// <param name="matrix">the transformation matrix</param>
         /// <returns></returns>
         public static ColorScheme ApplyMatrixFilter(ColorScheme original, float[,] matrix)
         {
-            ColorScheme myReturn = new ColorScheme();
+            var myReturn = new ColorScheme();
 
-            KeyCode[,] keys = Config.Instance.KeyByPosition;
+            var keys = Config.Instance.KeyByPosition;
 
-            for (int y = 0; y < keys.GetLength(0); y++)
-                for (int x = 0; x < keys.GetLength(1); x++)
+            for (var y = 0; y < keys.GetLength(0); y++)
+            {
+                for (var x = 0; x < keys.GetLength(1); x++)
                 {
-                    myReturn.SetKeyToColor(x, y, FilterPixel(original, matrix, x, y));
+                    myReturn.SetKeyToColor(
+                        x,
+                        y,
+                        FilterPixel(
+                            original,
+                            matrix,
+                            x,
+                            y
+                        )
+                    );
                 }
+            }
 
             return myReturn;
         }
 
         /// <summary>
-        /// Calculates the resulting pixel from an original using the supplied transformation matrix.
+        ///     Calculates the resulting pixel from an original using the supplied transformation matrix.
         /// </summary>
         /// <param name="original">the original color scheme</param>
         /// <param name="matrix">the transformation matrix</param>
@@ -146,26 +157,27 @@ namespace KspChromaControl.Animations
         {
             try
             {
-                Color oldColor = original[Config.Instance.KeyByPosition[origY, origX]];
+                var oldColor = original[Config.Instance.KeyByPosition[origY, origX]];
                 Color newColor;
 
                 if (matrix.GetLength(0) % 2 == 1 && matrix.GetLength(1) % 2 == 1)
                 {
                     newColor = Color.black;
-                    int halfX = (matrix.GetLength(0) - 1) / 2;
-                    int halfY = (matrix.GetLength(1) - 1) / 2;
+                    var halfX = (matrix.GetLength(0) - 1) / 2;
+                    var halfY = (matrix.GetLength(1) - 1) / 2;
 
-                    /// Dont start below 0
-                    int startX = (origX - halfX < 0) ? 0 : (origX - halfX);
-                    int startY = (origY - halfY < 0) ? 0 : (origY - halfY);
+                    // Dont start below 0
+                    var startX = origX - halfX < 0 ? 0 : origX - halfX;
+                    var startY = origY - halfY < 0 ? 0 : origY - halfY;
 
-                    for (int y = 0; y < matrix.GetLength(1); y++)
-                        for (int x = 0; x < matrix.GetLength(0); x++)
+                    for (var y = 0; y < matrix.GetLength(1); y++)
+                    {
+                        for (var x = 0; x < matrix.GetLength(0); x++)
                         {
                             try
                             {
-                                Color source = original[Config.Instance.KeyByPosition[startY + y, startX + x]];
-                                float factor = matrix[x, y];
+                                var source = original[Config.Instance.KeyByPosition[startY + y, startX + x]];
+                                var factor = matrix[x, y];
                                 newColor.r += source.r * factor;
                                 newColor.g += source.g * factor;
                                 newColor.b += source.b * factor;
@@ -176,6 +188,7 @@ namespace KspChromaControl.Animations
                                 Debug.LogWarning("invalid index: " + e.Message);
                             }
                         }
+                    }
                 }
                 else
                 {
@@ -189,11 +202,5 @@ namespace KspChromaControl.Animations
                 return Color.black;
             }
         }
-
-        /// <summary>
-        /// Utility classes should not be instantiated.
-        /// </summary>
-        private AnimationUtils() { }
-
     }
 }

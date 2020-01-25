@@ -1,55 +1,62 @@
-﻿using UnityEngine;
-using KspChromaControl.SceneManagers;
-using System.Collections.Generic;
-using System;
+﻿using System;
 
-/// <summary>
-/// Contains the chroma control plugin allowing Kerbal Space Program to communicate a keyboard
-/// layout via UDP to a chroma udp server.
-/// </summary>
-[assembly:CLSCompliant(false)]
+[assembly: CLSCompliant(false)]
+
 namespace KspChromaControl
 {
+    using System.Collections.Generic;
+    using KspChromaControl.Animations;
+    using KspChromaControl.ColorSchemes;
+    using KspChromaControl.SceneManagers;
+    using UnityEngine;
+
     /// <summary>
-    /// The main class, managing the keyboard appearance for every kind of scene KSP
-    /// uses.
+    ///     The main class, managing the keyboard appearance for every kind of scene KSP
+    ///     uses.
     /// </summary>
     [KSPAddon(KSPAddon.Startup.EveryScene, false)]
-    public class KSPChromaPlugin : MonoBehaviour
+    public class KspChromaPlugin : MonoBehaviour
     {
-        /// <summary>
-        /// The UDP network socket to send keyboard appearance orders to the server.
-        /// </summary>
-        private SceneManager flightSceneManager = new FlightSceneManager();
-        private SceneManager vabSceneManager = new VABSceneManager();
-        private List<DataDrain> dataDrains = new List<DataDrain>();
+        private readonly List<IDataDrain> dataDrains = new List<IDataDrain>();
 
         /// <summary>
-        /// Called by unity during the launch of this addon.
+        ///     The UDP network socket to send keyboard appearance orders to the server.
         /// </summary>
-        void Awake()
+        private readonly ISceneManager flightSceneManager = new FlightSceneManager();
+
+        private readonly ISceneManager vabSceneManager = new VabSceneManager();
+
+        /// <summary>
+        ///     Called by unity during the launch of this addon.
+        /// </summary>
+        // ReSharper disable once UnusedMember.Local
+        private void Awake()
         {
             this.dataDrains.Add(new ColoreDrain());
-            AnimationManager.Instance.setAnimation(new LogoAnimation());
+            AnimationManager.Instance.SetAnimation(new LogoAnimation());
 
-            GameEvents.VesselSituation.onLand.Add(callbackLanded);
-            GameEvents.onPartDie.Add(callbackCrash);
-            GameEvents.onGameSceneLoadRequested.Add(callbackSceneChange);
+            GameEvents.VesselSituation.onLand.Add(this.CallbackLanded);
+            GameEvents.onPartDie.Add(this.CallbackCrash);
+            GameEvents.onGameSceneLoadRequested.Add(this.CallbackSceneChange);
         }
 
-        private void callbackLanded(Vessel vessel, CelestialBody body)
+        private void CallbackLanded(Vessel vessel, CelestialBody body)
         {
             if (vessel.situation == Vessel.Situations.SPLASHED)
-                AnimationManager.Instance.setAnimation(new SplashdownAnimation());
+            {
+                AnimationManager.Instance.SetAnimation(new SplashdownAnimation());
+            }
         }
 
-        private void callbackCrash(Part part)
+        private void CallbackCrash(Part part)
         {
             if (FlightGlobals.ActiveVessel.rootPart == part)
-                AnimationManager.Instance.setAnimation(new CrashAnimation());
+            {
+                AnimationManager.Instance.SetAnimation(new CrashAnimation());
+            }
         }
 
-        private void callbackSceneChange(GameScenes scene)
+        private void CallbackSceneChange(GameScenes scene)
         {
             switch (scene)
             {
@@ -58,42 +65,43 @@ namespace KspChromaControl
                 case GameScenes.LOADING:
                 case GameScenes.LOADINGBUFFER:
                 case GameScenes.PSYSTEM:
-                    AnimationManager.Instance.setAnimation(null);
+                    AnimationManager.Instance.SetAnimation(null);
                     break;
                 default:
-                    AnimationManager.Instance.setAnimation(new LogoAnimation());
+                    AnimationManager.Instance.SetAnimation(new LogoAnimation());
                     break;
             }
         }
 
         /// <summary>
-        /// Called by unity on every physics frame.
+        ///     Called by unity on every physics frame.
         /// </summary>
-        void Update()
+        // ReSharper disable once UnusedMember.Local
+        private void Update()
         {
-            ColorSchemes.ColorScheme scheme;
-            
-            if (AnimationManager.Instance.animationRunning())
+            ColorScheme scheme;
+
+            if (AnimationManager.Instance.AnimationRunning())
             {
-                scheme = AnimationManager.Instance.getFrame();
+                scheme = AnimationManager.Instance.GetFrame();
             }
             else
             {
                 switch (HighLogic.LoadedScene)
                 {
                     case GameScenes.FLIGHT:
-                        scheme = this.flightSceneManager.getScheme();
+                        scheme = this.flightSceneManager.GetScheme();
                         break;
                     case GameScenes.EDITOR:
-                        scheme = this.vabSceneManager.getScheme();
+                        scheme = this.vabSceneManager.GetScheme();
                         break;
                     default:
-                        scheme = new ColorSchemes.LogoScheme();
+                        scheme = new LogoScheme();
                         break;
                 }
             }
 
-            this.dataDrains.ForEach(drain => drain.send(scheme));
+            this.dataDrains.ForEach(drain => drain.Send(scheme));
         }
     }
 }

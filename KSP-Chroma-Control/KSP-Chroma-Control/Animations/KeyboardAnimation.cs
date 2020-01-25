@@ -1,41 +1,41 @@
-﻿using KspChromaControl.ColorSchemes;
-using System.Collections.Generic;
-using UnityEngine;
-
-namespace KspChromaControl
+﻿namespace KspChromaControl.Animations
 {
+    using System.Collections.Generic;
+    using KspChromaControl.ColorSchemes;
+    using UnityEngine;
+
     /// <summary>
-    /// Implement this to create an animation on your keyboard.
+    ///     Implement this to create an animation on your keyboard.
     /// </summary>
     internal abstract class KeyboardAnimation
     {
         /// <summary>
-        /// Array of frames we iterate over to show the animation.
+        ///     The fps value for this animation
         /// </summary>
-        private ColorScheme[] frames;
+        private readonly int fps = 24;
 
         /// <summary>
-        /// The index of the currently displayed frame.
+        ///     Array of frames we iterate over to show the animation.
+        /// </summary>
+        private readonly ColorScheme[] frames;
+
+        /// <summary>
+        ///     The list of scenes, this animation can be shown in.
+        /// </summary>
+        private readonly List<GameScenes> validScenes;
+
+        /// <summary>
+        ///     The index of the currently displayed frame.
         /// </summary>
         private int currentFrame;
 
         /// <summary>
-        /// The realtime the last frame was displayed
+        ///     The realtime the last frame was displayed
         /// </summary>
-        private int lastFrameTime = 0;
+        private int lastFrameTime;
 
         /// <summary>
-        /// The fps value for this animation
-        /// </summary>
-        private int fps = 24;
-
-        /// <summary>
-        /// The list of scenes, this animation can be shown in.
-        /// </summary>
-        private List<GameScenes> validScenes;
-
-        /// <summary>
-        /// Creates a new keyboard animation with the given parameters
+        ///     Creates a new keyboard animation with the given parameters
         /// </summary>
         /// <param name="fps">The number of frames per second we want to use.</param>
         /// <param name="validScenes">A list of scenes, the animation should be valid in.</param>
@@ -49,37 +49,36 @@ namespace KspChromaControl
         }
 
         /// <summary>
-        /// Returns the current animation frame.
+        ///     Returns the current animation frame.
         /// </summary>
         /// <returns>the current animation frame.</returns>
-        public virtual ColorScheme getFrame()
+        public virtual ColorScheme GetFrame()
         {
             ColorScheme myReturn = null;
 
-            if (lastFrameTime < (int)(Time.realtimeSinceStartup * fps))
+            if (this.lastFrameTime < (int) (Time.realtimeSinceStartup * this.fps))
             {
-                currentFrame++;
-                lastFrameTime = (int)(Time.realtimeSinceStartup * fps);
+                this.currentFrame++;
+                this.lastFrameTime = (int) (Time.realtimeSinceStartup * this.fps);
             }
 
-            if(frames.Length > currentFrame)
+            if (this.frames.Length > this.currentFrame)
             {
-                myReturn = frames[currentFrame];
+                myReturn = this.frames[this.currentFrame];
             }
             else
             {
-                myReturn = frames[frames.Length - 1];
+                myReturn = this.frames[this.frames.Length - 1];
             }
+
             return myReturn;
         }
 
         /// <summary>
-        /// Checks if the animation is complete.
+        ///     Checks if the animation is complete.
         /// </summary>
         /// <returns>true, if the animation is finished.</returns>
-        public virtual bool isFinished()
-        {
-            return !validScenes.Contains(HighLogic.LoadedScene) || currentFrame >= frames.Length;
-        }
+        public virtual bool IsFinished() => !this.validScenes.Contains(HighLogic.LoadedScene) ||
+                                            this.currentFrame >= this.frames.Length;
     }
 }

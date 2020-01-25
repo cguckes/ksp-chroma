@@ -1,39 +1,37 @@
-﻿using System;
-using KspChromaControl.ColorSchemes;
-using System.Collections;
-using UnityEngine;
-using System.Linq;
-using System.Collections.Generic;
-using KspChromaControl.Animations;
-
-namespace KspChromaControl
+﻿namespace KspChromaControl.Animations
 {
+    using System.Collections.Generic;
+    using System.Linq;
+    using KspChromaControl.ColorSchemes;
+    using UnityEngine;
+
     /// <summary>
-    /// Animation displayed when you manage to explode the root part of your vessel.
+    ///     Animation displayed when you manage to explode the root part of your vessel.
     /// </summary>
     internal class CrashAnimation : KeyboardAnimation
     {
         /// <summary>
-        /// All animation frames for this animation.
+        ///     All animation frames for this animation.
         /// </summary>
-        private static ColorScheme[] frames;
+        private static readonly ColorScheme[] frames;
 
         /// <summary>
-        /// List of scenes this animation is valid in.
+        ///     List of scenes this animation is valid in.
         /// </summary>
-        private static List<GameScenes> validScenes = new List<GameScenes>() {
+        private static readonly List<GameScenes> validScenes = new List<GameScenes>
+        {
             GameScenes.FLIGHT
         };
 
         /// <summary>
-        /// Static constructor adds lightning bolts in different colors to both frames
+        ///     Static constructor adds lightning bolts in different colors to both frames
         /// </summary>
         static CrashAnimation()
         {
-            List<ColorScheme> newFrames = new List<ColorScheme>();
+            var newFrames = new List<ColorScheme>();
 
-            ColorScheme red = new ColorScheme(Color.red);
-            ColorScheme yellow = new ColorScheme(Color.yellow);
+            var red = new ColorScheme(Color.red);
+            var yellow = new ColorScheme(Color.yellow);
 
             // Generate first few frames
             newFrames.AddRange(AnimationUtils.InterpolateFrames(red, yellow, 3));
@@ -46,7 +44,7 @@ namespace KspChromaControl
             // Octuple it
             newFrames.AddRange(newFrames.ToArray());
 
-            for (int i = 0; i < 30; i++)
+            for (var i = 0; i < 30; i++)
             {
                 newFrames.Add(AnimationUtils.CircularSineWave(Color.red, Color.yellow, i));
             }
@@ -55,9 +53,9 @@ namespace KspChromaControl
 
             frames = newFrames.ToArray();
         }
-        
+
         /// <summary>
-        /// Initializes the base keyboard animation object.
+        ///     Initializes the base keyboard animation object.
         /// </summary>
         public CrashAnimation() : base(30, validScenes, frames)
         {
