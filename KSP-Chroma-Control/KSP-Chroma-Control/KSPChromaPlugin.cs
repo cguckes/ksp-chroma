@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 
 [assembly: CLSCompliant(false)]
 
@@ -25,6 +26,8 @@ namespace KspChromaControl
         private readonly ISceneManager flightSceneManager = new FlightSceneManager();
 
         private readonly ISceneManager vabSceneManager = new VabSceneManager();
+
+        private ColorScheme lastScheme = null;
 
         /// <summary>
         ///     Called by unity during the launch of this addon.
@@ -101,7 +104,21 @@ namespace KspChromaControl
                 }
             }
 
-            this.dataDrains.ForEach(drain => drain.Send(scheme));
+            bool update;
+            if (lastScheme == null)
+            {
+                update = true;
+            }
+            else
+            {
+                update = scheme.Count != lastScheme.Count || scheme.Except(lastScheme).Any();
+            }
+
+            if (update)
+            {
+                this.dataDrains.ForEach(drain => drain.Send(scheme));
+                lastScheme = scheme;
+            }
         }
     }
 }
