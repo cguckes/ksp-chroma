@@ -1,0 +1,587 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>KSPChromaControl</name>
+    </assembly>
+    <members>
+        <member name="T:KspChromaControl.Animations.AnimationManager">
+            <summary>
+                Handles all animations to avoid confusion and multiple animations running at the same time.
+            </summary>
+        </member>
+        <member name="F:KspChromaControl.Animations.AnimationManager.instance">
+            <summary>
+                Singleton instance
+            </summary>
+        </member>
+        <member name="F:KspChromaControl.Animations.AnimationManager.activeAnimation">
+            <summary>
+                The currently running animation or null
+            </summary>
+        </member>
+        <member name="M:KspChromaControl.Animations.AnimationManager.#ctor">
+            <summary>
+                Private constructor to avoid out of singleton instantiation
+            </summary>
+        </member>
+        <member name="P:KspChromaControl.Animations.AnimationManager.Instance">
+            <summary>
+                Instance getter
+            </summary>
+        </member>
+        <member name="M:KspChromaControl.Animations.AnimationManager.SetAnimation(KspChromaControl.Animations.KeyboardAnimation)">
+            <summary>
+                Set the current animation
+            </summary>
+            <param name="animation">the animation to display</param>
+        </member>
+        <member name="M:KspChromaControl.Animations.AnimationManager.GetFrame">
+            <summary>
+                Fetches one frame from the animation
+            </summary>
+            <returns>the current animation frame</returns>
+        </member>
+        <member name="M:KspChromaControl.Animations.AnimationManager.AnimationRunning">
+            <summary>
+                Checks if there is still an animation running.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:KspChromaControl.Animations.AnimationUtils">
+            <summary>
+                Utility class that contains many useful functions for displaying animations on the keyboard.
+            </summary>
+        </member>
+        <member name="M:KspChromaControl.Animations.AnimationUtils.InterpolateFrames(KspChromaControl.ColorSchemes.ColorScheme,KspChromaControl.ColorSchemes.ColorScheme,System.Int32)">
+            <summary>
+                Interpolates a number of frames for a smooth transition between the provided color schemes.
+            </summary>
+            <param name="from">The color scheme to transition from</param>
+            <param name="to">The color scheme to transition to</param>
+            <param name="steps">The number of steps to take</param>
+            <returns></returns>
+        </member>
+        <member name="M:KspChromaControl.Animations.AnimationUtils.GetDistanceFromCenter(System.Int32,System.Int32)">
+            <summary>
+                Calculates the distance of a key from the center of the keyboard.
+            </summary>
+            <param name="x">The x coordinate of the key</param>
+            <param name="y">The y coordinate of the key</param>
+            <returns></returns>
+        </member>
+        <member name="M:KspChromaControl.Animations.AnimationUtils.CircularSineWave(UnityEngine.Color,UnityEngine.Color,System.Double)">
+            <summary>
+                Colors the keyboard in a circular sine wave from the center with the given offset.
+            </summary>
+            <param name="one">The base color</param>
+            <param name="two">The color for the wave peaks</param>
+            <param name="offset">The offset used to animate the scene (offset + 1 => next scene)</param>
+            <returns></returns>
+        </member>
+        <member name="M:KspChromaControl.Animations.AnimationUtils.GaussBlur(KspChromaControl.ColorSchemes.ColorScheme)">
+            <summary>
+                Very simple gauss blur over the current color scheme.
+            </summary>
+            <param name="original">the original color scheme</param>
+            <returns>the gauss-smoothed color scheme</returns>
+        </member>
+        <member name="M:KspChromaControl.Animations.AnimationUtils.ApplyMatrixFilter(KspChromaControl.ColorSchemes.ColorScheme,System.Single[0:,0:])">
+            <summary>
+                Allows you to apply any matrix filter to a given color scheme, as long as the matrix is of uneven
+                width and height.
+            </summary>
+            <param name="original">the original color scheme</param>
+            <param name="matrix">the transformation matrix</param>
+            <returns></returns>
+        </member>
+        <member name="M:KspChromaControl.Animations.AnimationUtils.FilterPixel(KspChromaControl.ColorSchemes.ColorScheme,System.Single[0:,0:],System.Int32,System.Int32)">
+            <summary>
+                Calculates the resulting pixel from an original using the supplied transformation matrix.
+            </summary>
+            <param name="original">the original color scheme</param>
+            <param name="matrix">the transformation matrix</param>
+            <param name="origX">the pixel x-coordinate</param>
+            <param name="origY">the pixel y-coordinate</param>
+            <returns></returns>
+        </member>
+        <member name="T:KspChromaControl.Animations.CrashAnimation">
+            <summary>
+                Animation displayed when you manage to explode the root part of your vessel.
+            </summary>
+        </member>
+        <member name="F:KspChromaControl.Animations.CrashAnimation.frames">
+            <summary>
+                All animation frames for this animation.
+            </summary>
+        </member>
+        <member name="F:KspChromaControl.Animations.CrashAnimation.validScenes">
+            <summary>
+                List of scenes this animation is valid in.
+            </summary>
+        </member>
+        <member name="M:KspChromaControl.Animations.CrashAnimation.#cctor">
+            <summary>
+                Static constructor adds lightning bolts in different colors to both frames
+            </summary>
+        </member>
+        <member name="M:KspChromaControl.Animations.CrashAnimation.#ctor">
+            <summary>
+                Initializes the base keyboard animation object.
+            </summary>
+        </member>
+        <member name="T:KspChromaControl.Animations.LogoAnimation">
+            <summary>
+                Slowly displays the KSP logo from a blue base scheme.
+            </summary>
+        </member>
+        <member name="F:KspChromaControl.Animations.LogoAnimation.frames">
+            <summary>
+                The frames this animation consists of.
+            </summary>
+        </member>
+        <member name="F:KspChromaControl.Animations.LogoAnimation.validScenes">
+            <summary>
+                List of scenes this animation is valid in.
+            </summary>
+        </member>
+        <member name="M:KspChromaControl.Animations.LogoAnimation.#cctor">
+            <summary>
+                Static constructor interpolates from blue to logo.
+            </summary>
+        </member>
+        <member name="M:KspChromaControl.Animations.LogoAnimation.#ctor">
+            <summary>
+                Initializes the base keyboard animation object.
+            </summary>
+        </member>
+        <member name="T:KspChromaControl.Animations.SplashdownAnimation">
+            <summary>
+                Animation displayed when the vessel is splashed down into any sort of ocean.
+            </summary>
+        </member>
+        <member name="F:KspChromaControl.Animations.SplashdownAnimation.frames">
+            <summary>
+                The animation frames.
+            </summary>
+        </member>
+        <member name="F:KspChromaControl.Animations.SplashdownAnimation.validScenes">
+            <summary>
+                List of scenes this animation is valid in.
+            </summary>
+        </member>
+        <member name="M:KspChromaControl.Animations.SplashdownAnimation.#cctor">
+            <summary>
+                Static constructor adds lightning bolts in different colors to both frames
+            </summary>
+        </member>
+        <member name="M:KspChromaControl.Animations.SplashdownAnimation.#ctor">
+            <summary>
+                Constructor that initializes the keyboard animation object.
+            </summary>
+        </member>
+        <member name="M:KspChromaControl.Animations.SplashdownAnimation.GenerateAnimationFrames">
+            <summary>
+                Helper method that generates all animation frames.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:KspChromaControl.Animations.KeyboardAnimation">
+            <summary>
+                Implement this to create an animation on your keyboard.
+            </summary>
+        </member>
+        <member name="F:KspChromaControl.Animations.KeyboardAnimation.fps">
+            <summary>
+                The fps value for this animation
+            </summary>
+        </member>
+        <member name="F:KspChromaControl.Animations.KeyboardAnimation.frames">
+            <summary>
+                Array of frames we iterate over to show the animation.
+            </summary>
+        </member>
+        <member name="F:KspChromaControl.Animations.KeyboardAnimation.validScenes">
+            <summary>
+                The list of scenes, this animation can be shown in.
+            </summary>
+        </member>
+        <member name="F:KspChromaControl.Animations.KeyboardAnimation.currentFrame">
+            <summary>
+                The index of the currently displayed frame.
+            </summary>
+        </member>
+        <member name="F:KspChromaControl.Animations.KeyboardAnimation.lastFrameTime">
+            <summary>
+                The realtime the last frame was displayed
+            </summary>
+        </member>
+        <member name="M:KspChromaControl.Animations.KeyboardAnimation.#ctor(System.Int32,System.Collections.Generic.List{GameScenes},KspChromaControl.ColorSchemes.ColorScheme[])">
+            <summary>
+                Creates a new keyboard animation with the given parameters
+            </summary>
+            <param name="fps">The number of frames per second we want to use.</param>
+            <param name="validScenes">A list of scenes, the animation should be valid in.</param>
+            <param name="frames">A list of all frames, containing the actual animation</param>
+        </member>
+        <member name="M:KspChromaControl.Animations.KeyboardAnimation.GetFrame">
+            <summary>
+                Returns the current animation frame.
+            </summary>
+            <returns>the current animation frame.</returns>
+        </member>
+        <member name="M:KspChromaControl.Animations.KeyboardAnimation.IsFinished">
+            <summary>
+                Checks if the animation is complete.
+            </summary>
+            <returns>true, if the animation is finished.</returns>
+        </member>
+        <member name="T:KspChromaControl.Animations.PowerLostAnimation">
+            <summary>
+                Displays a warning on the keyboard, indicating that the vessel is currently out of power and cannot
+                be controlled. Consists of two frames alternating at 1fps.
+            </summary>
+        </member>
+        <member name="F:KspChromaControl.Animations.PowerLostAnimation.red">
+            <summary>
+                The red frame
+            </summary>
+        </member>
+        <member name="F:KspChromaControl.Animations.PowerLostAnimation.blue">
+            <summary>
+                The blue frame
+            </summary>
+        </member>
+        <member name="M:KspChromaControl.Animations.PowerLostAnimation.#cctor">
+            <summary>
+                Static constructor adds lightning bolts in different colors to both frames
+            </summary>
+        </member>
+        <member name="M:KspChromaControl.Animations.PowerLostAnimation.#ctor">
+            <summary>
+                Constructor that initializes the keyboard animation object. frames can be null here, because the
+                getFrame method relies on alternating between two fixed frames rather than a sequence.
+            </summary>
+        </member>
+        <member name="M:KspChromaControl.Animations.PowerLostAnimation.GetFrame">
+            <summary>
+                <see cref="M:KspChromaControl.Animations.KeyboardAnimation.GetFrame" />
+            </summary>
+            <returns>the current animation frame.</returns>
+        </member>
+        <member name="M:KspChromaControl.Animations.PowerLostAnimation.IsFinished">
+            <summary>
+                <see cref="M:KspChromaControl.Animations.KeyboardAnimation.IsFinished" />
+            </summary>
+            <returns>true, if the animation is finished, false if not.</returns>
+        </member>
+        <member name="T:KspChromaControl.ColoreDrain">
+            <summary>
+                Data drain that colors razer devices.
+            </summary>
+        </member>
+        <member name="F:KspChromaControl.ColoreDrain.cold">
+            <summary>
+                Three colors we use to display craft hotness.
+            </summary>
+        </member>
+        <member name="F:KspChromaControl.ColoreDrain.keyMapping">
+            <summary>
+                Unity Keybinding - UK Layout translation dictionary
+            </summary>
+        </member>
+        <member name="M:KspChromaControl.ColoreDrain.Send(KspChromaControl.ColorSchemes.ColorScheme)">
+            <summary>
+                Applies the current color scheme to all connected razer devices.
+            </summary>
+            <param name="scheme"></param>
+        </member>
+        <member name="M:KspChromaControl.ColoreDrain.ApplyToKeyboard(KspChromaControl.ColorSchemes.ColorScheme)">
+            <summary>
+                Applies the color scheme to the keyboard.
+            </summary>
+            <param name="colorScheme">The color scheme to apply.</param>
+        </member>
+        <member name="M:KspChromaControl.ColoreDrain.DisplayHeat(KspChromaControl.ColorSchemes.ColorScheme)">
+            <summary>
+                Paints heat displays onto all connected devices except keyboards and keypads.
+            </summary>
+            <param name="colorScheme"></param>
+        </member>
+        <member name="T:KspChromaControl.ColorSchemes.ColorScheme">
+            <summary>
+                Represents a base color scheme, saving a base color and colors for modified keys. Implements the
+                flyweight design pattern, to keep the memory footprint low. This is necessary for the animations to
+                work smoothly. Also allows the storage of values for other gauge display devices, should range from 0 to 1.
+            </summary>
+        </member>
+        <member name="M:KspChromaControl.ColorSchemes.ColorScheme.#ctor">
+            <summary>
+                Creates a new ColorScheme rendering all keys black;
+            </summary>
+        </member>
+        <member name="M:KspChromaControl.ColorSchemes.ColorScheme.#ctor(UnityEngine.Color)">
+            <summary>
+                Creates a new ColorScheme rendering all keys in the defined color.
+            </summary>
+            <param name="color">The color to use</param>
+        </member>
+        <member name="M:KspChromaControl.ColorSchemes.ColorScheme.SetKeysToColor(UnityEngine.KeyCode[],UnityEngine.Color)">
+            <summary>
+                Sets a number of keys to the defined color
+            </summary>
+            <param name="keys">An array of keys to light up</param>
+            <param name="color">The color to use</param>
+        </member>
+        <member name="T:KspChromaControl.ColorSchemes.EvaScheme">
+            <summary>
+                Special color scheme for EVA scenes.
+            </summary>
+        </member>
+        <member name="M:KspChromaControl.ColorSchemes.EvaScheme.#ctor">
+            <summary>
+                Overlays the defined keys over a black base layout.
+            </summary>
+        </member>
+        <member name="T:KspChromaControl.ColorSchemes.LogoScheme">
+            <summary>
+                Displays an image on the keyboard vaguely similar to the logo minus the
+                KSP text.
+            </summary>
+        </member>
+        <member name="M:KspChromaControl.ColorSchemes.LogoScheme.#ctor">
+            <summary>
+                Overlays the defined keys on top of a blue base color scheme.
+            </summary>
+        </member>
+        <member name="T:KspChromaControl.ColorSchemes.FlightScheme">
+            <summary>
+                The base color scheme for all flight related game scenes.
+            </summary>
+        </member>
+        <member name="M:KspChromaControl.ColorSchemes.FlightScheme.#ctor">
+            <summary>
+                Overlays the defined keys over a black base layout.
+            </summary>
+        </member>
+        <member name="T:KspChromaControl.ColorSchemes.VabScheme">
+            <summary>
+                Contains the base color scheme for all VAB and SPH scenes.
+            </summary>
+        </member>
+        <member name="M:KspChromaControl.ColorSchemes.VabScheme.#ctor">
+            <summary>
+                Overlays the defined key colors over the base color scheme.
+            </summary>
+        </member>
+        <member name="T:KspChromaControl.IDataDrain">
+            <summary>
+                Implement this to use the mod with other devices.
+            </summary>
+        </member>
+        <member name="M:KspChromaControl.IDataDrain.Send(KspChromaControl.ColorSchemes.ColorScheme)">
+            <summary>
+                Sends the requested color scheme to the implemented output channel
+            </summary>
+            <param name="scheme">The color scheme to apply to the implemented output device</param>
+        </member>
+        <member name="T:KspChromaControl.KspChromaPlugin">
+            <summary>
+                The main class, managing the keyboard appearance for every kind of scene KSP
+                uses.
+            </summary>
+        </member>
+        <member name="F:KspChromaControl.KspChromaPlugin.flightSceneManager">
+            <summary>
+                The UDP network socket to send keyboard appearance orders to the server.
+            </summary>
+        </member>
+        <member name="M:KspChromaControl.KspChromaPlugin.Awake">
+            <summary>
+                Called by unity during the launch of this addon.
+            </summary>
+        </member>
+        <member name="M:KspChromaControl.KspChromaPlugin.Update">
+            <summary>
+                Called by unity on every physics frame.
+            </summary>
+        </member>
+        <member name="T:KspChromaControl.SceneManagers.VabSceneManager">
+            <summary>
+                Manages the keyboard colors for VAB and SPH scenes.
+            </summary>
+        </member>
+        <member name="F:KspChromaControl.SceneManagers.VabSceneManager.currentColorScheme">
+            <summary>
+                The base color scheme, used by all editor scenes
+            </summary>
+        </member>
+        <member name="M:KspChromaControl.SceneManagers.VabSceneManager.GetScheme">
+            <summary>
+                Returns the rendered color scheme for the current game state.
+            </summary>
+            <returns>The finalized color scheme</returns>
+        </member>
+        <member name="M:KspChromaControl.SceneManagers.VabSceneManager.Update">
+            <summary>
+                Called during every physics frame of the game. Recalculates the colors
+                according to the editor's state.
+            </summary>
+        </member>
+        <member name="M:KspChromaControl.SceneManagers.VabSceneManager.UpdatePlacementState">
+            <summary>
+                Lights up the corresponding key to the current editor construction mode.
+            </summary>
+        </member>
+        <member name="M:KspChromaControl.SceneManagers.VabSceneManager.UpdateToggleables">
+            <summary>
+                Lights up all toggleable keys in a color signifying the button's state.
+            </summary>
+        </member>
+        <member name="M:KspChromaControl.SceneManagers.VabSceneManager.Reset">
+            <summary>
+                Resets the color scheme to the original one.
+            </summary>
+        </member>
+        <member name="T:KspChromaControl.SceneManagers.FlightSceneManager">
+            <summary>
+                Manages the keyboard colors during all flight scenes.
+            </summary>
+        </member>
+        <member name="F:KspChromaControl.SceneManagers.FlightSceneManager.actionGroups">
+            <summary>
+                Contains all ActionGroups and their current usage state. False means
+                this ActionGroup has no impact on any part of the vessel.
+            </summary>
+        </member>
+        <member name="F:KspChromaControl.SceneManagers.FlightSceneManager.currentColorScheme">
+            <summary>
+                The current keyboard state color scheme
+            </summary>
+        </member>
+        <member name="F:KspChromaControl.SceneManagers.FlightSceneManager.currentVessel">
+            <summary>
+                The vessel we are piloting currently. Can be a normal vessel or a single
+                kerbal.
+            </summary>
+        </member>
+        <member name="F:KspChromaControl.SceneManagers.FlightSceneManager.maxTemperature">
+            <summary>
+                Maximum relative temperature, meaning the maximum of the percentage of all parts heat / heat resistance
+            </summary>
+        </member>
+        <member name="M:KspChromaControl.SceneManagers.FlightSceneManager.#ctor">
+            <summary>
+                Fills the action group list with all false values;
+            </summary>
+        </member>
+        <member name="M:KspChromaControl.SceneManagers.FlightSceneManager.GetScheme">
+            <summary>
+                Returns the calculated color scheme for the current game state.
+            </summary>
+            <returns>The final color scheme for this frame</returns>
+        </member>
+        <member name="M:KspChromaControl.SceneManagers.FlightSceneManager.ResetActionGroups">
+            <summary>
+                Recalculates every action group's usage.
+            </summary>
+        </member>
+        <member name="M:KspChromaControl.SceneManagers.FlightSceneManager.Update">
+            <summary>
+                Called by the plugin on every physics frame.
+            </summary>
+        </member>
+        <member name="M:KspChromaControl.SceneManagers.FlightSceneManager.FindUsableActionGroups">
+            <summary>
+                Scans the ship's parts for actions in any action group. Every action group
+                that has any active parts gets a toggleing button lit up.
+            </summary>
+        </member>
+        <member name="M:KspChromaControl.SceneManagers.FlightSceneManager.RecalculateResources">
+            <summary>
+                Displays the fuel status as lights on the keyboard.
+            </summary>
+        </member>
+        <member name="M:KspChromaControl.SceneManagers.FlightSceneManager.ShowGauge(System.String,System.Double,System.Double)">
+            <summary>
+                Displays the amount of resources left as a gauge on the keyboard
+            </summary>
+            <param name="resource">The name of the resource</param>
+            <param name="amount">The actual amount of the resource in the current stage</param>
+            <param name="maxAmount">The maximal amount of the resource in the current stage</param>
+        </member>
+        <member name="M:KspChromaControl.SceneManagers.FlightSceneManager.UpdateToggleables">
+            <summary>
+                Updates all toggleable buttons on the keyboard.
+            </summary>
+        </member>
+        <member name="M:KspChromaControl.SceneManagers.FlightSceneManager.DisplayVesselHeight">
+            <summary>
+                Height off ground display on F keys from F1 to F4.
+            </summary>
+        </member>
+        <member name="M:KspChromaControl.SceneManagers.FlightSceneManager.CalculateDistanceFromGroundAndTemperaturePercentage">
+            <summary>
+                Calculates the ground distance for the vessel. Also calculates the maximum temperature percentage
+                because why iterate over all parts twice.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:KspChromaControl.SceneManagers.ISceneManager">
+            <summary>
+                Allows creation of keyboard color managers for multiple scenes.
+            </summary>
+        </member>
+        <member name="M:KspChromaControl.SceneManagers.ISceneManager.GetScheme">
+            <summary>
+                Gets the keyboard color scheme for the current frame.
+            </summary>
+            <returns>The new color scheme.</returns>
+        </member>
+        <member name="T:KspChromaControl.Config">
+            <summary>
+                Stores configuration settings for the whole mod. Implemented as singleton.
+            </summary>
+        </member>
+        <member name="F:KspChromaControl.Config.instance">
+            <summary>
+                Singleton instance
+            </summary>
+        </member>
+        <member name="F:KspChromaControl.Config.ActionGroupConf">
+            <summary>
+                Configures the key binding and colors for every action group
+            </summary>
+        </member>
+        <member name="F:KspChromaControl.Config.CyanBlueToggle">
+            <summary>
+                Colors for cyan and blue toggle keys.
+            </summary>
+        </member>
+        <member name="F:KspChromaControl.Config.RedGreenToggle">
+            <summary>
+                Colors for red and green toggle keys.
+            </summary>
+        </member>
+        <member name="F:KspChromaControl.Config.RedOrangeToggle">
+            <summary>
+                Colors for red and orange toggle keys.
+            </summary>
+        </member>
+        <member name="M:KspChromaControl.Config.#ctor">
+            <summary>
+                Private constructor to avoid instantiation outside of our singleton logic.
+            </summary>
+        </member>
+        <member name="P:KspChromaControl.Config.Instance">
+            <summary>
+                Singleton getter / initializer
+            </summary>
+        </member>
+        <member name="P:KspChromaControl.Config.KeyByPosition">
+            <summary>
+                Allows getting a key via it's coordinates, rather than it's keycodes. Necessary for animations to work as expected.
+                Default values are calibrated for razer devices. (Most animations should be ok on other devices too).
+            </summary>
+        </member>
+    </members>
+</doc>

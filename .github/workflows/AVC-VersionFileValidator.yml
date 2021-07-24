@@ -1,0 +1,19 @@
+# This is a standard workflow to validate all .version files
+# found in the root directory of the repository and any subdirectories,
+# whenever something is pushed to any branch in the repository, or to a "foreign" branch active in a pull request.
+# It should cover most cases.
+name: Validate AVC .version files
+on:
+  push:
+  pull_request:
+    types: [opened, synchronize, reopened]
+jobs:
+  validate_version_files:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 1
+      - name: Validate files
+        uses: DasSkelett/AVC-VersionFileValidator@v1

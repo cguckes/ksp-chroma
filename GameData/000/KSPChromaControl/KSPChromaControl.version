@@ -1,0 +1,37 @@
+{
+    "NAME": "KSP Chroma Control",
+    "URL": "https://raw.githubusercontent.com/zer0Kerbal/KSPChromaControl/master/KSPChromaControl.version",
+    "DOWNLOAD": "https://github.com/zer0Kerbal/KSPChromaControl/releases/latest",
+    "CHANGE_LOG_URL": "https://raw.githubusercontent.com/zer0Kerbal/KSPChromaControl/master/Changelog.cfg",
+    "GITHUB": {
+        "USERNAME": "zer0Kerbal",
+        "REPOSITORY": "KSPChromaControl",
+        "ALLOW_PRE_RELEASE": false
+    },
+    "VERSION" :
+    {
+        "MAJOR" : 1,
+        "MINOR" : 12,
+        "PATCH" : 0,
+        "BUILD" : 0
+    },
+    "KSP_VERSION": {
+        "MAJOR": 1,
+        "MINOR": 12,
+        "PATCH": 1
+    },
+    "KSP_VERSION_MIN": {
+        "MAJOR": 1,
+        "MINOR": 8,
+        "PATCH": 1
+    },
+    "KSP_VERSION_MAX": {
+        "MAJOR": 1,
+        "MINOR": 12,
+        "PATCH": 9999
+    },
+    "INSTALL_LOC": {
+        "NAME": "KSPChromaControl",
+        "DIRECTORY": "000\KSPChromaControl"
+    }
+}

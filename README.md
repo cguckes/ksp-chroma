@@ -1,4 +1,18 @@
-# ksp-chroma
+<!-- Readme.md v1.1.0.0
+KSP Chroma Control (KCC)
+created: 
+updated: 21 Jul 2021 -->  
+***  
+
+## Download on [Curseforge][MOD:curseforge] or [Github][MOD:github] or [SpaceDock][MOD:spacedock].  Also available on [CKAN][MOD:ckan].  
+
+# KSP Chroma Control (KCC)  
+![Mod Version][shield:mod:latest] ![KSP version][shield:ksp] ![KSP-AVC][shield:kspavc] ![License c{LICENSE}][shield:license] ![][LOGO:license]   
+
+![Curseforge][shield:curseforge] ![CKAN][shield:ckan] ![GitHub][shield:github] ![SpaceDock][shield:spacedock]  
+
+![Validate .version files][shield:avcvalid]  
+***
 
 [![Join the chat at https://gitter.im/cguckes/ksp-chroma](https://badges.gitter.im/cguckes/ksp-chroma.svg)](https://gitter.im/cguckes/ksp-chroma?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
@@ -42,3 +56,45 @@ Due to a bug in the SDK, some people reported strange flickering. This occurs if
 - Light up all keys when the player is entering text (vessel name, savegame, etc.)
 - Different colors for different altimeter zoom levels.
 - Linux version (this might take a bit longer, but I'm planning to do it anyway. What good is a c# interface if it is only ever implemented once...)
+[MOD:license]:      https://github.com/zer0Kerbal/KSPChromaControl/blob/master/LICENSE  
+[MOD:issues]:       https://github.com/zer0Kerbal/KSPChromaControl/issues  
+[MOD:wiki]:         https://github.com/zer0Kerbal/KSPChromaControl/  
+[MOD:known]:        https://github.com/zer0Kerbal/KSPChromaControl/wiki/Known-Issues  
+[MOD:disc]:         https://github.com/zer0Kerbal/KSPChromaControl/discussions "Discussions"  
+[MOD:github:repo]:  https://github.com/zer0Kerbal/KSPChromaControl/  
+[MOD:clog]:    https://raw.githubusercontent.com/zer0Kerbal/KSPChromaControl/master/Changelog.cfg  
+[MOD:forum]:        https://forum.kerbalspaceprogram.com/index.php?/topic/192456-*  
+[MOD:contributing]: https://github.com/zer0Kerbal/KSPChromaControl/blob/master/.github/CONTRIBUTING.md  
+<!--- original mod stuff -->  
+[MOD:original:thread]: https://forum.kerbalspaceprogram.com/index.php?/topic/64520-*   
+[MOD:original:download]: https://licensebuttons.net/l/by-sa/4.0/80x15.png  
+.  
+[KSP:website]: http://kerbalspaceprogram.com/  
+[LOGO:license:0]: https://licensebuttons.net/i/l/by-nc-sa/transparent/33/66/99/76x22.png ""  
+[LOGO:license:1]: https://creativecommons.org/licenses/by-nc-sa/4.0/ "CC-BY-NC-SA-4.0"  
+[LINK:license]: https://creativecommons.org/licenses/by-nc-sa/4.0/ "CC-BY-NC-SA-4.0"  
+.  
+[MOD:github]: https://github.com/zer0Kerbal/KSPChromaControl/releases/latest "GitHub"  
+[MOD:spacedock]: http://spacedock.info/mod/2379  
+[MOD:curseforge]: https://www.curseforge.com/kerbal/ksp-mods/KSPChromaControl  
+[MOD:ckan]: http://forum.kerbalspaceprogram.com/index.php?/topic/192456-*  
+.  
+[image:github]:       https://i.imgur.com/RE4Ppr9.png  
+[image:spacedock]: https://i.imgur.com/m0a7tn2.png  
+[image:curseforge]: https://i.postimg.cc/RZNyB5vP/Download-On-Curse.png  
+[image:get-support]:    https://i.postimg.cc/vHP6zmrw/image.png  
+.  
+[image:ckan]:    https://i.postimg.cc/x8XSVg4R/sj507JC.png  
+.  
+[shield:mod:latest]: https://img.shields.io/github/v/release/zer0Kerbal/KSPChromaControl?include_prereleases?style=plastic  
+[shield:mod]: https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/zer0Kerbal/KSPChromaControl/master/json/mod.json  
+[shield:ksp]: https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/zer0Kerbal/KSPChromaControl/master/json/ksp.json  "KSP Version"  
+[shield:license]: https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/zer0Kerbal/KSPChromaControl/master/json/license.json  
+[shield:kspavc]:     https://img.shields.io/badge/KSP-AVC--supported-brightgreen.svg?style=plastic  
+[shield:spacedock]:  https://img.shields.io/badge/SpaceDock-Listed-blue.svg?style=plastic  
+[shield:ckan]:       https://img.shields.io/badge/CKAN-Indexed-blue.svg?style=plastic  
+[shield:github]:     https://img.shields.io/badge/Github-Indexed-blue.svg?style=plastic&logo=github  
+[shield:curseforge]: https://img.shields.io/badge/CurseForge-Listed-blue.svg?style=plastic  
+[shield:avcvalid]:   https://github.com/zer0Kerbal/KSPChromaControl/workflows/Validate0AVC0.version0files/badge.svg "thank you to DasSkelett"  
+
+[LINK:zer0Kerbal]:     https://forum.kerbalspaceprogram.com/index.php?/profile/190933-zer0kerbal/ "zer0Kerbal" 

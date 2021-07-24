@@ -1,0 +1,90 @@
+<!-- Readme.md v1.1.0.0
+KSP Chroma Control (KCC)
+created: 
+updated: 21 Jul 2021 -->  
+
+<hr />
+<h2 id="download-on-curseforgemodcurseforge-or-githubmodgithub-or-spacedockmodspacedock-also-available-on-ckanmodckan">Download on [Curseforge][MOD:curseforge] or [Github][MOD:github] or [SpaceDock][MOD:spacedock]. Also available on [CKAN][MOD:ckan].</h2>
+<h1 id="ksp-chroma-control-kcc">KSP Chroma Control (KCC)</h1>
+<p>![Mod Version][shield:mod:latest] ![KSP version][shield:ksp] ![KSP-AVC][shield:kspavc] ![License c{LICENSE}][shield:license] ![][LOGO:license]</p>
+<p>![Curseforge][shield:curseforge] ![CKAN][shield:ckan] ![GitHub][shield:github] ![SpaceDock][shield:spacedock]</p>
+<p>![Validate .version files][shield:avcvalid]</p>
+<hr />
+<p><a href="https://gitter.im/cguckes/ksp-chroma?utm_source=badge&amp;utm_medium=badge&amp;utm_campaign=pr-badge&amp;utm_content=badge"><img src="https://badges.gitter.im/cguckes/ksp-chroma.svg" alt="Join the chat at https://gitter.im/cguckes/ksp-chroma" /></a></p>
+<p>Lights up your keyboard to make playing Kerbal Space Program a lot easier. Currently only supports Razer Chroma Keyboards, Mousepads, Mice and Headsets. If you want me to add support for other devices as well, you'll have to send me one. I can send it back after I'm done implementing the code. Enough talk, watch this awesome video by <a href="https://www.youtube.com/channel/UCeiT-KYAvbos30RKre4W9UQ">Game Instructor</a> to see what this mod really is all about: <a href="https://www.youtube.com/watch?v=-nqTzKLMGuU">https://www.youtube.com/watch?v=-nqTzKLMGuU</a></p>
+<h2 id="known-issues">Known Issues</h2>
+<p>Due to a bug in the SDK, some people reported strange flickering. This occurs if you use a custom color scheme on your keyboard. To fix this, switch to the standard color scheme and start the game afterwards.</p>
+<h2 id="features">Features</h2>
+<ul>
+<li>Function keys 1 to 0 are only lit, if the underlying action group actually does anything. The keys are displayed in two different colors, depending on whether the action group is toggled or not.</li>
+<li>The keys for SAS, RCS, Gears, Lights and the Brakes are lit up in different colors, indicating if the respective system was activated or not.</li>
+<li>The amount of resources in the current stage is displayed on your keypad and the keys to the left of it (PrtScr, ScrLk, ..., PageDown)</li>
+<li>The color of W, A, S, D, E and Q varies slightly depending on whether you're in precision or normal steering mode</li>
+<li>The keys for timewarp control are lit either red for physics timewarp or green for normal timewarp</li>
+</ul>
+<h2 id="full-list-of-game-effects">Full list of game effects</h2>
+<ul>
+<li>Stylized Kerbal Space Program logo that fades in on every scene that does not contain any noteworthy keyboard interaction (pressing Escape to go to the menu not being noteworthy enough to light up the key)</li>
+<li>In the vessel editor, different kinds of keysets are lit up according to the current editor mode.</li>
+<li>Control keys and toggleable function keys are lit up in different colors, showing whether the function is switched on or off during flight.</li>
+<li>Reduced keyset lit for EVA mode</li>
+<li>Resource gauges displayed on the keypad and the keys above the UpDownLeftRight keys.</li>
+<li>Power failure animation on vessels that need power to be controllable</li>
+<li>Crash animation that triggers when crashing a vessel's root part</li>
+<li>Splashdown animation that triggers, when landing on water.</li>
+<li>Vessel electricity status displayed on any Razer mouse and mousepad connected</li>
+<li>Vessel heat displayed in three colors (blue = cool, red = warm/hot, yellow = you're in trouble), uses the scrollwheel and logo on mice and the bottom LEDs on the mousepad.</li>
+<li>"Dear GF, please don't disturb me now" feature on the headset. The device is colored red, when you can't quicksave right now. Turns green once quicksave is allowed again.</li>
+<li>Vessel height above ground displayed on F1 to F4 keys (F1 = 10m, F2 = 50m, F3 = 100m, F4 = 1000m). The intensity changes, e.g. if F1 is fully lit and F2 is half lit, you are 30 meters above ground.</li>
+</ul>
+<h2 id="installation">Installation</h2>
+<ol type="1">
+<li>Unzip the release archive and place the KSPChromaControl folder in your KSP GameData directory.</li>
+<li>Start KSP and witness the awesomeness of highlighted function keys while kerbaling through space</li>
+<li>(optional) Move the file ChromaAppInfo.xml from the mod folder into the KSP folder, to allow Synapse to recognize the game properly.</li>
+</ol>
+<h2 id="todo">Todo</h2>
+<ul>
+<li>Make fuel gauge position device dependent (Blackwidow Chroma / Blackwidow Chroma TE / Orbweaver)</li>
+<li>Light up all keys when the player is entering text (vessel name, savegame, etc.)</li>
+<li>Different colors for different altimeter zoom levels.</li>
+<li>Linux version (this might take a bit longer, but I'm planning to do it anyway. What good is a c# interface if it is only ever implemented once...) [MOD:license]: <a href="https://github.com/zer0Kerbal/KSPChromaControl/blob/master/LICENSE">https://github.com/zer0Kerbal/KSPChromaControl/blob/master/LICENSE</a><br />
+[MOD:issues]: <a href="https://github.com/zer0Kerbal/KSPChromaControl/issues">https://github.com/zer0Kerbal/KSPChromaControl/issues</a><br />
+[MOD:wiki]: <a href="https://github.com/zer0Kerbal/KSPChromaControl/">https://github.com/zer0Kerbal/KSPChromaControl/</a><br />
+[MOD:known]: <a href="https://github.com/zer0Kerbal/KSPChromaControl/wiki/Known-Issues">https://github.com/zer0Kerbal/KSPChromaControl/wiki/Known-Issues</a><br />
+[MOD:disc]: <a href="https://github.com/zer0Kerbal/KSPChromaControl/discussions">https://github.com/zer0Kerbal/KSPChromaControl/discussions</a> "Discussions"<br />
+[MOD:github:repo]: <a href="https://github.com/zer0Kerbal/KSPChromaControl/">https://github.com/zer0Kerbal/KSPChromaControl/</a><br />
+[MOD:clog]: <a href="https://raw.githubusercontent.com/zer0Kerbal/KSPChromaControl/master/Changelog.cfg">https://raw.githubusercontent.com/zer0Kerbal/KSPChromaControl/master/Changelog.cfg</a><br />
+[MOD:forum]: <a href="https://forum.kerbalspaceprogram.com/index.php?/topic/192456-">https://forum.kerbalspaceprogram.com/index.php?/topic/192456-</a>*<br />
+[MOD:contributing]: <a href="https://github.com/zer0Kerbal/KSPChromaControl/blob/master/.github/CONTRIBUTING.md">https://github.com/zer0Kerbal/KSPChromaControl/blob/master/.github/CONTRIBUTING.md</a></li>
+</ul>
+<!--- original mod stuff -->  
+
+<p>.<br />
+[KSP:website]: <a href="http://kerbalspaceprogram.com/">http://kerbalspaceprogram.com/</a><br />
+[LOGO:license:0]: <a href="https://licensebuttons.net/i/l/by-nc-sa/transparent/33/66/99/76x22.png">https://licensebuttons.net/i/l/by-nc-sa/transparent/33/66/99/76x22.png</a> ""<br />
+[LOGO:license:1]: <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/">https://creativecommons.org/licenses/by-nc-sa/4.0/</a> "CC-BY-NC-SA-4.0"<br />
+[LINK:license]: <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/">https://creativecommons.org/licenses/by-nc-sa/4.0/</a> "CC-BY-NC-SA-4.0"<br />
+.<br />
+[MOD:github]: <a href="https://github.com/zer0Kerbal/KSPChromaControl/releases/latest">https://github.com/zer0Kerbal/KSPChromaControl/releases/latest</a> "GitHub"<br />
+[MOD:spacedock]: <a href="http://spacedock.info/mod/2379">http://spacedock.info/mod/2379</a><br />
+[MOD:curseforge]: <a href="https://www.curseforge.com/kerbal/ksp-mods/KSPChromaControl">https://www.curseforge.com/kerbal/ksp-mods/KSPChromaControl</a><br />
+[MOD:ckan]: <a href="http://forum.kerbalspaceprogram.com/index.php?/topic/192456-">http://forum.kerbalspaceprogram.com/index.php?/topic/192456-</a>*<br />
+.<br />
+[image:github]: <a href="https://i.imgur.com/RE4Ppr9.png">https://i.imgur.com/RE4Ppr9.png</a><br />
+[image:spacedock]: <a href="https://i.imgur.com/m0a7tn2.png">https://i.imgur.com/m0a7tn2.png</a><br />
+[image:curseforge]: <a href="https://i.postimg.cc/RZNyB5vP/Download-On-Curse.png">https://i.postimg.cc/RZNyB5vP/Download-On-Curse.png</a><br />
+[image:get-support]: <a href="https://i.postimg.cc/vHP6zmrw/image.png">https://i.postimg.cc/vHP6zmrw/image.png</a><br />
+.<br />
+[image:ckan]: <a href="https://i.postimg.cc/x8XSVg4R/sj507JC.png">https://i.postimg.cc/x8XSVg4R/sj507JC.png</a><br />
+.<br />
+[shield:mod:latest]: <a href="https://img.shields.io/github/v/release/zer0Kerbal/KSPChromaControl?include_prereleases?style=plastic">https://img.shields.io/github/v/release/zer0Kerbal/KSPChromaControl?include_prereleases?style=plastic</a><br />
+[shield:mod]: <a href="https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/zer0Kerbal/KSPChromaControl/master/json/mod.json">https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/zer0Kerbal/KSPChromaControl/master/json/mod.json</a><br />
+[shield:ksp]: <a href="https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/zer0Kerbal/KSPChromaControl/master/json/ksp.json">https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/zer0Kerbal/KSPChromaControl/master/json/ksp.json</a> "KSP Version"<br />
+[shield:license]: <a href="https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/zer0Kerbal/KSPChromaControl/master/json/license.json">https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/zer0Kerbal/KSPChromaControl/master/json/license.json</a><br />
+[shield:kspavc]: <a href="https://img.shields.io/badge/KSP-AVC--supported-brightgreen.svg?style=plastic">https://img.shields.io/badge/KSP-AVC--supported-brightgreen.svg?style=plastic</a><br />
+[shield:spacedock]: <a href="https://img.shields.io/badge/SpaceDock-Listed-blue.svg?style=plastic">https://img.shields.io/badge/SpaceDock-Listed-blue.svg?style=plastic</a><br />
+[shield:ckan]: <a href="https://img.shields.io/badge/CKAN-Indexed-blue.svg?style=plastic">https://img.shields.io/badge/CKAN-Indexed-blue.svg?style=plastic</a><br />
+[shield:github]: <a href="https://img.shields.io/badge/Github-Indexed-blue.svg?style=plastic&amp;logo=github">https://img.shields.io/badge/Github-Indexed-blue.svg?style=plastic&amp;logo=github</a><br />
+[shield:curseforge]: <a href="https://img.shields.io/badge/CurseForge-Listed-blue.svg?style=plastic">https://img.shields.io/badge/CurseForge-Listed-blue.svg?style=plastic</a><br />
+[shield:avcvalid]: <a href="https://github.com/zer0Kerbal/KSPChromaControl/workflows/Validate0AVC0.version0files/badge.svg">https://github.com/zer0Kerbal/KSPChromaControl/workflows/Validate0AVC0.version0files/badge.svg</a> "thank you to DasSkelett"</p>
