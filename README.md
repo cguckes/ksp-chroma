@@ -56,6 +56,8 @@ Due to a bug in the SDK, some people reported strange flickering. This occurs if
 - Light up all keys when the player is entering text (vessel name, savegame, etc.)
 - Different colors for different altimeter zoom levels.
 - Linux version (this might take a bit longer, but I'm planning to do it anyway. What good is a c# interface if it is only ever implemented once...)
+***  
+  
 [MOD:license]:      https://github.com/zer0Kerbal/KSPChromaControl/blob/master/LICENSE  
 [MOD:issues]:       https://github.com/zer0Kerbal/KSPChromaControl/issues  
 [MOD:wiki]:         https://github.com/zer0Kerbal/KSPChromaControl/  
